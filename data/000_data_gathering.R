@@ -18,7 +18,7 @@
 #' {hoaddata} also represents *article-level data* retrieved from
 #' 
 #'  - Crossref release 2023/10
-#'  - OpenAlex release 2023-10-1
+#'  - OpenAlex release 2023-10-18
 #'  
 #'  as well as the code used to compile the data from SUB Göttingen Scholarly
 #'  data warehouse.
@@ -28,6 +28,9 @@
 #'  release asset: 
 #'  <https://github.com/subugoe/hoaddata/releases/download/v0.2.82/ta_oa_inst.csv.gz>
 #'  
+#'  A version is provided in `data/` folder
+download.file("https://github.com/subugoe/hoaddata/releases/download/v0.2.82/ta_oa_inst.csv.gz",
+              destfile = here::here("data", "ta_oa_inst.csv.gz")) 
 #' *Raw data for reproducibility*: To improve reproducibility, 
 #' the underying raw data used to compile {hoaddata} 
 #' version v0.2.82 is available via Google BigQuery `hoa-article.hoaddata_nov23`.

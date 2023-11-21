@@ -11,14 +11,14 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
-  echo = TRUE,
+  echo = FALSE,
   fig.width = 6,
   fig.asp = 0.618,
   out.width = "99%",
   fig.align = "center",
   dpi = 300
 )
-options(scipen = 999, digits = 4)
+options(scipen = 999, digits = 2)
 knitr::knit_hooks$set(
   inline = function(x) {
     if (is.numeric(x)) {
@@ -37,18 +37,18 @@ library(tidyverse, warn.conflicts = FALSE)
 ```{r data, cache=TRUE}
 library(hoaddata)
 
-ta_oa_inst <- readr::read_csv("https://github.com/subugoe/hoaddata/releases/download/v0.2.82/ta_oa_inst.csv.gz")
+ta_oa_inst <- readr::read_csv(here::here("data", "ta_oa_inst.csv.gz"))
 ```
 
-What is the number and proportion of open access articles in hybrid journals published under a transformative agreement?
+What are the number and proportion of open access articles in hybrid journals published under a transformative agreement?
 
-```{r area_oa_over_the_years}
+```{r overview_data_prep}
 ta_oa_growth <- ta_oa_inst |>
-  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424") |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
   group_by(cr_year) |>
   summarise(ta_oa = n_distinct(doi))
 hybrid_oa_growth <- hoaddata::cc_articles |>
-  filter(issn_l != "0027-8424") |>
+  filter(issn_l != "0027-8424", cr_year != "2023") |>
   group_by(cr_year) |>
   summarise(oa_all = n_distinct(doi))
 ta_df <- inner_join(ta_oa_growth, hybrid_oa_growth) |>
@@ -59,11 +59,69 @@ ta_df <- inner_join(ta_oa_growth, hybrid_oa_growth) |>
 # year all
 year_all <-
   hoaddata::jn_ind |>
-  filter(issn_l != "0027-8424") |>
+  filter(issn_l != "0027-8424", cr_year != "2023") |>
   distinct(issn_l, cr_year, jn_all) |> 
   group_by(cr_year) |> 
   summarise(n = sum(jn_all))
 
+## Hybrid Journals
+ n_hybrid_jns_all <- hoaddata::jn_ind |>
+  filter(issn_l != "0027-8424", cr_year != "2023") |>
+  distinct(issn_l) |>
+   nrow()
+ 
+## Hybrid Journals with at least one OA article
+n_hybrid_jns <- hoaddata::cc_articles |>
+  filter(issn_l != "0027-8424", cr_year != "2023") |>
+  group_by(issn_l) |>
+  summarise(oa_all = n_distinct(doi)) |> 
+  nrow()
+
+## Hybrid Journals with at least one OA article
+n_ta_jns <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
+  distinct(issn_l) |>
+  nrow()
+
+## Hybrid Journals with at least one TA-OA article
+n_tas_with_oa <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
+  distinct(ta_journal_portfolio) |>
+  nrow()
+
+## Open access volume
+n_oa <-  hoaddata::cc_articles |>
+  filter(issn_l != "0027-8424", cr_year != "2023") |>
+  distinct(doi) |>
+  nrow()
+
+## Total
+n_total <- hoaddata::jn_ind |>
+  filter(issn_l != "0027-8424", cr_year != "2023", !is.na(cc)) |>
+  distinct(issn_l, cr_year, jn_all) |>
+  pull(jn_all) |>
+  sum()
+
+## TA total
+n_tas_with_oa <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
+  distinct(ta_journal_portfolio) |>
+  nrow()
+
+## TA article total
+n_ta_oa <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
+  distinct(doi) |>
+  nrow()
+```
+
+
+Between 2017 and 2022, a total of `r n_hybrid_jns` out of `r n_hybrid_jns_all` hybrid journals in transformative agreements provided at least one open access article under a Creative Commons license.
+During this period, `r n_oa` out of `r n_total` articles in these journals became open access, representing a six-year hybrid open access uptake rate of `r n_oa / n_total * 100`%.
+First authors affiliated with institutions that had a transformative agreement in place at the time of publication, which indicates that they could make use of such agreements, contributed `r n_ta_oa` open access articles to the total.
+
+
+```{r area_oa_over_the_years}
 oa_ta_plot <- ta_df |>
   select(cr_year, ta_oa, no_ta) |>
   pivot_longer(cols = c(ta_oa, no_ta), names_to = "type", values_to = "value") |>
@@ -84,7 +142,7 @@ ta_share_plot <- ta_df |>
   select(cr_year, ta_oa_prop, no_ta_prop) |>
   pivot_longer(cols = c(ta_oa_prop, no_ta_prop), names_to = "type", values_to = "value") |>
   filter(cr_year != "2023", type == "ta_oa_prop") |>
-  ggplot(aes(factor(cr_year), value, group = 1)) +
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), value, group = 1)) +
   geom_bar(stat = "identity", fill = "#56B4E9") +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)), breaks = c(0, 0.25, 0.5),
                      labels = scales::percent) +
@@ -113,9 +171,9 @@ oa_jn_box <- left_join(jn_hybrid_oa_growth, jn_year_all) |>
   geom_boxplot(outlier.shape = NA) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
                      labels = scales::percent) +
-  coord_cartesian(ylim = c(0,0.7)) +
+  coord_cartesian(ylim = c(0,0.65)) +
   theme_minimal() +
-  labs(y = "OA Uptake\nper Hybrid Journal", x = "Publication Year")
+  labs(y = "OA Uptake per Hybrid Journal", x = "Publication Year")
 ```
 
 ```{r}
@@ -147,31 +205,33 @@ box_ta_prop <- summary_all |>
   geom_boxplot(outlier.shape = NA) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
                      labels = scales::percent) +
-  coord_cartesian(ylim = c(0,0.5)) +
-  scale_fill_manual("Hybrid OA", values = c(prop_no_ta = "#b3b3b3a0", prop_ta_oa = "#56B4E9"), labels = c(prop_no_ta = "Other", prop_ta_oa = "Agreement")) +
+  coord_cartesian(ylim = c(0,0.65)) +
+  scale_fill_manual("Hybrid OA", values = c(prop_no_ta = "#b3b3b3a0", prop_ta_oa = "#56B4E9"), labels = c(prop_no_ta = "Other", prop_ta_oa = "Agreement"), guide = FALSE) +
   theme_minimal() +
-  labs(y = "OA Uptake\nper Hybrid Journal", x = "Publication Year")
+  labs(y = NULL, x = "Publication Year")
   
 
 ```
 
 ```{r}
 library(patchwork)
-design = "AC
-BD"
+layout = "
+EEE
+ACD
+BCD"
 wrap_plots(
+  E = guide_area(),
   A = oa_ta_plot,
   B = ta_share_plot,
   C = oa_jn_box,
   D = box_ta_prop,
-  design = design,
-  widths = c(2, 1),
-  heights = c(2, 1),
-  guides = "collect"
-) &
+  design = layout,
+  widths = c(0.4, 0.3, 0.3),
+  heights = c(0.2, 1, .5),
+  guides = "collect") &
   theme(
     legend.position = "top",
-    legend.justification = "left",
+    legend.justification = "right",
     legend.direction = "horizontal",
     panel.grid.minor = element_blank(),
                 panel.border = element_rect(color = "grey50", fill = NA),
@@ -179,7 +239,7 @@ wrap_plots(
     plot_annotation(tag_levels = 'A')
 ```
 
-by publisher
+Caption: 
 
 ```{r}
 jn_ind_jct <- hoaddata::jct_hybrid_jns |>
@@ -294,7 +354,7 @@ wrap_plots(
   B = publisher_ta_prop_plot,
   C = publisher_boxplot,
   design = design,
-#  guides = "collect",
+  guides = "collect",
  # widths = c(2, 1),
   heights = c(1, 0.5, 1)
 ) &
