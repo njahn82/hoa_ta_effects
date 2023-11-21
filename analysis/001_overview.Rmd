@@ -44,11 +44,11 @@ What are the number and proportion of open access articles in hybrid journals pu
 
 ```{r overview_data_prep}
 ta_oa_growth <- ta_oa_inst |>
-  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   group_by(cr_year) |>
   summarise(ta_oa = n_distinct(doi))
 hybrid_oa_growth <- hoaddata::cc_articles |>
-  filter(issn_l != "0027-8424", cr_year != "2023") |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   group_by(cr_year) |>
   summarise(oa_all = n_distinct(doi))
 ta_df <- inner_join(ta_oa_growth, hybrid_oa_growth) |>
@@ -59,65 +59,65 @@ ta_df <- inner_join(ta_oa_growth, hybrid_oa_growth) |>
 # year all
 year_all <-
   hoaddata::jn_ind |>
-  filter(issn_l != "0027-8424", cr_year != "2023") |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   distinct(issn_l, cr_year, jn_all) |> 
   group_by(cr_year) |> 
   summarise(n = sum(jn_all))
 
 ## Hybrid Journals
  n_hybrid_jns_all <- hoaddata::jn_ind |>
-  filter(issn_l != "0027-8424", cr_year != "2023") |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   distinct(issn_l) |>
    nrow()
  
 ## Hybrid Journals with at least one OA article
 n_hybrid_jns <- hoaddata::cc_articles |>
-  filter(issn_l != "0027-8424", cr_year != "2023") |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   group_by(issn_l) |>
   summarise(oa_all = n_distinct(doi)) |> 
   nrow()
 
 ## Hybrid Journals with at least one OA article
 n_ta_jns <- ta_oa_inst |>
-  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   distinct(issn_l) |>
   nrow()
 
 ## Hybrid Journals with at least one TA-OA article
 n_tas_with_oa <- ta_oa_inst |>
-  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   distinct(ta_journal_portfolio) |>
   nrow()
 
 ## Open access volume
 n_oa <-  hoaddata::cc_articles |>
-  filter(issn_l != "0027-8424", cr_year != "2023") |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   distinct(doi) |>
   nrow()
 
 ## Total
 n_total <- hoaddata::jn_ind |>
-  filter(issn_l != "0027-8424", cr_year != "2023", !is.na(cc)) |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023"), !is.na(cc)) |>
   distinct(issn_l, cr_year, jn_all) |>
   pull(jn_all) |>
   sum()
 
 ## TA total
 n_tas_with_oa <- ta_oa_inst |>
-  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   distinct(ta_journal_portfolio) |>
   nrow()
 
 ## TA article total
 n_ta_oa <- ta_oa_inst |>
-  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", cr_year != "2023") |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   distinct(doi) |>
   nrow()
 ```
 
 
 Between 2017 and 2022, a total of `r n_hybrid_jns` out of `r n_hybrid_jns_all` hybrid journals in transformative agreements provided at least one open access article under a Creative Commons license.
-During this period, `r n_oa` out of `r n_total` articles in these journals became open access, representing a six-year hybrid open access uptake rate of `r n_oa / n_total * 100`%.
+During this period, `r n_oa` out of `r n_total` articles in these journals became open access, representing a five-year hybrid open access uptake rate of `r n_oa / n_total * 100`%.
 First authors affiliated with institutions that had a transformative agreement in place at the time of publication, which indicates that they could make use of such agreements, contributed `r n_ta_oa` open access articles to the total.
 
 
@@ -125,7 +125,7 @@ First authors affiliated with institutions that had a transformative agreement i
 oa_ta_plot <- ta_df |>
   select(cr_year, ta_oa, no_ta) |>
   pivot_longer(cols = c(ta_oa, no_ta), names_to = "type", values_to = "value") |>
-  filter(cr_year != "2023") |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
   inner_join(year_all) |>
   # plot
   ggplot(aes(cr_year, value / n, fill = type, group = type)) +
@@ -141,7 +141,7 @@ oa_ta_plot <- ta_df |>
 ta_share_plot <- ta_df |>
   select(cr_year, ta_oa_prop, no_ta_prop) |>
   pivot_longer(cols = c(ta_oa_prop, no_ta_prop), names_to = "type", values_to = "value") |>
-  filter(cr_year != "2023", type == "ta_oa_prop") |>
+  filter(!cr_year %in%  c("2017", "2023"), type == "ta_oa_prop") |>
   ggplot(aes(gsub("^20", "'", as.character(cr_year)), value, group = 1)) +
   geom_bar(stat = "identity", fill = "#56B4E9") +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)), breaks = c(0, 0.25, 0.5),
@@ -166,7 +166,7 @@ jn_year_all <-
 
 oa_jn_box <- left_join(jn_hybrid_oa_growth, jn_year_all) |>
   mutate(prop = oa_all / n) |> 
-  filter(cr_year != "2023") |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
   ggplot(aes(gsub("^20", "'", as.character(cr_year)), prop)) +
   geom_boxplot(outlier.shape = NA) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
@@ -198,7 +198,7 @@ summary_all <- inner_join(ta_df, jn_year_all, by = c("cr_year", "issn_l")) |>
   pivot_longer(cols = c(prop_ta_oa, prop_no_ta))
 # plot
 box_ta_prop <- summary_all |>
-  filter(cr_year != "2023") |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
   # With at least one OA article
   filter(value > 0) |>
   ggplot(aes(gsub("^20", "'", as.character(cr_year)), value, fill = name)) +
@@ -285,7 +285,7 @@ publisher_plot_df <- publisher_df |>
              publisher,
              c("Elsevier", "Springer Nature", "Wiley", "Other") 
            )) |>
-  filter(cr_year != "2023", oa > 0)
+  filter(!cr_year %in%  c("2017", "2023"), oa > 0)
 
 #+ publisher ta shares
 publisher_ta_prop <- publisher_plot_df |>
