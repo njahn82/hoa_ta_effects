@@ -60,6 +60,8 @@ ta_df <- inner_join(ta_oa_growth, hybrid_oa_growth) |>
 year_all <-
   hoaddata::jn_ind |>
   filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  #   filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
   distinct(issn_l, cr_year, jn_all) |> 
   group_by(cr_year) |> 
   summarise(n = sum(jn_all))
@@ -117,7 +119,7 @@ n_ta_oa <- ta_oa_inst |>
 
 
 Between 2017 and 2022, a total of `r n_hybrid_jns` out of `r n_hybrid_jns_all` hybrid journals in transformative agreements provided at least one open access article under a Creative Commons license.
-During this period, `r n_oa` out of `r n_total` articles in these journals became open access, representing a five-year hybrid open access uptake rate of `r n_oa / n_total * 100`%.
+During this period, these hybrid journals provided open access to `r n_oa` out of `r n_total` articles, representing a five-year hybrid open access uptake rate of `r n_oa / n_total * 100`%.
 First authors affiliated with institutions that had a transformative agreement in place at the time of publication, which indicates that they could make use of such agreements, contributed `r n_ta_oa` open access articles to the total.
 
 
@@ -130,7 +132,7 @@ oa_ta_plot <- ta_df |>
   # plot
   ggplot(aes(cr_year, value / n, fill = type, group = type)) +
   geom_area() +
-  scale_fill_manual("Hybrid OA", values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"), labels = c(no_ta = "Other", ta_oa = "Agreement"),  guide = guide_legend(reverse = TRUE)) +
+  scale_fill_manual(NULL, values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"), labels = c(no_ta = "Other", ta_oa = "Agreement"),  guide = guide_legend(reverse = TRUE)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels = scales::percent_format(), limits = c(0, .15), breaks = c(0, .05, .1, .15)) +
   theme_minimal() +
   labs(y = "Hybrid OA Uptake", x = NULL) +
@@ -206,7 +208,7 @@ box_ta_prop <- summary_all |>
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
                      labels = scales::percent) +
   coord_cartesian(ylim = c(0,0.65)) +
-  scale_fill_manual("Hybrid OA", values = c(prop_no_ta = "#b3b3b3a0", prop_ta_oa = "#56B4E9"), labels = c(prop_no_ta = "Other", prop_ta_oa = "Agreement"), guide = FALSE) +
+  scale_fill_manual(NULL, values = c(prop_no_ta = "#b3b3b3a0", prop_ta_oa = "#56B4E9"), labels = c(prop_no_ta = "Other", prop_ta_oa = "Agreement"), guide = FALSE) +
   theme_minimal() +
   labs(y = NULL, x = "Publication Year")
   
@@ -214,6 +216,8 @@ box_ta_prop <- summary_all |>
 ```
 
 ```{r}
+#| fig-cap: "Open access uptake in hybrid journals through transformative agreements 2018-22 per publication year. The blue areas represent open access through transformative agreements, as indicated by the affiliation with institutions that had a corresponding transformative agreement in place at the time of publication (according to the first author affiliation data in OpenAlex matched with journal and institutional data from cOAlition S Transformative Agreements Public Data). (A) Proportion of open access articles in hybrid journals per year (according to the total number of articles indexed in Crossref). (B) Percentage of hybrid open access via agreements per year. Boxplots show the proportion of open access articles by individual hybrid journals (C) and individual open access uptake rates by individual hybrid journals and open access funding (D) per publication year. Horizontal lines denote lower quartile, median, and upper quartile, with whiskers extending to 1.5 × IQR. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available at the time of this study."
+
 library(patchwork)
 layout = "
 EEE
@@ -239,7 +243,8 @@ wrap_plots(
     plot_annotation(tag_levels = 'A')
 ```
 
-Caption: 
+
+
 
 ```{r}
 jn_ind_jct <- hoaddata::jct_hybrid_jns |>
