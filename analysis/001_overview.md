@@ -1,6 +1,6 @@
 Overview
 ================
-2023-11-27
+2023-11-28
 
 What are the number and proportion of open access articles in hybrid
 journals published under a transformative agreement?
@@ -57,7 +57,7 @@ through individual publication fees, which increased from 4.1% (n =
 were able to gain equally from individual and institutional open access
 publishing options.
 
-FFigure 2C depicts the substantial variations among the hybrid journals
+Figure 2C depicts the substantial variations among the hybrid journals
 included in transformative agreements in terms of open access uptake.
 Although the median generally follows the trend shown in Figure 2A, the
 farther stretch of upper quartiles and whiskers over the years
@@ -78,7 +78,21 @@ articles in 2022 were open access) and Bioinformatics (405 out of 777
 articles in 2022 were open access), which flipped to full open access as
 of January 2023.
 
-When comparing the impact of open access trough transfromative
-agreements across journals, it shows that larger number of journals
+When comparing the impact of open access trough transformative
+agreements across journals, it shows that for many journals these
+agreements have been a significant contributor to the growth of open
+access over the years (Figure 2D). Examples of such journals include
+those with a scope on specific countries or regions, where also
+transformative agreements were implemented. For instance, in 2022, the
+Germany-based journals Zeitschrift für Erziehungswissenschaft and
+Zeitschrift für Politikwissenschaft, as well as the Scandinavian
+Political Studies adressing the Nordic countries, achieved an overall
+open access uptake of more than 90% just through transformative
+agreements. Despite the rise in transformative agreements, it is worth
+noting that other means of publishing open access in hybrid journals
+remained common. In total, 9,223 journals published open access articles
+from authors affiliated with institutions without transformative
+agreements in place, while 8,715 journals published at least one open
+access article through a transformative agreement in the same year.
 
 <img src="001_overview_files/figure-gfm/unnamed-chunk-5-1.png" width="99%" style="display: block; margin: auto;" />
