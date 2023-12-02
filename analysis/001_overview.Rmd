@@ -301,13 +301,8 @@ publisher_df <- left_join(jn_ind_jct_all, jn_ind_jct_oa) |>
   mutate(cr_year = as.character(cr_year)) |>
   left_join(ta_active) |>
   mutate(across(everything(), .fns = ~replace_na(.,0))) |>
-  mutate(no_ta = oa - ta_oa)
-
-
-## plot
-publisher_plot_df <- publisher_df |> 
-  pivot_longer(cols = c(ta_oa, no_ta), names_to = "type", values_to = "value") |>
-  mutate(
+   mutate(no_ta = oa - ta_oa) |>
+    mutate(
     publisher = case_when(
       esac_publisher == "Elsevier" ~ "Elsevier",
       esac_publisher == "Springer Nature" ~ "Springer Nature",
@@ -320,7 +315,15 @@ publisher_plot_df <- publisher_df |>
              publisher,
              c("Elsevier", "Springer Nature", "Wiley", "Other") 
            )) |>
-  filter(!cr_year %in%  c("2017", "2023"))
+  filter(!cr_year %in%  c("2017", "2023")) |>
+  # Journal transfers across publishers grouped in publisher
+  select(-esac_publisher) |>
+  distinct()
+
+## plot
+publisher_plot_df <- publisher_df |> 
+  pivot_longer(cols = c(ta_oa, no_ta), names_to = "type", values_to = "value")
+
 
 #+ publisher ta shares
 publisher_ta_prop <- publisher_plot_df |>
@@ -384,12 +387,17 @@ While transformative agreements could be attributed to `r length(unique(publishe
 The remainder consists of
 
 ```{r publisher_summary_table}
-publisher_article_total_table <- publisher_summary_df |>
-  distinct(publisher, jn_all) |>
+publisher_article_total_table <- publisher_df |>
   group_by(publisher) |>
-  summarise(publisher_total = sum(jn_all)) |>
-  mutate(perc = publisher_total / sum(publisher_total),
-         cum = cumsum(publisher_total) / sum(publisher_total))
+  summarise(oa_journals = n_distinct(issn_l),
+            publisher_total = sum(jn_all)) |>
+  mutate(
+    jn_perc = oa_journals / sum(oa_journals),
+    jn_cum = cumsum(oa_journals) / sum(oa_journals),
+    perc = publisher_total / sum(publisher_total),
+    cum = cumsum(publisher_total) / sum(publisher_total)
+  ) |>
+  relocate(publisher_total, .after = jn_cum)
 
 publisher_article_oa_table <- publisher_summary_df |>
   group_by(publisher) |>
@@ -401,16 +409,44 @@ publisher_article_ta_oa_table <- publisher_summary_df |>
   filter(type == "ta_oa") |>
   group_by(publisher) |>
   summarise(ta_oa_total = sum(value)) |>
-  mutate(ta_oa_perc = ta_oa_total / sum(ta_oa_total),
-         ta_oa_cum = cumsum(ta_oa_total) / sum(ta_oa_total))
+  mutate(
+    ta_oa_perc = ta_oa_total / sum(ta_oa_total),
+    ta_oa_cum = cumsum(ta_oa_total) / sum(ta_oa_total)
+  )
 
 publisher_league_tbl <-
   inner_join(publisher_article_total_table, publisher_article_oa_table) |>
   inner_join(publisher_article_ta_oa_table)
 
-kbl(publisher_league_tbl) %>%
+
+publisher_league_tbl |>
+  mutate(across(contains(c("perc", "cum")), ~ paste(round(., 3) * 100))) |>
+  kbl(
+    col.names = c(
+      "Publisher",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%"
+    ),
+    format.args = list(big.mark = ',')
+  ) %>%
   kable_classic() %>%
-  add_header_above(c("Publisher" = 1, "Group 1" = 3, "Group 2" = 3, "Group 3" = 3))
+  add_header_above(c(
+    " " = 1,
+    "Hybrid journals" = 3,
+    "Articles" = 3,
+    "OA articles" = 3,
+    "TA OA articles" = 3
+  ))
 ```
 
 Figure 2 presents the growth of hybrid open access across publishers by year, highlighting the proportion of open articles published under transformative agreements. As can be seen from Figure 2A and 2C 

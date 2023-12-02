@@ -98,20 +98,22 @@ access article through a transformative agreement in the same year.
 Analysing hybrid open access across publishers between 2018 and 2022
 reveals a large concentration on a few publishers in terms of
 publication volume. While transformative agreements could be attributed
-to 47 distinct publishers, the three publishers Elsevier, Springer
-Nature and Wiley accounted for xxx percent of articles published.
-Together, they published xxx articles, representing a share of xx
-percent. xxx were published through transformative agreements. The
-remainder consists of
+to 0 distinct publishers, the three publishers Elsevier, Springer Nature
+and Wiley accounted for xxx percent of articles published. Together,
+they published xxx articles, representing a share of xx percent. xxx
+were published through transformative agreements. The remainder consists
+of
 
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<th style="empty-cells: hide;" colspan="1">
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
 
 <div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
 
-Publisher
+Hybrid journals
 
 </div>
 
@@ -120,7 +122,7 @@ Publisher
 
 <div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
 
-Group 1
+Articles
 
 </div>
 
@@ -129,7 +131,7 @@ Group 1
 
 <div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
 
-Group 2
+OA articles
 
 </div>
 
@@ -138,7 +140,7 @@ Group 2
 
 <div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
 
-Group 3
+TA OA articles
 
 </div>
 
@@ -146,34 +148,43 @@ Group 3
 </tr>
 <tr>
 <th style="text-align:left;">
-publisher
+Publisher
 </th>
 <th style="text-align:right;">
-publisher_total
+Total
+</th>
+<th style="text-align:left;">
+%
+</th>
+<th style="text-align:left;">
+C%
 </th>
 <th style="text-align:right;">
-perc
+Total
+</th>
+<th style="text-align:left;">
+%
+</th>
+<th style="text-align:left;">
+C%
 </th>
 <th style="text-align:right;">
-cum
+Total
+</th>
+<th style="text-align:left;">
+%
+</th>
+<th style="text-align:left;">
+C%
 </th>
 <th style="text-align:right;">
-oa_total
+Total
 </th>
-<th style="text-align:right;">
-oa_perc
+<th style="text-align:left;">
+%
 </th>
-<th style="text-align:right;">
-oa_cum
-</th>
-<th style="text-align:right;">
-ta_oa_total
-</th>
-<th style="text-align:right;">
-ta_oa_perc
-</th>
-<th style="text-align:right;">
-ta_oa_cum
+<th style="text-align:left;">
+C%
 </th>
 </tr>
 </thead>
@@ -183,31 +194,40 @@ ta_oa_cum
 Elsevier
 </td>
 <td style="text-align:right;">
-2788990
+1,946
+</td>
+<td style="text-align:left;">
+17.2
+</td>
+<td style="text-align:left;">
+17.2
 </td>
 <td style="text-align:right;">
-0.34
+2,788,990
+</td>
+<td style="text-align:left;">
+33.9
+</td>
+<td style="text-align:left;">
+33.9
 </td>
 <td style="text-align:right;">
-0.34
+174,479
+</td>
+<td style="text-align:left;">
+23.1
+</td>
+<td style="text-align:left;">
+23.1
 </td>
 <td style="text-align:right;">
-174479
+53,617
 </td>
-<td style="text-align:right;">
-0.23
+<td style="text-align:left;">
+16.7
 </td>
-<td style="text-align:right;">
-0.23
-</td>
-<td style="text-align:right;">
-53617
-</td>
-<td style="text-align:right;">
-0.17
-</td>
-<td style="text-align:right;">
-0.17
+<td style="text-align:left;">
+16.7
 </td>
 </tr>
 <tr>
@@ -215,31 +235,40 @@ Elsevier
 Springer Nature
 </td>
 <td style="text-align:right;">
-1325575
+2,252
+</td>
+<td style="text-align:left;">
+19.9
+</td>
+<td style="text-align:left;">
+37
 </td>
 <td style="text-align:right;">
-0.16
+1,325,575
+</td>
+<td style="text-align:left;">
+16.1
+</td>
+<td style="text-align:left;">
+50
 </td>
 <td style="text-align:right;">
-0.50
+174,074
+</td>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+46.1
 </td>
 <td style="text-align:right;">
-174074
+97,872
 </td>
-<td style="text-align:right;">
-0.23
+<td style="text-align:left;">
+30.5
 </td>
-<td style="text-align:right;">
-0.46
-</td>
-<td style="text-align:right;">
-97872
-</td>
-<td style="text-align:right;">
-0.30
-</td>
-<td style="text-align:right;">
-0.47
+<td style="text-align:left;">
+47.1
 </td>
 </tr>
 <tr>
@@ -247,31 +276,40 @@ Springer Nature
 Wiley
 </td>
 <td style="text-align:right;">
-1059147
+1,416
+</td>
+<td style="text-align:left;">
+12.5
+</td>
+<td style="text-align:left;">
+49.5
 </td>
 <td style="text-align:right;">
-0.13
+1,059,147
+</td>
+<td style="text-align:left;">
+12.9
+</td>
+<td style="text-align:left;">
+62.9
 </td>
 <td style="text-align:right;">
-0.63
+154,907
+</td>
+<td style="text-align:left;">
+20.5
+</td>
+<td style="text-align:left;">
+66.5
 </td>
 <td style="text-align:right;">
-154907
+84,538
 </td>
-<td style="text-align:right;">
-0.20
+<td style="text-align:left;">
+26.3
 </td>
-<td style="text-align:right;">
-0.66
-</td>
-<td style="text-align:right;">
-84538
-</td>
-<td style="text-align:right;">
-0.26
-</td>
-<td style="text-align:right;">
-0.73
+<td style="text-align:left;">
+73.4
 </td>
 </tr>
 <tr>
@@ -279,31 +317,40 @@ Wiley
 Other
 </td>
 <td style="text-align:right;">
-3036924
+5,727
+</td>
+<td style="text-align:left;">
+50.5
+</td>
+<td style="text-align:left;">
+100
 </td>
 <td style="text-align:right;">
-0.37
+3,056,581
+</td>
+<td style="text-align:left;">
+37.1
+</td>
+<td style="text-align:left;">
+100
 </td>
 <td style="text-align:right;">
-1.00
+253,105
+</td>
+<td style="text-align:left;">
+33.5
+</td>
+<td style="text-align:left;">
+100
 </td>
 <td style="text-align:right;">
-255437
+85,333
 </td>
-<td style="text-align:right;">
-0.34
+<td style="text-align:left;">
+26.6
 </td>
-<td style="text-align:right;">
-1.00
-</td>
-<td style="text-align:right;">
-85339
-</td>
-<td style="text-align:right;">
-0.27
-</td>
-<td style="text-align:right;">
-1.00
+<td style="text-align:left;">
+100
 </td>
 </tr>
 </tbody>
