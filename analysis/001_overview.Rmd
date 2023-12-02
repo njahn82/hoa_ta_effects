@@ -382,10 +382,6 @@ publisher_ta_prop_plot <- publisher_ta_prop |>
     strip.text.x = element_blank())
 ```
 
-Analysing hybrid open access across publishers between 2018 and 2022 reveals a large concentration on a few publishers in terms of publication volume. 
-While transformative agreements could be attributed to `r length(unique(publisher_plot_df$esac_publisher))` distinct publishers, the three publishers Elsevier, Springer Nature and Wiley accounted for xxx percent of articles published. Together, they published xxx articles, representing a share of xx percent. xxx were published through transformative agreements. 
-The remainder consists of
-
 ```{r publisher_summary_table}
 publisher_article_total_table <- publisher_df |>
   group_by(publisher) |>
@@ -417,11 +413,13 @@ publisher_article_ta_oa_table <- publisher_summary_df |>
 publisher_league_tbl <-
   inner_join(publisher_article_total_table, publisher_article_oa_table) |>
   inner_join(publisher_article_ta_oa_table)
+```
 
-
+```{r}
 publisher_league_tbl |>
   mutate(across(contains(c("perc", "cum")), ~ paste(round(., 3) * 100))) |>
   kbl(
+    caption ="Hybrid open access through transformative agreements market shares 2018-2022",
     col.names = c(
       "Publisher",
       "Total",
@@ -449,8 +447,16 @@ publisher_league_tbl |>
   ))
 ```
 
-Figure 2 presents the growth of hybrid open access across publishers by year, highlighting the proportion of open articles published under transformative agreements. As can be seen from Figure 2A and 2C 
+Analysing hybrid open access across publishers between 2018 and 2022 reveals a large market concentration among a small number of publishers. 
+Although `r length(unique(jn_ind_jct_all$esac_publisher))` publishers offered transformative agreements, the three major commercial publishers Elsevier, Springer Nature, and Wiley, accounted for `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(jn_cum) * 100`% of total article volume published (see Table ).
+Together, they published `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(oa_total) |> sum()` open access articles, representing `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_cum) * 100`% of the open access articles in hybrid journals.
+Elsevier, Springer Nature, and Wiley made `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(ta_oa_total) |> sum()` articles open access in hybrid journals through transformative agreements, resulting in an even larger market share of `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(ta_oa_cum)*100`%.
+However, there are differences among the three large publishers. Although Elsevier published the largest volume of articles (n = `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(publisher_total)`, `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(cum)*100`%), it published a relatively low number of open access articles, including those that can be associated with transformative agreements.
+In contrast, Springer Nature and Wiley provided open access to a much larger proportion of their articles (`r (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_total)) / (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(publisher_total)) * 100`% of Springer Nature articles and `r (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_total)) / (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(publisher_total)) * 100`% of Wiley articles were open acccess), leading to much higher open access market shares (`r publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_perc)*100`% Springer Nature resp. `r publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_perc)*100`% Wiley).
+This  difference can mainly be attributed to transformative agreements, as both publishers made the majority of their open access articles available through such deals (Springer Nature `r ((publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(ta_oa_total)) / (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_total)) * 100)`% resp. Wiley `r (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(ta_oa_total)) / (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_total)) * 100`%).
 
+
+Figure 2 presents the growth of hybrid open access across publishers by year, highlighting the growth of open articles published under transformative agreements. As can be seen from Figure 2A and 2C 
 
 
 ```{r, fig.asp=1.1}

@@ -95,16 +95,11 @@ from authors affiliated with institutions without transformative
 agreements in place, while 8,715 journals published at least one open
 access article through a transformative agreement in the same year.
 
-Analysing hybrid open access across publishers between 2018 and 2022
-reveals a large concentration on a few publishers in terms of
-publication volume. While transformative agreements could be attributed
-to 0 distinct publishers, the three publishers Elsevier, Springer Nature
-and Wiley accounted for xxx percent of articles published. Together,
-they published xxx articles, representing a share of xx percent. xxx
-were published through transformative agreements. The remainder consists
-of
-
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+Hybrid open access through transformative agreements market shares
+2018-2022
+</caption>
 <thead>
 <tr>
 <th style="empty-cells: hide;" colspan="1">
@@ -356,8 +351,30 @@ Other
 </tbody>
 </table>
 
+Analysing hybrid open access across publishers between 2018 and 2022
+reveals a large market concentration among a small number of publishers.
+Although 47 publishers offered transformative agreements, the three
+major commercial publishers Elsevier, Springer Nature, and Wiley,
+accounted for 50% of total article volume published (see Table ).
+Together, they published 503,460 open access articles, representing 67%
+of the open access articles in hybrid journals. Elsevier, Springer
+Nature, and Wiley made 236,027 articles open access in hybrid journals
+through transformative agreements, resulting in an even larger market
+share of 73%. However, there are differences among the three large
+publishers. Although Elsevier published the largest volume of articles
+(n = 2,788,990, 34%), it published a relatively low number of open
+access articles, including those that can be associated with
+transformative agreements. In contrast, Springer Nature and Wiley
+provided open access to a much larger proportion of their articles (13%
+of Springer Nature articles and 15% of Wiley articles were open
+acccess), leading to much higher open access market shares (23% Springer
+Nature resp. 23% Wiley). This difference can mainly be attributed to
+transformative agreements, as both publishers made the majority of their
+open access articles available through such deals (Springer Nature 56%
+resp. Wiley 55%).
+
 Figure 2 presents the growth of hybrid open access across publishers by
-year, highlighting the proportion of open articles published under
+year, highlighting the growth of open articles published under
 transformative agreements. As can be seen from Figure 2A and 2C
 
-<img src="001_overview_files/figure-gfm/unnamed-chunk-5-1.png" width="99%" style="display: block; margin: auto;" />
+<img src="001_overview_files/figure-gfm/unnamed-chunk-6-1.png" width="99%" style="display: block; margin: auto;" />
