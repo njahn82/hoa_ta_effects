@@ -22,7 +22,8 @@ Imports:
     hoaddata,
     rmarkdown,
     tidyverse,
-    here
+    here,
+    kableExtra
 Remotes: 
     subugoe/hoaddata@3b9eeaf37383c2999f122dd28c460799c2ba2a15
 

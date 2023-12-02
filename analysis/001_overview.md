@@ -1,6 +1,6 @@
 Overview
 ================
-2023-11-28
+2023-12-02
 
 What are the number and proportion of open access articles in hybrid
 journals published under a transformative agreement?
@@ -8,8 +8,8 @@ journals published under a transformative agreement?
 Between 2018 and 2022, a total of 11,171 out of 12,681 hybrid journals
 in transformative agreements published at least one open access article
 under a Creative Commons license. During this period, these hybrid
-journals provided open access to 747,238 out of 7,350,721 articles,
-representing a five-year hybrid open access uptake rate of 10%. First
+journals provided open access to 747,238 out of 8,174,722 articles,
+representing a five-year hybrid open access uptake of 9.1%. First
 authors affiliated with institutions that had a transformative agreement
 in place at the time of publication, which indicates that they could
 make use of such agreements, contributed 320,682 open access articles to
@@ -41,17 +41,17 @@ ending before June 2021 were not available at the time of this study.
 </div>
 
 Figure 2A shows a moderate growth in the proportion of open access
-articles in hybrid journals, comparing the overall uptake rate and the
-impact of transformative agreements on this trend. Over the five-years
-period from 2018 to 2022, the overall open access uptake rate increased
-from 4.3% (n = 66,154) to 15% (n = 250,804). At the same time, the total
-publication volume of the investigated journals grew from 1,533,372 in
-2018 to 1,680,807 in 2022.
+articles in hybrid journals, comparing the overall open access uptake
+and the impact of transformative agreements on this trend. Over the
+five-years period from 2018 to 2022, open access increased from 4.3% (n
+= 66,154) to 15% (n = 250,804). At the same time, the total article
+volume of the investigated journals grew from 1,533,372 in 2018 to
+1,680,807 in 2022.
 
 Figure 2B highlights that the majority of open access articles in hybrid
 journals were made available through transformative agreements in 2021
-and 2022, contributing 55% of the total open access volume in 2022.
-However, there was also a notable growth in open access provision
+and 2022, contributing 55% of the total open access article volume in
+2022. However, there was also a notable growth in open access provision
 through individual publication fees, which increased from 4.1% (n =
 63,334) in 2018 to 6.7% (n = 111,858). This suggests that publishers
 were able to gain equally from individual and institutional open access
@@ -94,5 +94,223 @@ remained common. In total, 9,223 journals published open access articles
 from authors affiliated with institutions without transformative
 agreements in place, while 8,715 journals published at least one open
 access article through a transformative agreement in the same year.
+
+Analysing hybrid open access across publishers between 2018 and 2022
+reveals a large concentration on a few publishers in terms of
+publication volume. While transformative agreements could be attributed
+to 47 distinct publishers, the three publishers Elsevier, Springer
+Nature and Wiley accounted for xxx percent of articles published.
+Together, they published xxx articles, representing a share of xx
+percent. xxx were published through transformative agreements. The
+remainder consists of
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+
+Publisher
+
+</div>
+
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+
+Group 1
+
+</div>
+
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+
+Group 2
+
+</div>
+
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+
+Group 3
+
+</div>
+
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+publisher
+</th>
+<th style="text-align:right;">
+publisher_total
+</th>
+<th style="text-align:right;">
+perc
+</th>
+<th style="text-align:right;">
+cum
+</th>
+<th style="text-align:right;">
+oa_total
+</th>
+<th style="text-align:right;">
+oa_perc
+</th>
+<th style="text-align:right;">
+oa_cum
+</th>
+<th style="text-align:right;">
+ta_oa_total
+</th>
+<th style="text-align:right;">
+ta_oa_perc
+</th>
+<th style="text-align:right;">
+ta_oa_cum
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Elsevier
+</td>
+<td style="text-align:right;">
+2788990
+</td>
+<td style="text-align:right;">
+0.34
+</td>
+<td style="text-align:right;">
+0.34
+</td>
+<td style="text-align:right;">
+174479
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+53617
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Springer Nature
+</td>
+<td style="text-align:right;">
+1325575
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+<td style="text-align:right;">
+174074
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.46
+</td>
+<td style="text-align:right;">
+97872
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+<td style="text-align:right;">
+0.47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wiley
+</td>
+<td style="text-align:right;">
+1059147
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+<td style="text-align:right;">
+0.63
+</td>
+<td style="text-align:right;">
+154907
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:right;">
+84538
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+0.73
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other
+</td>
+<td style="text-align:right;">
+3036924
+</td>
+<td style="text-align:right;">
+0.37
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+255437
+</td>
+<td style="text-align:right;">
+0.34
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+85339
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+</tr>
+</tbody>
+</table>
+
+Figure 2 presents the growth of hybrid open access across publishers by
+year, highlighting the proportion of open articles published under
+transformative agreements. As can be seen from Figure 2A and 2C
 
 <img src="001_overview_files/figure-gfm/unnamed-chunk-5-1.png" width="99%" style="display: block; margin: auto;" />
