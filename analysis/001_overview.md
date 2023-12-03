@@ -1,6 +1,6 @@
 Overview
 ================
-2023-12-02
+2023-12-03
 
 What are the number and proportion of open access articles in hybrid
 journals published under a transformative agreement?
@@ -9,11 +9,9 @@ Between 2018 and 2022, a total of 11,171 out of 12,681 hybrid journals
 in transformative agreements published at least one open access article
 under a Creative Commons license. During this period, these hybrid
 journals provided open access to 747,238 out of 8,174,722 articles,
-representing a five-year hybrid open access uptake of 9.1%. First
-authors affiliated with institutions that had a transformative agreement
-in place at the time of publication, which indicates that they could
-make use of such agreements, contributed 320,682 open access articles to
-the total.
+representing a five-year open access proportion of 9.1%. Authors who
+could make use of transformative agreements at the time of publication
+contributed 320,682 open access articles to the total.
 
 <div class="figure" style="text-align: center">
 
@@ -80,20 +78,20 @@ of January 2023.
 
 When comparing the impact of open access trough transformative
 agreements across journals, it shows that for many journals these
-agreements have been a significant contributor to the growth of open
-access over the years (Figure 2D). Examples of such journals include
-those with a scope on specific countries or regions, where also
-transformative agreements were implemented. For instance, in 2022, the
-Germany-based journals Zeitschrift für Erziehungswissenschaft and
-Zeitschrift für Politikwissenschaft, as well as the Scandinavian
-Political Studies adressing the Nordic countries, achieved an overall
-open access uptake of more than 90% just through transformative
-agreements. Despite the rise in transformative agreements, it is worth
-noting that other means of publishing open access in hybrid journals
-remained common. In total, 9,223 journals published open access articles
-from authors affiliated with institutions without transformative
-agreements in place, while 8,715 journals published at least one open
-access article through a transformative agreement in the same year.
+agreements substantially contributed to the growth of open access over
+the years (Figure 2D). Examples of such journals include those with a
+scope on specific countries or regions, where also transformative
+agreements were implemented. For instance, in 2022, the Germany-based
+journals Zeitschrift für Erziehungswissenschaft and Zeitschrift für
+Politikwissenschaft, as well as the Scandinavian Political Studies
+adressing the Nordic countries, achieved an overall open access uptake
+of more than 90% just through transformative agreements. Despite the
+rise in transformative agreements, it is worth noting that other means
+of publishing open access in hybrid journals remained common. In total,
+9,223 journals published open access articles from authors affiliated
+with institutions without transformative agreements in place, while
+8,715 journals published at least one open access article through a
+transformative agreement in the same year.
 
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
@@ -352,29 +350,70 @@ Other
 </table>
 
 Analysing hybrid open access across publishers between 2018 and 2022
-reveals a large market concentration among a small number of publishers.
-Although 47 publishers offered transformative agreements, the three
-major commercial publishers Elsevier, Springer Nature, and Wiley,
-accounted for 50% of total article volume published (see Table ).
-Together, they published 503,460 open access articles, representing 67%
-of the open access articles in hybrid journals. Elsevier, Springer
-Nature, and Wiley made 236,027 articles open access in hybrid journals
-through transformative agreements, resulting in an even larger market
-share of 73%. However, there are differences among the three large
-publishers. Although Elsevier published the largest volume of articles
-(n = 2,788,990, 34%), it published a relatively low number of open
-access articles, including those that can be associated with
-transformative agreements. In contrast, Springer Nature and Wiley
-provided open access to a much larger proportion of their articles (13%
-of Springer Nature articles and 15% of Wiley articles were open
-acccess), leading to much higher open access market shares (23% Springer
-Nature resp. 23% Wiley). This difference can mainly be attributed to
-transformative agreements, as both publishers made the majority of their
-open access articles available through such deals (Springer Nature 56%
-resp. Wiley 55%).
+reveals a large market concentration. Although 47 publishers offered
+transformative agreements, the big three commercial publishers Elsevier,
+Springer Nature, and Wiley, accounted for 50% of total article volume
+published (see Table ). Together, they published 503,460 open access
+articles, representing 67% of the open access articles in hybrid
+journals. Elsevier, Springer Nature, and Wiley made 236,027 articles
+open access in hybrid journals through transformative agreements,
+resulting in an even larger market share of 73%. However, there are
+differences among the three large publishers. Although Elsevier
+published the largest volume of articles (n = 2,788,990, 34%), it
+published a relatively low number of open access articles, including
+those that can be associated with transformative agreements. In
+contrast, Springer Nature and Wiley provided open access to a larger
+proportion of their articles (13% of Springer Nature articles and 15% of
+Wiley articles were open acccess), leading to higher open access market
+shares (23% Springer Nature resp. 23% Wiley). This difference between
+Elsevier on the one hand and Springer Nature and Wiley on the other can
+be attributed to transformative agreements, as the latter made the
+majority of their open access articles available through such deals
+(Springer Nature 56% resp. Wiley 55%).
 
-Figure 2 presents the growth of hybrid open access across publishers by
-year, highlighting the growth of open articles published under
-transformative agreements. As can be seen from Figure 2A and 2C
+Figure 2 takes a closer look into the growth of hybrid open access
+across publishers by year with a focus on open articles enabled by
+transformative agreements. Although all publishers show a general
+long-term trend towards transformative agreements, Figure 2A and 2B
+indicate that, in particular, the open access share of Wiley’s hybrid
+journal portfolio quadrupled from 5.8% in 2018 to 26% in 2022 as a
+result of these agreements. In comparison, the proportion of open access
+articles Elsevier hybrid journals grew from from 3.3% in 2018 to 10% in
+2022. Unlike the other two publishers, Springer Nature started early to
+offer selected consortia open access agreements for its hybrid journal
+portfolio (“Springer Compact”). Data about the Springer compact
+agreements with large consortia including Max Planck Society, the
+Swedish Bibsam consortium qnd the Finish FinELib consortium that ended
+before start of the trnasofrmative agreement data collection in June
+2021. 8.4% Springer Nature excelled in 2018, but gained a slower growth
+than Wiley, resulting into 18% of all articles being open access in
+Springer Nature hybrid journals in 2022.
+
+published the less than half of its 61,620 open access articles in 2022
+through transformative agreements (48%). while 64% of Springer Nature’s
+grew slower in the last year compared to Wiley, and 69% of Wiley’s open
+access articles could be linked to transformative agreements in 2022.
+Overall, Wiley published the largest number of open access articles from
+transformative agreements in 2022 (n = 54,753), followed by Springer
+Nature (54,753) and Elsevier (54,753). This varying focus resulted into
+an different overall open access proportion in 2022 – only 10% of all
+articles in Elsevier hybrid journals were open access in 2022, compared
+to published in springer nautre and xx in Wiley hybrid journals.
+
+The increasing impact of open access through transofmrative agreements
+can be also obsevered at the journal-level (Figure 2). While no
+substantial differences between open access enabled through
+transformative agreements can be seen across Elsevier journals, an
+growing number of hybrid journals published by Springer Nature and Wiley
+increased their open access share through these agreements. In 2022, 25%
+of Springer Nature hybrid journal portfolio comprised journals with an
+open access proportion of percent, while Wiley.
+
+again a glanc eon the jorunals indicates that these ar emore smaller
+journals focus on a researchers affitialted with a socienty or a
+language springe rnautre german-speaking didactic journasl whereas in
+wiley british society tend to across all more smaller like smaller and
+of journals majority and springe rnature majority oabove 50 % .
+prominent example BJC
 
 <img src="001_overview_files/figure-gfm/unnamed-chunk-6-1.png" width="99%" style="display: block; margin: auto;" />

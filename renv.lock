@@ -824,6 +824,34 @@
       ],
       "Hash": "266a20443ca13c65688b2116d5220f76"
     },
+    "kableExtra": {
+      "Package": "kableExtra",
+      "Version": "1.3.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "digest",
+        "glue",
+        "grDevices",
+        "graphics",
+        "htmltools",
+        "knitr",
+        "magrittr",
+        "rmarkdown",
+        "rstudioapi",
+        "rvest",
+        "scales",
+        "stats",
+        "stringr",
+        "svglite",
+        "tools",
+        "viridisLite",
+        "webshot",
+        "xml2"
+      ],
+      "Hash": "49b625e6aabe4c5f091f5850aba8ff78"
+    },
     "knitr": {
       "Package": "knitr",
       "Version": "1.45",
@@ -1362,6 +1390,18 @@
       ],
       "Hash": "671a4d384ae9d32fc47a14e98bfa3dc8"
     },
+    "svglite": {
+      "Package": "svglite",
+      "Version": "2.1.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cpp11",
+        "systemfonts"
+      ],
+      "Hash": "be5318f6b48c136ecd6b8b5de24cc0ae"
+    },
     "sys": {
       "Package": "sys",
       "Version": "3.4.2",
@@ -1591,6 +1631,19 @@
         "withr"
       ],
       "Hash": "9db52c1656cf19c124f93124ea57f0fd"
+    },
+    "webshot": {
+      "Package": "webshot",
+      "Version": "0.5.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "callr",
+        "jsonlite",
+        "magrittr"
+      ],
+      "Hash": "16858ee1aba97f902d24049d4a44ef16"
     },
     "withr": {
       "Package": "withr",
