@@ -1,6 +1,6 @@
 Overview
 ================
-2023-12-03
+2023-12-04
 
 What are the number and proportion of open access articles in hybrid
 journals published under a transformative agreement?
@@ -371,49 +371,58 @@ be attributed to transformative agreements, as the latter made the
 majority of their open access articles available through such deals
 (Springer Nature 56% resp. Wiley 55%).
 
+<img src="001_overview_files/figure-gfm/unnamed-chunk-6-1.png" width="99%" style="display: block; margin: auto;" />
+
 Figure 2 takes a closer look into the growth of hybrid open access
 across publishers by year with a focus on open articles enabled by
 transformative agreements. Although all publishers show a general
 long-term trend towards transformative agreements, Figure 2A and 2B
-indicate that, in particular, the open access share of Wiley’s hybrid
-journal portfolio quadrupled from 5.8% in 2018 to 26% in 2022 as a
-result of these agreements. In comparison, the proportion of open access
-articles Elsevier hybrid journals grew from from 3.3% in 2018 to 10% in
-2022. Unlike the other two publishers, Springer Nature started early to
-offer selected consortia open access agreements for its hybrid journal
-portfolio (“Springer Compact”). Data about the Springer compact
-agreements with large consortia including Max Planck Society, the
-Swedish Bibsam consortium qnd the Finish FinELib consortium that ended
-before start of the trnasofrmative agreement data collection in June
-2021. 8.4% Springer Nature excelled in 2018, but gained a slower growth
-than Wiley, resulting into 18% of all articles being open access in
-Springer Nature hybrid journals in 2022.
+indicate that, in particular, Wiley’s has experienced a substantial
+increase in its open access share from 5.8% (n = 11,672) in 2018 to 26%
+(n = 54,753) in 2022, rperesenting an 4.5-fold increase. In contrast,
+Elsevier’s hybrid journals deonstrated a more modest increase, from 3.3%
+(n = 17,017) in 2018 to 10% (n = 61,620) in 2022, which is a relatively
+low open access share compared to the general trend. In 2018, Springer
+Nature had the largest open access proportion among the three publishers
+of 8.4% (n = 19,577), but experienced a relatively slower growth,
+resulting in 18% (n = 52,116) of articles being open access in Springer
+Nature hybrid journals in 2022.
 
-published the less than half of its 61,620 open access articles in 2022
-through transformative agreements (48%). while 64% of Springer Nature’s
-grew slower in the last year compared to Wiley, and 69% of Wiley’s open
-access articles could be linked to transformative agreements in 2022.
-Overall, Wiley published the largest number of open access articles from
-transformative agreements in 2022 (n = 54,753), followed by Springer
-Nature (54,753) and Elsevier (54,753). This varying focus resulted into
-an different overall open access proportion in 2022 – only 10% of all
-articles in Elsevier hybrid journals were open access in 2022, compared
-to published in springer nautre and xx in Wiley hybrid journals.
+The varying degrees of uptake of open access across the three major
+publishers can be attributed to distinct approaches to transformative
+agreements. Springer Nature, for example, began in 2015 offering
+selected consortia, such as the Max Planck Society, the Swedish Bibsam
+consortium, and the Finnish FinELib consortium, open access agreements
+for its hybrid journal portfolio under the name Springer Compact[^1].
+However, these agreements were not included in the data as they
+concluded prior to the start of the transformative agreement data
+collection in June 2021. Nonetheless, the results suggest the importance
+of central agreements for Springer Nature’s hybrid open access business
+over the past five years (Figure 2B). In 2022, 64% (n = 33,211) of open
+access articles in f Springer Nature hybrid journals were enabled
+through transformative agreements. In the same year, 69% (n = 37,923) of
+Wiley’s open access articles could be linked to transformative
+agreements in 2022. In contrast, Elsevier published fewer than half of
+its open access articles through transformative agreements (n = 29,347;
+48%).
 
-The increasing impact of open access through transofmrative agreements
-can be also obsevered at the journal-level (Figure 2). While no
-substantial differences between open access enabled through
-transformative agreements can be seen across Elsevier journals, an
-growing number of hybrid journals published by Springer Nature and Wiley
-increased their open access share through these agreements. In 2022, 25%
-of Springer Nature hybrid journal portfolio comprised journals with an
-open access proportion of percent, while Wiley.
+The increasing trend towards transformative agreements can be also
+observed at the journal-level (Figure 2). While no substantial
+differences between open access enabled through transformative
+agreements and other revenue source could observed across Elsevier
+journals, the distribution of open access across Springer Nature and
+Wiley hybrid journals indicates that the growth is not limited to a few
+journals, but extends across the portfolio. In particular, Wiley’s upper
+quantile, which represents the top 25% of journals in terms of the
+proportion of open access articles from transformative agreements,
+increased markedly from 13% in 2020 to 31% in 2022. At the same time,
+the median proportion grew from 7.4% to 19%. It is interesting to note
+that a small but increasing number of journals from these two publishers
+are providing open access to the majority of articles through
+transformative agreements. Wiley recorded 66 and Springer Nature 98
+hybrid journals with an open access share above 50% that could be solely
+attributed to transformative agreements. Upon inspection, these journals
+were mainly society or local language journals with a small yearly
+article volume.
 
-again a glanc eon the jorunals indicates that these ar emore smaller
-journals focus on a researchers affitialted with a socienty or a
-language springe rnautre german-speaking didactic journasl whereas in
-wiley british society tend to across all more smaller like smaller and
-of journals majority and springe rnature majority oabove 50 % .
-prominent example BJC
-
-<img src="001_overview_files/figure-gfm/unnamed-chunk-6-1.png" width="99%" style="display: block; margin: auto;" />
+[^1]: <https://web.archive.org/web/20180414062853id_/http://www.liber2015.org.uk/wp-content/uploads/2015/03/Springer-Compact.pdf>
