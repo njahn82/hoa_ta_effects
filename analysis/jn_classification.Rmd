@@ -390,3 +390,89 @@ subject_ta_df |>
   theme_minimal() +
   theme(strip.background = element_blank())
 ```
+
+
+```{r side_by_side_subject_publisher}
+# normalize publishers
+subject_short <- subject_df  |>  mutate(
+    publisher = case_when(
+      esac_publisher == "Elsevier" ~ "Elsevier",
+      esac_publisher == "Springer Nature" ~ "Springer Nature",
+      esac_publisher == "Wiley" ~ "Wiley",
+      is.character(esac_publisher) ~ "Other"
+    )
+  ) |>
+  mutate(publisher =
+           forcats::fct_relevel(
+             publisher,
+             c("Elsevier", "Springer Nature", "Wiley", "Other") 
+           )) |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
+  # Journal transfers across publishers grouped in publisher
+  select(-esac_publisher) |>
+# top level
+ select(-subject_area, -ajcs) |>
+  distinct() |>
+  group_by(cr_year, top_level, publisher, issn_l) |>
+  summarise(oa = sum(oa), ta_oa = sum(ta_oa), no_ta = sum(no_ta), jn_all = sum(jn_all))
+
+subject_short |>
+  filter(top_level != "Multidisciplinary") |>
+  ggplot(aes(cr_year, oa / jn_all)) +
+  geom_boxplot(varwidth = TRUE) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), breaks = c(0, 0.25,0.5,0.75), limits = c(0, .75),
+                     labels = scales::percent) +
+  facet_grid(top_level ~publisher)
+
+
+
+subject_short |>
+  ungroup() |>
+  filter(oa > 0) |>
+  select(-oa) |>
+  filter(top_level != "Multidisciplinary") |>
+  pivot_longer(cols = c(ta_oa, no_ta), names_to = "oa_type", values_to = "oa") |> 
+  ggplot(aes(cr_year, oa / jn_all, fill = oa_type)) +
+  geom_boxplot(varwidth = TRUE, outlier.shape = NA, notch = TRUE) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
+                     labels = scales::percent,
+                     limits = c(0, .5)) +
+  facet_grid(top_level ~ publisher)
+
+subject_short |>
+  ungroup() |>
+  filter(oa > 0) |>
+  select(-oa) |>
+  pivot_longer(cols = c(ta_oa, no_ta), names_to = "oa_type", values_to = "oa") |> 
+  filter(top_level != "Multidisciplinary") |>
+  mutate(publisher = as.character(publisher)) |>
+  group_by(publisher, top_level, cr_year) |>
+  
+subject_short |>
+  ungroup() |>
+  filter(oa > 0) |>
+  select(-oa) |>
+  pivot_longer(cols = c(ta_oa, no_ta), names_to = "oa_type", values_to = "oa") |> 
+  filter(top_level != "Multidisciplinary") |>
+  mutate(publisher = as.character(publisher)) |>
+  group_by(publisher, top_level, cr_year) |>
+  summarise(nn = wilcox.test(oa ~ oa-type)$p.value))
+
+
+subject_short |>
+ ungroup() |>
+filter(oa > 0) |>
+select(-oa) |>
+ pivot_longer(cols = c(ta_oa, no_ta), names_to = "oa_type", values_to = "oa") |> 
+  mutate(oa_prop = oa / jn_all) |>
+ filter(top_level != "Multidisciplinary") |>
+ mutate(publisher = as.character(publisher)) |>
+  group_by(publisher, top_level, cr_year) |>
+  summarise(p_value = wilcox.test(oa ~ oa_type, paired = TRUE)$p.value) |> View()
+
+preprints %>%
+  filter(posted_date >= analysis_start,
+         posted_date <= analysis_end) %>%
+  with(., wilcox.test(n_versions ~ covid_preprint))
+
+```

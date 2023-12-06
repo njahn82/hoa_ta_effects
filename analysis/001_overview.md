@@ -1,6 +1,6 @@
 Overview
 ================
-2023-12-04
+2023-12-06
 
 What are the number and proportion of open access articles in hybrid
 journals published under a transformative agreement?
@@ -424,5 +424,9 @@ hybrid journals with an open access share above 50% that could be solely
 attributed to transformative agreements. Upon inspection, these journals
 were mainly society or local language journals with a small yearly
 article volume.
+
+Next, I focus on the subject distribution.
+
+<img src="001_overview_files/figure-gfm/subject_panel-1.png" width="99%" style="display: block; margin: auto;" />
 
 [^1]: <https://web.archive.org/web/20180414062853id_/http://www.liber2015.org.uk/wp-content/uploads/2015/03/Springer-Compact.pdf>

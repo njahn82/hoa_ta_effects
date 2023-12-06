@@ -363,7 +363,7 @@ publisher_boxplot <- publisher_plot_df |>
                      labels = scales::percent) +
   scale_fill_manual("Hybrid OA", values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"), labels = c(no_ta = "Other", ta_oa = "Agreement")) +
   coord_cartesian(ylim = c(0,0.65)) +
-  facet_wrap(~publisher, nrow = 1, scales = "free") +
+  facet_wrap(~publisher, nrow = 1) +
   labs(y = "OA Uptake\nby Hybrid Journal", x = "Publication Year") +
   theme_minimal() +
     theme(strip.background = element_blank(),
@@ -510,6 +510,162 @@ It is interesting to note that a small but increasing number of journals from th
 Wiley recorded `r publisher_plot_df |>  mutate(prop = value / jn_all)  |> filter(cr_year == "2022", prop > 0.5, type == "ta_oa", publisher == "Wiley") |> nrow()` and Springer Nature `r publisher_plot_df |>  mutate(prop = value / jn_all)  |> filter(cr_year == "2022", prop > 0.5, type == "ta_oa", publisher == "Springer Nature") |> nrow()` hybrid journals with an open access share above 50% that could be solely attributed to transformative agreements. 
 Upon inspection, these journals were mainly society or local language journals with a small yearly article volume.
 
+Next, I focus on the subject distribution.
 
+```{r subject_data_prep}
+jn_issnl_ajsc <-
+  readr::read_csv(here::here("data", "jn_issnl_ajsc.csv")) |>
+  select(issn_l, top_level, subject_area, ajcs)
+subject_df <- left_join(jn_ind_jct_all, jn_ind_jct_oa) |>
+  mutate(cr_year = as.character(cr_year)) |>
+  left_join(ta_active) |>
+  mutate(across(everything(), .fns = ~ replace_na(., 0))) |>
+  mutate(no_ta = oa - ta_oa) |>
+  left_join(jn_issnl_ajsc, by = "issn_l") 
+
+top_level_by_year_jn <- subject_df |>
+  # with at least one
+  filter(oa > 0) |>
+  distinct(cr_year, issn_l, jn_all, top_level) |>
+  group_by(cr_year, issn_l, top_level) |>
+  summarise(n = sum(jn_all)) |>
+  mutate(fractions_factor = n / sum(n)) |>
+  mutate(fractions = n * fractions_factor) |>
+  ungroup() |> 
+  group_by(cr_year, top_level) |>
+  summarise(articles_n = sum(n),
+            articles_frac = sum(fractions)) |>
+  arrange(top_level, cr_year)
+
+top_level_by_year_oa_frac <- subject_df |>
+   # with at least one
+  filter(oa > 0) |>
+  select(-ajcs, -subject_area, -esac_publisher) |>
+  distinct(cr_year, issn_l, top_level, .keep_all = TRUE) |>
+  group_by(cr_year, issn_l, top_level) |>
+  summarise(n = sum(jn_all)) |>
+  mutate(fractions_factor = n / sum(n)) |>
+  select(-n)
+
+top_level_by_year_oa <- top_level_by_year_oa_frac |>
+  inner_join(subject_df) |>
+     # with at least one
+  filter(oa > 0) |>
+  select(-ajcs, -subject_area, -esac_publisher) |>
+  distinct(cr_year, issn_l, top_level, .keep_all = TRUE) |>
+  mutate(across(c(oa, ta_oa, no_ta),  function(x) x * fractions_factor, .names = "frac_{.col}")) |>
+  ungroup() |> 
+  group_by(cr_year, top_level) |>
+  summarise(oa_n = sum(oa),
+            oa_frac = sum(frac_oa),
+            ta_oa = sum(ta_oa),
+            ta_oa_frac= sum(frac_ta_oa),
+            no_ta = sum(no_ta),
+            no_ta_fractions = sum(frac_no_ta)) |>
+  arrange(top_level, cr_year) |>
+  inner_join(top_level_by_year_jn)
+```
+
+```{r subject_plots}
+subject_trend_plot <- top_level_by_year_oa |>
+  filter(top_level != "Multidisciplinary") |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
+  select(cr_year, top_level, contains("frac"),-oa_frac) |>
+  pivot_longer(
+    cols = c(ta_oa_frac, no_ta_fractions),
+    names_to = "type",
+    values_to = "value"
+  ) |>
+  mutate(prop = value / articles_frac) |>
+  ggplot(aes(
+    gsub("^20", "'", as.character(cr_year)),
+    prop,
+    fill = type,
+    group = type
+  )) +
+  geom_area() +
+  facet_wrap( ~ top_level, nrow = 1) +
+  scale_fill_manual(
+    "Hybrid OA",
+    values = c(
+      no_ta_fractions = "#b3b3b3a0",
+      ta_oa_frac = "#56B4E9"
+    ),
+    labels = c(no_ta_fractions = "Other", ta_oa_frac = "Agreement"),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::percent_format(),
+    breaks = c(0.05, 0.1, 0.15, 0.2, 0.25)
+  ) +
+  theme_minimal() +
+  labs(y = "Hybrid OA Uptake", x = NULL) +
+  theme(
+    legend.position = "top",
+    legend.justification = "left",
+    axis.text.x = element_blank()
+  )
+
+subject_ta_trend_plot <- top_level_by_year_oa |>
+  filter(top_level != "Multidisciplinary") |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
+  mutate(prop = ta_oa_frac / oa_frac) |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), prop)) +
+  geom_bar(stat = "identity", fill = "#56B4E9") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), breaks = c(0, 0.25,0.5,0.75), limits = c(0, .75),
+                     labels = scales::percent) +
+  facet_wrap(~top_level, nrow = 1) +
+  theme_minimal() +
+  labs(y = "Percentage\nof Hybrid OA\nvia Agreement", x = NULL) +
+  theme(
+    axis.text.x = element_blank(),
+    strip.background = element_blank(),
+    strip.text.x = element_blank())
+subject_box_trend <- subject_df |>
+   # with at least one
+  select(-ajcs, -subject_area, -esac_publisher) |>
+  distinct(cr_year, issn_l, top_level, .keep_all = TRUE) |>
+  pivot_longer(cols = c(ta_oa, no_ta), names_to = "type", values_to = "value") |>
+  filter(value > 0) |>
+  filter(top_level != "Multidisciplinary", !cr_year %in% c("2017", "2023")) |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), value / jn_all, fill = type)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE, varwidth = TRUE) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
+                     labels = scales::percent) +
+  scale_fill_manual("Hybrid OA", values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"), labels = c(no_ta = "Other", ta_oa = "Agreement")) +
+  coord_cartesian(ylim = c(0,0.55)) +
+  facet_wrap(~top_level, nrow = 1) +
+  labs(y = "OA Uptake\nby Hybrid Journal", x = "Publication Year") +
+  theme_minimal() +
+    theme(strip.background = element_blank(),
+    strip.text.x = element_blank()
+    )
+```
+
+```{r subject_panel, fig.asp=0.8}
+library(patchwork)
+design = "E
+A
+B
+C"
+wrap_plots(
+  E = guide_area(),
+  A = subject_trend_plot,
+  B = subject_ta_trend_plot,
+  C = subject_box_trend,
+  design = design,
+  guides = "collect",
+  heights = c(0, 0.4, 0.3, 0.7)
+) &
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.direction = "horizontal",
+    panel.grid.minor = element_blank(),
+                panel.border = element_rect(color = "grey50", fill = NA),
+    axis.title=element_text(size = 10)) &
+    plot_annotation(tag_levels = 'A') 
+```
 
 [^springercompact]: <https://web.archive.org/web/20180414062853id_/http://www.liber2015.org.uk/wp-content/uploads/2015/03/Springer-Compact.pdf> 
