@@ -1,6 +1,6 @@
 Overview
 ================
-2023-12-06
+2023-12-07
 
 What are the number and proportion of open access articles in hybrid
 journals published under a transformative agreement?
@@ -426,6 +426,264 @@ were mainly society or local language journals with a small yearly
 article volume.
 
 Next, I focus on the subject distribution.
+
+Here’s a table. I applied fractional counting because of large overlaps.
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+Hybrid open access through transformative agreements by journal subject
+2018-2022
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;" colspan="1">
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+
+Hybrid journals
+
+</div>
+
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+
+Articles
+
+</div>
+
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+
+OA articles
+
+</div>
+
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+
+TA OA articles
+
+</div>
+
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Journal subject
+</th>
+<th style="text-align:right;">
+Total
+</th>
+<th style="text-align:left;">
+%
+</th>
+<th style="text-align:left;">
+C%
+</th>
+<th style="text-align:right;">
+Total
+</th>
+<th style="text-align:left;">
+%
+</th>
+<th style="text-align:left;">
+C%
+</th>
+<th style="text-align:right;">
+Total
+</th>
+<th style="text-align:left;">
+%
+</th>
+<th style="text-align:left;">
+C%
+</th>
+<th style="text-align:right;">
+Total
+</th>
+<th style="text-align:left;">
+%
+</th>
+<th style="text-align:left;">
+C%
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Health Sciences
+</td>
+<td style="text-align:right;">
+2,385
+</td>
+<td style="text-align:left;">
+22.5
+</td>
+<td style="text-align:left;">
+22.5
+</td>
+<td style="text-align:right;">
+2,687,326
+</td>
+<td style="text-align:left;">
+27.6
+</td>
+<td style="text-align:left;">
+27.6
+</td>
+<td style="text-align:right;">
+282,076
+</td>
+<td style="text-align:left;">
+27.1
+</td>
+<td style="text-align:left;">
+27.1
+</td>
+<td style="text-align:right;">
+107,871
+</td>
+<td style="text-align:left;">
+24.9
+</td>
+<td style="text-align:left;">
+24.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Life Sciences
+</td>
+<td style="text-align:right;">
+1,424
+</td>
+<td style="text-align:left;">
+13.4
+</td>
+<td style="text-align:left;">
+35.9
+</td>
+<td style="text-align:right;">
+1,492,070
+</td>
+<td style="text-align:left;">
+15.4
+</td>
+<td style="text-align:left;">
+43
+</td>
+<td style="text-align:right;">
+195,154
+</td>
+<td style="text-align:left;">
+18.7
+</td>
+<td style="text-align:left;">
+45.8
+</td>
+<td style="text-align:right;">
+66,183
+</td>
+<td style="text-align:left;">
+15.3
+</td>
+<td style="text-align:left;">
+40.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Physical Sciences
+</td>
+<td style="text-align:right;">
+2,748
+</td>
+<td style="text-align:left;">
+25.9
+</td>
+<td style="text-align:left;">
+61.8
+</td>
+<td style="text-align:right;">
+4,277,476
+</td>
+<td style="text-align:left;">
+44
+</td>
+<td style="text-align:left;">
+87
+</td>
+<td style="text-align:right;">
+366,536
+</td>
+<td style="text-align:left;">
+35.2
+</td>
+<td style="text-align:left;">
+81
+</td>
+<td style="text-align:right;">
+154,952
+</td>
+<td style="text-align:left;">
+35.8
+</td>
+<td style="text-align:left;">
+76
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Social Sciences
+</td>
+<td style="text-align:right;">
+4,050
+</td>
+<td style="text-align:left;">
+38.2
+</td>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:right;">
+1,262,342
+</td>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:right;">
+198,422
+</td>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:right;">
+103,702
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+100
+</td>
+</tr>
+</tbody>
+</table>
 
 <img src="001_overview_files/figure-gfm/subject_panel-1.png" width="99%" style="display: block; margin: auto;" />
 

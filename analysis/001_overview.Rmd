@@ -566,6 +566,76 @@ top_level_by_year_oa <- top_level_by_year_oa_frac |>
   inner_join(top_level_by_year_jn)
 ```
 
+Here's a table. I applied fractional counting because of large overlaps.
+
+```{r subject_summary_table}
+jn_fract <- subject_df |>
+  # with at least one
+  filter(oa > 0) |>
+  distinct(issn_l, top_level) |>
+  group_by(issn_l, top_level) |>
+  summarise(n = n_distinct(issn_l)) |>
+  mutate(fractions_factor = n / sum(n)) |>
+  mutate(fractions = n * fractions_factor) |>
+  ungroup() |> 
+  group_by(top_level) |>
+  summarise(jn_frac = sum(fractions)) |>
+  arrange(top_level)
+
+
+subject_tbl <- top_level_by_year_oa |>
+  inner_join(jn_fract, by = "top_level") |>
+  filter(!top_level %in% c("Multidisciplinary", NA)) |>
+  group_by(top_level, jn_frac) |>
+  summarise(articles_frac = sum(articles_frac),
+            oa_frac = sum(oa_frac),
+            ta_oa_frac = sum(ta_oa_frac)) |>
+  ungroup() |>
+  mutate(
+    jn_perc = jn_frac / sum(jn_frac),
+    jn_cum = cumsum(jn_frac) / sum(jn_frac),
+    perc = articles_frac / sum(articles_frac),
+    cum = cumsum(articles_frac) / sum(articles_frac),
+    oa_perc = oa_frac / sum(oa_frac),
+    oa_cum = cumsum(oa_frac) / sum(oa_frac),
+    ta_oa_perc = ta_oa_frac / sum(ta_oa_frac),
+    ta_oa_cum = cumsum(ta_oa_frac) / sum(ta_oa_frac)
+  ) |>
+  select(top_level, jn_frac, jn_perc, jn_cum, articles_frac, perc, cum, 
+         oa_frac, oa_perc, oa_cum, ta_oa_frac,ta_oa_perc,  ta_oa_cum)
+
+subject_tbl |>
+  mutate(across(contains(c("perc", "cum")), ~ paste(round(., 3) * 100))) |>
+  kbl(
+    caption ="Hybrid open access through transformative agreements by journal subject 2018-2022",
+    col.names = c(
+      "Journal subject",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%"
+    ),
+    format.args = list(big.mark = ',')
+  ) %>%
+  kable_classic() %>%
+  add_header_above(c(
+    " " = 1,
+    "Hybrid journals" = 3,
+    "Articles" = 3,
+    "OA articles" = 3,
+    "TA OA articles" = 3
+  ))
+```
+
+
 ```{r subject_plots}
 subject_trend_plot <- top_level_by_year_oa |>
   filter(top_level != "Multidisciplinary") |>
