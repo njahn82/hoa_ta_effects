@@ -393,18 +393,18 @@ publishers can be attributed to distinct approaches to transformative
 agreements. Springer Nature, for example, began in 2015 offering
 selected consortia, such as the Max Planck Society, the Swedish Bibsam
 consortium, and the Finnish FinELib consortium, open access agreements
-for its hybrid journal portfolio under the name Springer Compact[^1].
-However, these agreements were not included in the data as they
-concluded prior to the start of the transformative agreement data
-collection in June 2021. Nonetheless, the results suggest the importance
-of central agreements for Springer Nature’s hybrid open access business
-over the past five years (Figure 2B). In 2022, 64% (n = 33,211) of open
-access articles in f Springer Nature hybrid journals were enabled
-through transformative agreements. In the same year, 69% (n = 37,923) of
-Wiley’s open access articles could be linked to transformative
-agreements in 2022. In contrast, Elsevier published fewer than half of
-its open access articles through transformative agreements (n = 29,347;
-48%).
+for its hybrid journal portfolio under the name Springer
+Compact\[^springercompact\]. However, these agreements were not included
+in the data as they concluded prior to the start of the transformative
+agreement data collection in June 2021. Nonetheless, the results suggest
+the importance of central agreements for Springer Nature’s hybrid open
+access business over the past five years (Figure 2B). In 2022, 64% (n =
+33,211) of open access articles in f Springer Nature hybrid journals
+were enabled through transformative agreements. In the same year, 69% (n
+= 37,923) of Wiley’s open access articles could be linked to
+transformative agreements in 2022. In contrast, Elsevier published fewer
+than half of its open access articles through transformative agreements
+(n = 29,347; 48%).
 
 The increasing trend towards transformative agreements can be also
 observed at the journal-level (Figure 2). While no substantial
@@ -687,4 +687,8 @@ Social Sciences
 
 <img src="001_overview_files/figure-gfm/subject_panel-1.png" width="99%" style="display: block; margin: auto;" />
 
-[^1]: <https://web.archive.org/web/20180414062853id_/http://www.liber2015.org.uk/wp-content/uploads/2015/03/Springer-Compact.pdf>
+And here’s my country analysis. First top 20
+
+<img src="001_overview_files/figure-gfm/country_plot-1.png" width="99%" style="display: block; margin: auto;" />
+\[^springercompact\]:
+<https://web.archive.org/web/20180414062853id_/http://www.liber2015.org.uk/wp-content/uploads/2015/03/Springer-Compact.pdf>
