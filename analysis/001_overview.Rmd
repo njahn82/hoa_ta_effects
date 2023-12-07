@@ -17,7 +17,9 @@ knitr::opts_chunk$set(
   fig.asp = 0.618,
   out.width = "99%",
   fig.align = "center",
-  dpi = 300
+  dpi = 300,
+  dev = c("png", "pdf"),
+  fig.path = "fig/"
 )
 options(scipen = 999, digits = 2)
 knitr::knit_hooks$set(
@@ -853,11 +855,12 @@ ggplot(top_20_plot_df, aes(
     breaks = scales::breaks_extended(4)
   ) +
   theme_minimal() +
-  labs(y = "OA Share", x = "2018 - 2022") +
+  labs(y = "Hybrid OA Uptake", x = "2018 - 2022") +
   theme(
     legend.position = "top",
     legend.justification = "right",
     legend.direction = "horizontal",
+    axis.text.x = element_blank(),
     panel.grid.minor = element_blank(),
                 panel.border = element_rect(color = "grey50", fill = NA),
     axis.title=element_text(size = 10),
@@ -866,5 +869,83 @@ ggplot(top_20_plot_df, aes(
     panel.spacing = unit(1, "lines")
   )
 ```
+
+here a scatterplot and a classifciation of oecd / brics / other. first, the scatterplot 2022!
+
+```{r}
+oecd <- readr::read_csv(here::here("data", "oecd.csv")) |>
+  mutate(country_code = countrycode::countrycode(iso3, "iso3c", "iso2c"))
+
+
+
+country_scatter_df <- country_df |>
+#  filter(cr_year == "2022", !is.na(country_code)) |>
+  mutate(cat = case_when(
+    country_code %in% oecd$country_code ~ "OECD",
+    country_code %in% c("BR", "CN", "IN", "RU", "ZA") ~ "BRICS",
+    .default = "Other"
+  ))
+
+country_scatter_22 <- country_scatter_df |>
+  filter(cr_year == "2022", !is.na(country_code)) |>
+  ggplot(aes(all, oa)) +
+  geom_point(aes(color = cat, size = ta_oa), alpha = 0.8) +
+  scale_color_manual(NULL, values = c("OECD" = "#3fc1c9", "BRICS" = "#fc5185", "Other" = "#e1e1e1")) +
+  geom_smooth(aes(all, oa), method=lm) +
+  scale_size("TA OA", guide = "none") +
+  ggrepel::geom_text_repel(
+    data = filter(country_scatter_df, cr_year == 2022, cat %in% c("OECD", "BRICS"), all > 50000),
+    aes(x = all, y = oa, label = country_code),
+    force = 50,
+    box.padding = 0.5,
+    point.padding = 0.8,
+    size = 3,
+    max.iter = 1000000,
+    max.overlaps = Inf,
+    min.segment.length = 0,
+    arrow = arrow(length = unit(0.010, "npc"))) +
+  scale_x_continuous(labels =  scales::number_format(big.mark = ","), guide = guide_axis(angle = 45)) +
+  scale_y_continuous(labels =  scales::number_format(big.mark = ",")) +
+  theme_minimal() +
+  labs(x = "Total articles", y = "OA articles in hybrid journals") +
+  theme(legend.position = "top",
+    legend.justification = "left",
+    legend.direction = "horizontal")
+
+country_bar <- country_scatter_df |>
+  group_by(cr_year, cat) |>
+  summarise(all = sum(all), oa = sum(oa), ta_oa = sum(ta_oa)) |>
+  mutate(closed = all - oa) |>
+  pivot_longer(cols = c(oa, ta_oa, closed), names_to = "oa_type") |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), value, group = oa_type, fill = oa_type)) +
+  geom_area() +
+  facet_wrap(~ cat) +
+  scale_fill_manual(NULL, values = c(oa = "#b3b3b3a0", ta_oa = "#56B4E9", closed = "#e98b56"),
+    labels = c(oa = "OA", ta_oa = "Agreement", closed = "Closed")) +
+  theme_minimal() +
+  scale_y_continuous(labels =  scales::number_format(big.mark = ",")) +
+  theme_minimal() +
+  labs(x = "Publication year", y = "Total articles") +
+  theme(legend.position = "top",
+    legend.justification = "left",
+    legend.direction = "horizontal")
+```
+
+```{r country_patch}
+library(patchwork)
+wrap_plots(
+  A = country_scatter_22,
+  B = country_bar,
+  design = "AB",
+  widths = c(0.35, 0.65)
+) &
+  theme(
+    panel.grid.minor = element_blank(),
+                panel.border = element_rect(color = "grey50", fill = NA),
+    axis.title=element_text(size = 10)) &
+    plot_annotation(tag_levels = 'A') 
+```
+
+
 
 [^springercompact]: <https://web.archive.org/web/20180414062853id_/http://www.liber2015.org.uk/wp-content/uploads/2015/03/Springer-Compact.pdf> 
