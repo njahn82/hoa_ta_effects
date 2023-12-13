@@ -1,17 +1,17 @@
 Overview
 ================
-2023-12-07
+2023-12-13
 
 What are the number and proportion of open access articles in hybrid
 journals published under a transformative agreement?
 
-Between 2018 and 2022, a total of 11,171 out of 12,681 hybrid journals
+Between 2018 and 2022, a total of 11,189 out of 12,857 hybrid journals
 in transformative agreements published at least one open access article
 under a Creative Commons license. During this period, these hybrid
-journals provided open access to 747,238 out of 8,174,722 articles,
+journals provided open access to 742,369 out of 8,146,958 articles,
 representing a five-year open access proportion of 9.1%. Authors who
 could make use of transformative agreements at the time of publication
-contributed 320,682 open access articles to the total.
+contributed 328,957 open access articles to the total.
 
 <div class="figure" style="text-align: center">
 
@@ -42,16 +42,16 @@ Figure 2A shows a moderate growth in the proportion of open access
 articles in hybrid journals, comparing the overall open access uptake
 and the impact of transformative agreements on this trend. Over the
 five-years period from 2018 to 2022, open access increased from 4.3% (n
-= 66,154) to 15% (n = 250,804). At the same time, the total article
-volume of the investigated journals grew from 1,533,372 in 2018 to
-1,680,807 in 2022.
+= 65,486) to 15% (n = 249,511). At the same time, the total article
+volume of the investigated journals grew from 1,528,051 in 2018 to
+1,676,928 in 2022.
 
 Figure 2B highlights that the majority of open access articles in hybrid
 journals were made available through transformative agreements in 2021
-and 2022, contributing 55% of the total open access article volume in
+and 2022, contributing 58% of the total open access article volume in
 2022. However, there was also a notable growth in open access provision
 through individual publication fees, which increased from 4.1% (n =
-63,334) in 2018 to 6.7% (n = 111,858). This suggests that publishers
+62,625) in 2018 to 6.3% (n = 105,896). This suggests that publishers
 were able to gain equally from individual and institutional open access
 publishing options.
 
@@ -61,20 +61,20 @@ Although the median generally follows the trend shown in Figure 2A, the
 farther stretch of upper quartiles and whiskers over the years
 illustrates that an increasing number of journals published an
 above-average proportion of open access articles. In 2022, 25% of hybrid
-journals (n = 2,568) had an open access uptake of 29%, and 6.6% of
-journals (n = 742) provided the majority of their articles under a
+journals (n = 2,576) had an open access uptake of 29%, and 6.6% of
+journals (n = 744) provided the majority of their articles under a
 Creative Commons license in the same year. These journals were, on
-average, smaller (M = 77, SD = 189) than those with an open access share
-below 50% (M = 165, SD = 347). Notable exception of large journals with
+average, smaller (M = 75, SD = 186) than those with an open access share
+below 50% (M = 164, SD = 347). Notable exception of large journals with
 an above-average open access proportion were Physical Review D, a
 high-energy physics journal covered by the SCOAP3 consortium that
 provided open access to 2,341 out of 4,074 articles in 2022, Astronomy
 and Physics (1,396 out of 2,230 articles in 2022 were open access),
 which shifted to a subscribe to open business model for all accepted
 articles as of April 2022, the Journal of Fluid Mechanics (577 of 1,077
-articles in 2022 were open access) and Bioinformatics (405 out of 777
-articles in 2022 were open access), which flipped to full open access as
-of January 2023.
+articles in 2022 were open access) and Bioinformatics ( out of articles
+in 2022 were open access), which flipped to full open access as of
+January 2023.
 
 When comparing the impact of open access trough transformative
 agreements across journals, it shows that for many journals these
@@ -88,9 +88,9 @@ adressing the Nordic countries, achieved an overall open access uptake
 of more than 90% just through transformative agreements. Despite the
 rise in transformative agreements, it is worth noting that other means
 of publishing open access in hybrid journals remained common. In total,
-9,223 journals published open access articles from authors affiliated
+9,153 journals published open access articles from authors affiliated
 with institutions without transformative agreements in place, while
-8,715 journals published at least one open access article through a
+8,780 journals published at least one open access article through a
 transformative agreement in the same year.
 
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
@@ -187,40 +187,40 @@ C%
 Elsevier
 </td>
 <td style="text-align:right;">
-1,946
+1,936
 </td>
 <td style="text-align:left;">
-17.2
+17
 </td>
 <td style="text-align:left;">
-17.2
+17
 </td>
 <td style="text-align:right;">
-2,788,990
+2,770,826
 </td>
 <td style="text-align:left;">
-33.9
+33.8
 </td>
 <td style="text-align:left;">
-33.9
+33.8
 </td>
 <td style="text-align:right;">
-174,479
+172,723
 </td>
 <td style="text-align:left;">
-23.1
+22.9
 </td>
 <td style="text-align:left;">
-23.1
+22.9
 </td>
 <td style="text-align:right;">
-53,617
+60,440
 </td>
 <td style="text-align:left;">
-16.7
+18.3
 </td>
 <td style="text-align:left;">
-16.7
+18.3
 </td>
 </tr>
 <tr>
@@ -228,40 +228,40 @@ Elsevier
 Springer Nature
 </td>
 <td style="text-align:right;">
-2,252
+2,274
 </td>
 <td style="text-align:left;">
-19.9
+20
 </td>
 <td style="text-align:left;">
 37
 </td>
 <td style="text-align:right;">
-1,325,575
+1,330,430
 </td>
 <td style="text-align:left;">
-16.1
+16.2
 </td>
 <td style="text-align:left;">
 50
 </td>
 <td style="text-align:right;">
-174,074
+175,432
 </td>
 <td style="text-align:left;">
-23
+23.3
 </td>
 <td style="text-align:left;">
-46.1
+46.2
 </td>
 <td style="text-align:right;">
-97,872
+100,008
 </td>
 <td style="text-align:left;">
-30.5
+30.3
 </td>
 <td style="text-align:left;">
-47.1
+48.6
 </td>
 </tr>
 <tr>
@@ -269,40 +269,40 @@ Springer Nature
 Wiley
 </td>
 <td style="text-align:right;">
-1,416
+1,410
 </td>
 <td style="text-align:left;">
-12.5
+12.4
 </td>
 <td style="text-align:left;">
-49.5
+49.4
 </td>
 <td style="text-align:right;">
-1,059,147
+1,043,052
 </td>
 <td style="text-align:left;">
-12.9
+12.7
 </td>
 <td style="text-align:left;">
-62.9
+62.7
 </td>
 <td style="text-align:right;">
-154,907
+152,723
 </td>
 <td style="text-align:left;">
-20.5
+20.3
 </td>
 <td style="text-align:left;">
 66.5
 </td>
 <td style="text-align:right;">
-84,538
+83,443
 </td>
 <td style="text-align:left;">
-26.3
+25.3
 </td>
 <td style="text-align:left;">
-73.4
+73.9
 </td>
 </tr>
 <tr>
@@ -310,25 +310,25 @@ Wiley
 Other
 </td>
 <td style="text-align:right;">
-5,727
+5,767
 </td>
 <td style="text-align:left;">
-50.5
-</td>
-<td style="text-align:left;">
-100
-</td>
-<td style="text-align:right;">
-3,056,581
-</td>
-<td style="text-align:left;">
-37.1
+50.6
 </td>
 <td style="text-align:left;">
 100
 </td>
 <td style="text-align:right;">
-253,105
+3,061,337
+</td>
+<td style="text-align:left;">
+37.3
+</td>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:right;">
+252,523
 </td>
 <td style="text-align:left;">
 33.5
@@ -337,10 +337,10 @@ Other
 100
 </td>
 <td style="text-align:right;">
-85,333
+86,294
 </td>
 <td style="text-align:left;">
-26.6
+26.1
 </td>
 <td style="text-align:left;">
 100
@@ -350,16 +350,16 @@ Other
 </table>
 
 Analysing hybrid open access across publishers between 2018 and 2022
-reveals a large market concentration. Although 47 publishers offered
+reveals a large market concentration. Although 48 publishers offered
 transformative agreements, the big three commercial publishers Elsevier,
-Springer Nature, and Wiley, accounted for 50% of total article volume
-published (see Table ). Together, they published 503,460 open access
-articles, representing 67% of the open access articles in hybrid
-journals. Elsevier, Springer Nature, and Wiley made 236,027 articles
+Springer Nature, and Wiley, accounted for 49% of total article volume
+published (see Table ). Together, they published 500,878 open access
+articles, representing 66% of the open access articles in hybrid
+journals. Elsevier, Springer Nature, and Wiley made 243,891 articles
 open access in hybrid journals through transformative agreements,
-resulting in an even larger market share of 73%. However, there are
+resulting in an even larger market share of 74%. However, there are
 differences among the three large publishers. Although Elsevier
-published the largest volume of articles (n = 2,788,990, 34%), it
+published the largest volume of articles (n = 2,770,826, 34%), it
 published a relatively low number of open access articles, including
 those that can be associated with transformative agreements. In
 contrast, Springer Nature and Wiley provided open access to a larger
@@ -369,7 +369,7 @@ shares (23% Springer Nature resp. 23% Wiley). This difference between
 Elsevier on the one hand and Springer Nature and Wiley on the other can
 be attributed to transformative agreements, as the latter made the
 majority of their open access articles available through such deals
-(Springer Nature 56% resp. Wiley 55%).
+(Springer Nature 57% resp. Wiley 55%).
 
 <img src="fig/unnamed-chunk-6-1.png" width="99%" style="display: block; margin: auto;" />
 
@@ -378,14 +378,14 @@ across publishers by year with a focus on open articles enabled by
 transformative agreements. Although all publishers show a general
 long-term trend towards transformative agreements, Figure 2A and 2B
 indicate that, in particular, Wiley’s has experienced a substantial
-increase in its open access share from 5.8% (n = 11,672) in 2018 to 26%
-(n = 54,753) in 2022, rperesenting an 4.5-fold increase. In contrast,
+increase in its open access share from 5.9% (n = 11,628) in 2018 to 26%
+(n = 53,503) in 2022, rperesenting an 4.5-fold increase. In contrast,
 Elsevier’s hybrid journals deonstrated a more modest increase, from 3.3%
-(n = 17,017) in 2018 to 10% (n = 61,620) in 2022, which is a relatively
+(n = 16,872) in 2018 to 10% (n = 60,821) in 2022, which is a relatively
 low open access share compared to the general trend. In 2018, Springer
 Nature had the largest open access proportion among the three publishers
-of 8.4% (n = 19,577), but experienced a relatively slower growth,
-resulting in 18% (n = 52,116) of articles being open access in Springer
+of 8.4% (n = 19,701), but experienced a relatively slower growth,
+resulting in 18% (n = 52,616) of articles being open access in Springer
 Nature hybrid journals in 2022.
 
 The varying degrees of uptake of open access across the three major
@@ -398,13 +398,13 @@ However, these agreements were not included in the data as they
 concluded prior to the start of the transformative agreement data
 collection in June 2021. Nonetheless, the results suggest the importance
 of central agreements for Springer Nature’s hybrid open access business
-over the past five years (Figure 2B). In 2022, 64% (n = 33,211) of open
+over the past five years (Figure 2B). In 2022, 66% (n = 34,725) of open
 access articles in f Springer Nature hybrid journals were enabled
-through transformative agreements. In the same year, 69% (n = 37,923) of
+through transformative agreements. In the same year, 70% (n = 37,316) of
 Wiley’s open access articles could be linked to transformative
 agreements in 2022. In contrast, Elsevier published fewer than half of
-its open access articles through transformative agreements (n = 29,347;
-48%).
+its open access articles through transformative agreements (n = 32,627;
+54%).
 
 The increasing trend towards transformative agreements can be also
 observed at the journal-level (Figure 2). While no substantial
@@ -416,10 +416,10 @@ journals, but extends across the portfolio. In particular, Wiley’s upper
 quantile, which represents the top 25% of journals in terms of the
 proportion of open access articles from transformative agreements,
 increased markedly from 13% in 2020 to 31% in 2022. At the same time,
-the median proportion grew from 7.4% to 19%. It is interesting to note
+the median proportion grew from 7.5% to 19%. It is interesting to note
 that a small but increasing number of journals from these two publishers
 are providing open access to the majority of articles through
-transformative agreements. Wiley recorded 66 and Springer Nature 98
+transformative agreements. Wiley recorded 68 and Springer Nature 102
 hybrid journals with an open access share above 50% that could be solely
 attributed to transformative agreements. Upon inspection, these journals
 were mainly society or local language journals with a small yearly
@@ -523,7 +523,7 @@ C%
 Health Sciences
 </td>
 <td style="text-align:right;">
-2,385
+2,376
 </td>
 <td style="text-align:left;">
 22.5
@@ -532,31 +532,31 @@ Health Sciences
 22.5
 </td>
 <td style="text-align:right;">
-2,687,326
+2,709,906
 </td>
 <td style="text-align:left;">
-27.6
+27.8
 </td>
 <td style="text-align:left;">
-27.6
+27.8
 </td>
 <td style="text-align:right;">
-282,076
+286,592
 </td>
 <td style="text-align:left;">
-27.1
+27.3
 </td>
 <td style="text-align:left;">
-27.1
+27.3
 </td>
 <td style="text-align:right;">
-107,871
+117,746
 </td>
 <td style="text-align:left;">
-24.9
+25
 </td>
 <td style="text-align:left;">
-24.9
+25
 </td>
 </tr>
 <tr>
@@ -564,37 +564,37 @@ Health Sciences
 Life Sciences
 </td>
 <td style="text-align:right;">
-1,424
+1,403
 </td>
 <td style="text-align:left;">
-13.4
+13.3
 </td>
 <td style="text-align:left;">
-35.9
+35.8
 </td>
 <td style="text-align:right;">
-1,492,070
+1,477,808
 </td>
 <td style="text-align:left;">
-15.4
+15.1
 </td>
 <td style="text-align:left;">
-43
+42.9
 </td>
 <td style="text-align:right;">
-195,154
+191,880
 </td>
 <td style="text-align:left;">
-18.7
+18.3
 </td>
 <td style="text-align:left;">
-45.8
+45.6
 </td>
 <td style="text-align:right;">
-66,183
+71,593
 </td>
 <td style="text-align:left;">
-15.3
+15.2
 </td>
 <td style="text-align:left;">
 40.2
@@ -605,40 +605,40 @@ Life Sciences
 Physical Sciences
 </td>
 <td style="text-align:right;">
-2,748
+2,732
 </td>
 <td style="text-align:left;">
 25.9
 </td>
 <td style="text-align:left;">
-61.8
+61.7
 </td>
 <td style="text-align:right;">
-4,277,476
+4,291,833
 </td>
 <td style="text-align:left;">
 44
 </td>
 <td style="text-align:left;">
-87
+86.9
 </td>
 <td style="text-align:right;">
-366,536
+366,794
 </td>
 <td style="text-align:left;">
-35.2
+35
 </td>
 <td style="text-align:left;">
-81
+80.6
 </td>
 <td style="text-align:right;">
-154,952
+167,686
 </td>
 <td style="text-align:left;">
-35.8
+35.6
 </td>
 <td style="text-align:left;">
-76
+75.8
 </td>
 </tr>
 <tr>
@@ -649,34 +649,34 @@ Social Sciences
 4,050
 </td>
 <td style="text-align:left;">
-38.2
+38.3
 </td>
 <td style="text-align:left;">
 100
 </td>
 <td style="text-align:right;">
-1,262,342
+1,280,460
 </td>
 <td style="text-align:left;">
-13
-</td>
-<td style="text-align:left;">
-100
-</td>
-<td style="text-align:right;">
-198,422
-</td>
-<td style="text-align:left;">
-19
+13.1
 </td>
 <td style="text-align:left;">
 100
 </td>
 <td style="text-align:right;">
-103,702
+203,461
 </td>
 <td style="text-align:left;">
-24
+19.4
+</td>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:right;">
+114,190
+</td>
+<td style="text-align:left;">
+24.2
 </td>
 <td style="text-align:left;">
 100

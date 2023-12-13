@@ -42,6 +42,7 @@ library(kableExtra)
 library(hoaddata)
 
 ta_oa_inst <- readr::read_csv(here::here("data", "ta_oa_inst.csv.gz"))
+
 ```
 
 What are the number and proportion of open access articles in hybrid journals published under a transformative agreement?

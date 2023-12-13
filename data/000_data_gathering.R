@@ -29,11 +29,11 @@
 #'  <https://github.com/subugoe/hoaddata/releases/download/v0.2.82/ta_oa_inst.csv.gz>
 #'  
 #'  A version is provided in `data/` folder
-download.file("https://github.com/subugoe/hoaddata/releases/download/v0.2.82/ta_oa_inst.csv.gz",
+download.file("https://github.com/subugoe/hoaddata/releases/download/v0.2.91/ta_oa_inst.csv.gz",
               destfile = here::here("data", "ta_oa_inst.csv.gz")) 
 #' *Raw data for reproducibility*: To improve reproducibility, 
-#' the underying raw data used to compile {hoaddata} 
-#' version v0.2.82 is available via Google BigQuery `hoa-article.hoaddata_nov23`.
+#' the underlying raw data used to compile {hoaddata} 
+#' version v0.2.91 is available via Google BigQuery `hoa-article.hoaddata_nov23`.
 #' 
 #' *Subject classification* data was obtained from Scopus on 4 Oct 2023 and is
 #' stored in `data/jn_scopus_ind_subjects.csv`
