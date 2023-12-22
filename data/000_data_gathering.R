@@ -43,15 +43,15 @@ download.file("https://github.com/subugoe/hoaddata/releases/download/v0.2.91/ta_
 library(bigrquery)
 library(tidyverse)
 
-my_sql <-  "SELECT
-  DISTINCT main.ror_main,
-  country_code
-FROM
-  `hoa-article.hoaddata_nov23.ta_oa_inst` AS main
-INNER JOIN
-  `subugoe-collaborative.openalex.institutions` AS oalex
-ON
-  ror_main = oalex.ror"
+  my_sql <-  "SELECT
+    DISTINCT main.ror_main,
+    country_code
+  FROM
+    `hoa-article.hoaddata_nov23.ta_oa_inst` AS main
+  INNER JOIN
+    `subugoe-collaborative.openalex.institutions` AS oalex
+  ON
+    ror_main = oalex.ror"
 
 tb <- bq_project_query("subugoe-collaborative", my_sql)
 ror_country_codes_raw <- bq_table_download(tb)
