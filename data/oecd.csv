@@ -1,27 +1,38 @@
-"iso3","country"
-"AUS","Australia"
-"AUT","Austria"
-"BEL","Belgium"
-"CAN","Canada"
-"CHE","Switzerland"
-"DEU","Germany"
-"DNK","Denmark"
-"ESP","Spain"
-"FIN","Finland"
-"FRA","France"
-"GBR","Great Britain"
-"GRC","Greece"
-"IRE","Ireland"
-"ISL","Iceland"
-"ITA","Italy"
-"JPN","Japan"
-"KOR","South Korea"
-"LUX","Luxemburg"
-"MEX","Mexico"
-"NLD","Netherlands"
-"NOR","Norway"
-"NZL","New Zealand"
-"PRT","Portugal"
-"SWE","Sweden"
-"TUR","Turkey"
-"USA","United States"
+country,iso3
+Australia,AUS
+Austria,AUT
+Belgium,BEL
+Canada,CAN
+Chile,CHL
+Colombia,COL
+Czech Republic,CZE
+Denmark,DNK
+Estonia,EST
+Finland,FIN
+France,FRA
+Germany,DEU
+Greece,GRC
+Hungary,HUN
+Iceland,ISL
+Ireland,IRL
+Israel,ISR
+Italy,ITA
+Japan,JPN
+Korea,KOR
+Latvia,LVA
+Lithuania,LTU
+Luxembourg,LUX
+Mexico,MEX
+Netherlands,NLD
+New Zealand,NZL
+Norway,NOR
+Poland,POL
+Portugal,PRT
+Slovakia,SVK
+Slovenia,SVN
+Spain,ESP
+Sweden,SWE
+Switzerland,CHE
+Turkey,TUR
+United Kingdom,GBR
+United States,USA

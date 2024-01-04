@@ -135,8 +135,10 @@ oa_ta_plot_df <- ta_df |>
   inner_join(year_all)
   # plot
 oa_ta_plot <- ggplot(oa_ta_plot_df, aes(cr_year, value / n, fill = type, group = type)) +
-  geom_area() +
-  scale_fill_manual(NULL, values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"), labels = c(no_ta = "Other", ta_oa = "Agreement"),  guide = guide_legend(reverse = TRUE)) +
+  geom_area(color = "white",
+            alpha = 0.8,
+            linewidth = 0.3) +
+  scale_fill_manual(NULL, values = c(no_ta = "#b3b3b3", ta_oa = "#56B4E9"), labels = c(no_ta = "Other", ta_oa = "Agreement"),  guide = guide_legend(reverse = TRUE)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels = scales::percent_format(), limits = c(0, .15), breaks = c(0, .05, .1, .15)) +
   theme_minimal() +
   labs(y = "Hybrid OA Uptake", x = NULL) +
@@ -349,9 +351,11 @@ publisher_summary_df <- inner_join(oa_publisher, all_publisher) |>
 
 
 publisher_prop <- ggplot(publisher_summary_df, aes(gsub("^20", "'", as.character(cr_year)), prop, fill = type, group = type)) +
-  geom_area() +
+    geom_area(color = "white",
+            alpha = 0.8,
+            linewidth = 0.3) +
   facet_wrap(~publisher, nrow = 1) +
-  scale_fill_manual("Hybrid OA", values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"), labels = c(no_ta = "Other", ta_oa = "Agreement"),  guide = guide_legend(reverse = TRUE)) +
+  scale_fill_manual("Hybrid OA", values = c(no_ta = "#b3b3b3", ta_oa = "#56B4E9"), labels = c(no_ta = "Other", ta_oa = "Agreement"),  guide = guide_legend(reverse = TRUE)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels = scales::percent_format(),
                      breaks = c(0.05, 0.1, 0.15, 0.2, 0.25)) +
   theme_minimal() +
@@ -656,12 +660,14 @@ subject_trend_plot <- top_level_by_year_oa |>
     fill = type,
     group = type
   )) +
-  geom_area() +
+    geom_area(color = "white",
+            alpha = 0.8,
+            linewidth = 0.3) +
   facet_wrap( ~ top_level, nrow = 1) +
   scale_fill_manual(
     "Hybrid OA",
     values = c(
-      no_ta_fractions = "#b3b3b3a0",
+      no_ta_fractions = "#b3b3b3",
       ta_oa_frac = "#56B4E9"
     ),
     labels = c(no_ta_fractions = "Other", ta_oa_frac = "Agreement"),
@@ -840,10 +846,13 @@ ggplot(top_20_plot_df, aes(
     group = type,
     fill = type
   )) +
-  geom_area(stat = "identity") +
-  scale_fill_manual(
+  geom_area(color = "white",
+            alpha = 0.8,
+            linewidth = 0.3,
+            stat = "identity") +
+scale_fill_manual(
     "Hybrid OA",
-    values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"),
+    values = c(no_ta = "#b3b3b3", ta_oa = "#56B4E9"),
     labels = c(no_ta = "Other", ta_oa = "Agreement"),
     guide = guide_legend(reverse = TRUE)
   ) +
@@ -878,7 +887,6 @@ oecd <- readr::read_csv(here::here("data", "oecd.csv")) |>
   mutate(country_code = countrycode::countrycode(iso3, "iso3c", "iso2c"))
 
 
-
 country_scatter_df <- country_df |>
 #  filter(cr_year == "2022", !is.na(country_code)) |>
   mutate(cat = case_when(
@@ -887,28 +895,73 @@ country_scatter_df <- country_df |>
     .default = "Other"
   ))
 
+```
+
+```{r country_bar_chart_top_20}
+top_20_df <- country_scatter_df |>
+  filter(cr_year == "2022") |>
+  mutate(country_name_fct = forcats::fct_other(country_name, keep = top_20$country_name)) |>
+  mutate(country_name_fct = forcats::fct_relevel(country_name_fct, top_20$country_name, "Other")) |>
+  group_by(country_name_fct, country_code, cat) |>
+  summarise(all = sum(all),
+            oa = sum(oa),
+            ta_oa = sum(ta_oa), .groups = "drop") |>
+  head(20) |>
+  mutate(cat_labels = case_when(
+   cat == "OECD" ~ glue::glue("<span style = 'color: #3fc1c9'>{country_code}</span>"),
+   cat == "BRICS" ~ glue::glue("<span style = 'color: #fc5185'>{country_code}</span>"),
+   cat == "Other" ~ glue::glue("<span style = 'color: #e1e1e1'>{country_code}</span>")
+  )) |>
+  mutate(cat_labels = fct_inorder(cat_labels))
+
+
+top_20_plot <- top_20_df |>
+  mutate(no_ta = oa - ta_oa) |>
+  pivot_longer(
+  cols = c(no_ta, ta_oa),
+  values_to = "value",
+  names_to = "type") |>
+  ggplot(aes(reorder(as.character(country_code),  value), value / sum(value), fill = type)) +
+    geom_bar(stat = "identity", alpha = 0.8, color = "#000000", linewidth = 0.2) +
+   scale_fill_manual(
+    NULL,
+    values = c(no_ta = "#b3b3b3", ta_oa = "#56B4E9"),
+    labels = c(no_ta = "Other", ta_oa = "Agreement"),
+    guide = FALSE) +
+  coord_flip() +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 1L),
+    expand = expansion(mult = c(0, 0.05)),
+    breaks = scales::breaks_extended(4)
+  ) +
+  theme_minimal() +
+#  theme(axis.text.y = ggtext::element_markdown()) +
+  labs(x = NULL, y = "% of Hybrid OA published\nin 2022")
+
+```
+
+```{r}
 country_scatter_22 <- country_scatter_df |>
   filter(cr_year == "2022", !is.na(country_code)) |>
   ggplot(aes(all, oa)) +
-  geom_point(aes(color = cat, size = ta_oa), alpha = 0.8) +
-  scale_color_manual(NULL, values = c("OECD" = "#3fc1c9", "BRICS" = "#fc5185", "Other" = "#e1e1e1")) +
+  geom_point(aes(fill = cat, size = ta_oa), pch = 21, alpha = 0.7) +
+  scale_fill_manual(NULL, values = c("OECD" = "#3fc1c9", "BRICS" = "#fc5185", "Other" = "#e1e1e1")) +
   geom_smooth(aes(all, oa), method=lm) +
   scale_size("TA OA", guide = "none") +
   ggrepel::geom_text_repel(
-    data = filter(country_scatter_df, cr_year == 2022, cat %in% c("OECD", "BRICS"), all > 50000),
+    data = filter(country_scatter_df, cr_year == 2022, cat %in% c("OECD", "BRICS"), ta_oa > 5000 | country_code %in% c("CN", "IN")),
     aes(x = all, y = oa, label = country_code),
-    force = 50,
-    box.padding = 0.5,
-    point.padding = 0.8,
+    force = 5,
+    segment.color = "grey30",
+    segment.size = 0.2,
+    segment.alpha = 0.8,
+    color = "grey10", 
     size = 3,
-    max.iter = 1000000,
-    max.overlaps = Inf,
-    min.segment.length = 0,
-    arrow = arrow(length = unit(0.010, "npc"))) +
+    box.padding = 0.3) +
   scale_x_continuous(labels =  scales::number_format(big.mark = ","), guide = guide_axis(angle = 45)) +
   scale_y_continuous(labels =  scales::number_format(big.mark = ",")) +
   theme_minimal() +
-  labs(x = "Total articles", y = "OA articles in hybrid journals") +
+  labs(x = "Total articles in hybrid journals in 2022", y = "OA articles") +
   theme(legend.position = "top",
     legend.justification = "left",
     legend.direction = "horizontal")
@@ -924,33 +977,40 @@ oecd_stats_df <- oecd_stats |>
   pivot_longer(cols = c(ta_oa, oa_other, closed), names_to = "oa_type") |>
   mutate(cat = ifelse(is.na(cat), "Other", cat))
 
-country_bar <- ggplot(oecd_stats_df, aes(gsub("^20", "'", as.character(cr_year)), value, group = oa_type, fill = oa_type)) +
-  geom_area() +
+country_bar <- ggplot(oecd_stats_df, aes(gsub("^20", "'", as.character(cr_year)), value, group = oa_type, fill = oa_type, color = oa_type)) +
+  geom_area(color = "#000000",
+            alpha = 0.8,
+            linewidth = 0.2) +
+  scale_color_manual(values = colorspace::darken(c(oa_other = "#b3b3b3", ta_oa = "#56B4E9", closed = "#e1e1e1"), 0.3)) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels =  scales::number_format(big.mark = ",")) +
   facet_wrap(~ cat) +
-  scale_fill_manual(NULL, values = c(oa_other = "#b3b3b3a0", ta_oa = "#56B4E9", closed = "grey50"),
-                    labels = c(oa_other = "OA Other", ta_oa = "Agreement", closed = "Closed")) +
+  scale_fill_manual("Hybrid OA", values = c(oa_other = "#b3b3b3", ta_oa = "#56B4E9", closed = "#e1e1e1"),
+                    labels = c(oa_other = "Other", ta_oa = "Agreement", closed = "NA"),  guide = guide_legend(reverse = TRUE)) +
   theme_minimal() +
-  scale_y_continuous(labels =  scales::number_format(big.mark = ",")) +
-  theme_minimal() +
-  labs(x = "Publication year", y = "Total articles") +
-  theme(legend.position = "top",
-        legend.justification = "left",
-        legend.direction = "horizontal")
+  labs(x = "Publication year", y = "Total articles") 
 
 ```
 
-```{r country_patch}
+```{r country_patch, fig.asp=0.9}
 library(patchwork)
 wrap_plots(
-  A = country_scatter_22,
-  B = country_bar,
-  design = "AB",
-  widths = c(0.35, 0.65)
+  A = country_bar,
+  B = country_scatter_22,
+  C = top_20_plot,
+  design = "
+  AC
+  BC",
+#  guides = "collect",
+  widths = c(0.7, 0.3),
+  heights = c(0.5,0.5)
 ) &
   theme(
     panel.grid.minor = element_blank(),
                 panel.border = element_rect(color = "grey50", fill = NA),
-    axis.title=element_text(size = 10)) &
+    axis.title=element_text(size = 10),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.direction = "horizontal") &
     plot_annotation(tag_levels = 'A') 
 ```
 
