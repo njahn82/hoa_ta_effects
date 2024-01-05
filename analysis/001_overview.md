@@ -1,6 +1,6 @@
 Overview
 ================
-2024-01-04
+2024-01-05
 
 What are the number and proportion of open access articles in hybrid
 journals published under a transformative agreement?
