@@ -559,7 +559,6 @@ It is interesting to note that a small but increasing number of journals from th
 Wiley recorded `r publisher_plot_df |>  mutate(prop = value / jn_all)  |> filter(cr_year == "2022", prop > 0.5, type == "ta_oa", publisher == "Wiley") |> nrow()` and Springer Nature `r publisher_plot_df |>  mutate(prop = value / jn_all)  |> filter(cr_year == "2022", prop > 0.5, type == "ta_oa", publisher == "Springer Nature") |> nrow()` hybrid journals with an open access share above 50% that could be solely attributed to transformative agreements. 
 Upon inspection, these journals were mainly society or local language journals with a small yearly article volume.
 
-Next, I focus on the subject distribution.
 
 ```{r subject_data_prep}
 jn_issnl_ajsc <-
@@ -615,7 +614,11 @@ top_level_by_year_oa <- top_level_by_year_oa_frac |>
   inner_join(top_level_by_year_jn)
 ```
 
-Here's a table. I applied fractional counting because of large overlaps.
+Table presents a high-level overview of hybrid open access by AJCS subject area using fractionalised counting to account for journals belonging to more than one category. 
+Between 2018 and 2022, most hybrid journals with at least one open articles could be attributed to the social sciences including the humanities. 
+However, these journals published the fewest number of articles, whereas physical sciences journals recorded most articles (n = , 44%), followed by the health sciences and the life sciences. 
+In terms of open access,  physical sciences journals accounted for more than one third of articles published in the five-years period, followed by the health science, the social sciences and the life sciences.
+
 
 ```{r subject_summary_table}
 jn_fract <- subject_df |>
@@ -706,7 +709,7 @@ subject_trend_plot <- top_level_by_year_oa |>
             linewidth = 0.15) +
   facet_wrap( ~ top_level, nrow = 1) +
   scale_fill_manual(
-    "Hybrid OA",
+    NULL,
     values = c(
       no_ta_fractions = "#b3b3b3a0",
       ta_oa_frac = "#56B4E9"
@@ -764,6 +767,13 @@ subject_box_trend <- subject_df |>
     )
 ```
 
+Figure presents the relative growth of hybrid open access by subject area between 2018-2022. In particular, journals in the social sciences accounted for the strongest growth by from % to %, followed by the Life Science , Health Science and Physical Sciences. 
+This growth in the social sciences can be largely attributed to transformative agreements, which are prevalent across journals in this field. In 2022, 75% , (median).
+However, it is noteworthy that hybrid open access through transformative agreements plays a comparable lesser role in the life sciences and health sciences. 
+In these two subject areas, only about half of the open access articles could be linked to transformative agreements, both overall and on median average across journals.
+In contrast to the Life Science , Health Science, the majority of physical science journals, recorded an above-average open access uptake through transformative agreements. 
+
+
 ```{r subject_panel, fig.asp=0.8}
 library(patchwork)
 design = "E
@@ -789,7 +799,7 @@ wrap_plots(
     plot_annotation(tag_levels = 'A') 
 ```
 
-And here's my country analysis. First top 20
+
 
 ```{r coutnry_data_prep}
 country_all <- hoaddata::jn_aff |>
@@ -1047,6 +1057,87 @@ wrap_plots(
     legend.position = "top", 
     legend.justification = "right") &
     plot_annotation(tag_levels = 'A') 
+```
+
+### Supplements
+
+```{r country_by_publisher}
+country_jn_all <- hoaddata::jn_aff |>
+  filter(!cr_year %in% c(2017, 2023), issn_l != "0027-8424") |>
+  # only with cc
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  distinct(issn_l, cr_year, country_code, articles_total) |>
+  group_by(cr_year, country_code, issn_l) |>
+  summarise(all = sum(articles_total))
+
+country_jn_oa <- hoaddata::cc_articles |>
+  filter(!cr_year %in% c(2017, 2023), issn_l != "0027-8424") |>
+  group_by(cr_year, country_code, issn_l) |>
+  summarise(oa = n_distinct(doi))
+
+country_codes <- readr::read_csv(here::here("data", "ror_country_codes.csv"))
+country_jn_ta <-  ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  left_join(country_codes) |>
+  group_by(cr_year, country_code, issn_l) |>
+  summarise(ta_oa = n_distinct(doi))
+
+country_jn_df <- country_jn_all |>
+  left_join(country_jn_oa, by = c("cr_year", "country_code", "issn_l")) |>
+  left_join(country_jn_ta, by = c("cr_year", "country_code", "issn_l")) |>
+  distinct() |>
+  ungroup() |>
+  mutate(cr_year = as.character(cr_year)) |>
+  mutate(across(c(oa, ta_oa), .fns = ~replace_na(.,0))) |>
+  filter(!is.na(country_code)) |>
+  mutate(
+    country_name = countrycode::countrycode(country_code, origin = "iso2c", destination = "country.name")
+  )
+
+## add publishers
+country_by_publisher_df <- hoaddata::jct_hybrid_jns |>
+  distinct(issn_l, esac_publisher) |>
+  inner_join(country_jn_df, by = "issn_l") |>
+  # Publisher encoding
+   mutate(
+    publisher = case_when(
+      esac_publisher == "Elsevier" ~ "Elsevier",
+      esac_publisher == "Springer Nature" ~ "Springer Nature",
+      esac_publisher == "Wiley" ~ "Wiley",
+      is.character(esac_publisher) ~ "Other"
+    )
+  ) |>
+  mutate(publisher =
+           forcats::fct_relevel(
+             publisher,
+             c("Elsevier", "Springer Nature", "Wiley", "Other") 
+           )) |>
+  # Country encoding
+   mutate(cat = case_when(
+    country_code %in% oecd$country_code ~ "OECD",
+    country_code %in% c("BR", "CN", "IN", "RU", "ZA") ~ "BRICS",
+    .default = "Other"
+  )) |>
+  # Summary
+  group_by(cr_year, publisher, cat) |>
+  summarise(all = sum(all),
+            oa = sum(oa),
+            ta_oa = sum(ta_oa), .groups = "drop") |>
+  mutate(closed = all - oa,
+         oa_other = oa - ta_oa)
+
+# Plot
+country_by_publisher_df |>
+  pivot_longer(cols = c(ta_oa, oa_other, closed), names_to = "oa_type") |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), value, group = oa_type, fill = oa_type)) +
+  geom_area(color = "#000000",
+            linewidth = 0.15) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels =  scales::number_format(big.mark = ",")) +
+  facet_grid(cat ~publisher) +
+  scale_fill_manual("Hybrid OA", values = c(oa_other = "#b3b3b3a0", ta_oa = "#56B4E9", closed = "#e1e1e1a0"),
+                    labels = c(oa_other = "Other", ta_oa = "Agreement", closed = "NA"),  guide = guide_legend(reverse = TRUE)) +
+  theme_minimal() +
+  labs(x = "Publication year", y = "Total articles")
 ```
 
 
