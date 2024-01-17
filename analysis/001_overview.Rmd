@@ -615,8 +615,8 @@ top_level_by_year_oa <- top_level_by_year_oa_frac |>
 ```
 
 Table presents a high-level overview of hybrid open access by AJCS subject area using fractionalised counting to account for journals belonging to more than one category. 
-Between 2018 and 2022, most hybrid journals with at least one open articles could be attributed to the social sciences including the humanities. 
-However, these journals published the fewest number of articles, whereas physical sciences journals recorded most articles (n = , 44%), followed by the health sciences and the life sciences. 
+Between 2018 and 2022, most hybrid journals with at least one open articles could be attributed to the social sciences including the humanities.
+However, these journals published the fewest number of articles, whereas physical sciences journals recorded most articles, followed by the health sciences and the life sciences. 
 In terms of open access,  physical sciences journals accounted for more than one third of articles published in the five-years period, followed by the health science, the social sciences and the life sciences.
 
 
@@ -767,11 +767,14 @@ subject_box_trend <- subject_df |>
     )
 ```
 
-Figure presents the relative growth of hybrid open access by subject area between 2018-2022. In particular, journals in the social sciences accounted for the strongest growth by from % to %, followed by the Life Science , Health Science and Physical Sciences. 
-This growth in the social sciences can be largely attributed to transformative agreements, which are prevalent across journals in this field. In 2022, 75% , (median).
-However, it is noteworthy that hybrid open access through transformative agreements plays a comparable lesser role in the life sciences and health sciences. 
-In these two subject areas, only about half of the open access articles could be linked to transformative agreements, both overall and on median average across journals.
-In contrast to the Life Science , Health Science, the majority of physical science journals, recorded an above-average open access uptake through transformative agreements. 
+Figure presents the relative growth of hybrid open access by subject area between 2018-2022. In particular, Social Sciences and Humanties journals accounted for the strongest growth in the five-years period from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Social Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Social Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(value) |> sum()`), followed by the Life Science from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Life Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Life Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Life Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Life Sciences") |> pull(value) |> sum()`) , Health Science from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Health Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Health Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Health Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Health Sciences") |> pull(value) |> sum()`) and Physical Sciences from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Physical Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Physical Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Physical Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Physical Sciences") |> pull(value) |> sum()`). 
+<!-- In particular, journals in the subject areas recorded large high rate (see supplement)-->
+This growth in the social sciences can be largely attributed to transformative agreements. In 2022, two-third of open access articles (`r subject_ta_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(prop) * 100`%, n = `r subject_ta_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(ta_oa_frac)`) could be attributed to transformative agreements. 
+Figure C shows that this trend is consistent across Social Sciences journals.
+In 2022, 25% of Social Science journals were able to faciliate open access to every fourth article soley through transformative agreements.
+However, it is noteworthy that hybrid open access through transformative agreements played a comparable lesser role in the Life Sciences and Health Sciences. 
+In these two subject areas, only about half of the open access articles can be linked to transformative agreements, both overall and on median average across journals.
+In contrast, the majority of Physical Science Journals, shows an increase of open access through transformative agreements compared to other options to publish open access in hybrid journals.
 
 
 ```{r subject_panel, fig.asp=0.8}

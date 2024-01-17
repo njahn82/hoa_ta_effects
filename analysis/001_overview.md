@@ -1,6 +1,6 @@
 Overview
 ================
-2024-01-16
+2024-01-17
 
 What are the number and proportion of open access articles in hybrid
 journals published under a transformative agreement?
@@ -431,11 +431,11 @@ belonging to more than one category. Between 2018 and 2022, most hybrid
 journals with at least one open articles could be attributed to the
 social sciences including the humanities. However, these journals
 published the fewest number of articles, whereas physical sciences
-journals recorded most articles (n = , 44%), followed by the health
-sciences and the life sciences. In terms of open access, physical
-sciences journals accounted for more than one third of articles
-published in the five-years period, followed by the health science, the
-social sciences and the life sciences.
+journals recorded most articles, followed by the health sciences and the
+life sciences. In terms of open access, physical sciences journals
+accounted for more than one third of articles published in the
+five-years period, followed by the health science, the social sciences
+and the life sciences.
 
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
@@ -694,19 +694,27 @@ Social Sciences
 </table>
 
 Figure presents the relative growth of hybrid open access by subject
-area between 2018-2022. In particular, journals in the social sciences
-accounted for the strongest growth by from % to %, followed by the Life
-Science , Health Science and Physical Sciences. This growth in the
-social sciences can be largely attributed to transformative agreements,
-which are prevalent across journals in this field. In 2022, 75% ,
-(median). However, it is noteworthy that hybrid open access through
-transformative agreements plays a comparable lesser role in the life
-sciences and health sciences. In these two subject areas, only about
-half of the open access articles could be linked to transformative
+area between 2018-2022. In particular, Social Sciences and Humanties
+journals accounted for the strongest growth in the five-years period
+from 6.4% (n = 8,361) to 23% (n = 51,938), followed by the Life Science
+from 7.6% (n = 15,003) to 18% (n = 39,494) , Health Science from 5.3% (n
+= 18,279) to 16% (n = 63,089) and Physical Sciences from 4.5% (n =
+22,364) to 12% (n = 85,428).
+<!-- In particular, journals in the subject areas recorded large high rate (see supplement)-->
+This growth in the social sciences can be largely attributed to
+transformative agreements. In 2022, two-third of open access articles
+(67%, n = 34,759) could be attributed to transformative agreements.
+Figure C shows that this trend is consistent across Social Sciences
+journals. In 2022, 25% of Social Science journals were able to faciliate
+open access to every fourth article soley through transformative
+agreements. However, it is noteworthy that hybrid open access through
+transformative agreements played a comparable lesser role in the Life
+Sciences and Health Sciences. In these two subject areas, only about
+half of the open access articles can be linked to transformative
 agreements, both overall and on median average across journals. In
-contrast to the Life Science , Health Science, the majority of physical
-science journals, recorded an above-average open access uptake through
-transformative agreements.
+contrast, the majority of Physical Science Journals, shows an increase
+of open access through transformative agreements compared to other
+options to publish open access in hybrid journals.
 
 <img src="fig/subject_panel-1.png" width="99%" style="display: block; margin: auto;" />
 
