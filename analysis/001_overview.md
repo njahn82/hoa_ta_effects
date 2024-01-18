@@ -1,9 +1,10 @@
 Overview
 ================
-2024-01-17
+2024-01-18
 
-What are the number and proportion of open access articles in hybrid
-journals published under a transformative agreement?
+# Results
+
+## Overview
 
 Between 2018 and 2022, a total of 11,189 out of 12,857 hybrid journals
 in transformative agreements published at least one open access article
@@ -92,6 +93,8 @@ of publishing open access in hybrid journals remained common. In total,
 with institutions without transformative agreements in place, while
 8,780 journals published at least one open access article through a
 transformative agreement in the same year.
+
+## Publishing market
 
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
@@ -425,6 +428,8 @@ attributed to transformative agreements. Upon inspection, these journals
 were mainly society or local language journals with a small yearly
 article volume.
 
+## Journal subjects
+
 Table presents a high-level overview of hybrid open access by AJCS
 subject area using fractionalised counting to account for journals
 belonging to more than one category. Between 2018 and 2022, most hybrid
@@ -706,22 +711,68 @@ transformative agreements. In 2022, two-third of open access articles
 (67%, n = 34,759) could be attributed to transformative agreements.
 Figure C shows that this trend is consistent across Social Sciences
 journals. In 2022, 25% of Social Science journals were able to faciliate
-open access to every fourth article soley through transformative
-agreements. However, it is noteworthy that hybrid open access through
-transformative agreements played a comparable lesser role in the Life
-Sciences and Health Sciences. In these two subject areas, only about
-half of the open access articles can be linked to transformative
-agreements, both overall and on median average across journals. In
-contrast, the majority of Physical Science Journals, shows an increase
-of open access through transformative agreements compared to other
-options to publish open access in hybrid journals.
+open access to at least every fourth article soley through
+transformative agreements. However, it is noteworthy that hybrid open
+access through transformative agreements played a comparable lesser role
+in the Life Sciences and Health Sciences. In these two subject areas,
+only about half of the open access articles can be linked to
+transformative agreements, both overall and on median average across
+journals. In contrast, the majority of Physical Science Journals, shows
+an increase of open access through transformative agreements compared to
+other options to publish open access in hybrid journals.
 
 <img src="fig/subject_panel-1.png" width="99%" style="display: block; margin: auto;" />
 
-<img src="fig/country_plot-1.png" width="99%" style="display: block; margin: auto;" />
+## Comparing countries
 
-here a scatterplot and a classifciation of oecd / brics / other. first,
-the scatterplot 2022!
+When analysing the country affiliations of first authors, open access
+publishing in hybrid journals including through transformative
+agreements was almost exclusively prevalent in western economies between
+2018 and 2022. To highlight this trend, Figure 2A groups the country
+affiliation according to its membership in the intergovernmental
+organisations BRICS as of 2022, comprising the five countries Brazil,
+Russia, India, China and South Africa, and in the Organisation for
+Economic Co-operation and Development (OECD), consisting of 38
+membership countries. The residual category “Other” comprises the
+remaining countries. Together, OECD countries recorded 602,050 open
+access articles in hybrid journals between 2018 and 2022, representing
+81% of the investigated open access articles in hybrid journals in the
+five-year period. The gap between OECD and the other countries is even
+more pronounced when it comes to open access through transformative
+agreements. Overall, 310,712 of 328,957 open access articles were linked
+to an agreement, representing 94%. Focusing on publications from first
+authors affiliated with institutions based in an OECD country reveals an
+absolute and relative growth of hybrid open access. In the five-year
+period, the proportion of open access in hybrid journals increased from
+6.1% in 2018 to 26% in 2022. In contrast, BRICS recorded low growth
+rates, from 1.6% in 2018 to 3.7% in 2022.
+
+It is worth noting that while the number of open access articles
+increased across OECD countries, the overall publication output
+decreased sharply, dropping to xxxx in 2022 from a peak of xxx articles
+in 2020. In stark contrast, the number of articles published in hybrid
+journals by first authors affiliated with institutions from BRICS
+countries increased steadily over the years. Upon inspection, this trend
+can be observed across publishers, although the shift towards BRICS is
+particularly prevalent across Elsevier’s hybrid journal portfolio. Upon
+closer examination, this trend can be observed across publishers,
+although the shift towards BRICS is particularly evident in Elsevier’s
+hybrid journal portfolio.
+
+figure b compares oa articles with total articles in hybrid journals in
+the final year of your study. Trend line indicates it highligths that in
+2022, china has been the most prodi´cutive country, followed by the usa
+and india. it shows taht mainly the west and european coutrnie, in
+particular above a
+
+in tersm of market share the uk alone contrib by . surpringsly, with not
+conevrage ndd. countries with gugh rates of ar ein particular
+nethrrlnacd sewden and suisse. the former two already introduced long
+ihsitrory of
+
+sCountries wirh compatrabel large open access
+
+it furthermore highligths oecd countries an
 
 <img src="fig/country_patch-1.png" width="99%" style="display: block; margin: auto;" />
 
