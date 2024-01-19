@@ -1,6 +1,6 @@
 Overview
 ================
-2024-01-18
+2024-01-19
 
 # Results
 
@@ -757,27 +757,44 @@ can be observed across publishers, although the shift towards BRICS is
 particularly prevalent across Elsevier’s hybrid journal portfolio. Upon
 closer examination, this trend can be observed across publishers,
 although the shift towards BRICS is particularly evident in Elsevier’s
-hybrid journal portfolio.
+hybrid journal portfolio, in particular with regard to articles
+published in Physical Sciences journals (see Supplement). While OECD
+publication output in Elsevier’s Physical Sciences journals declined
+from 112,822 articles in 2018 to 103,766 in 2022, BRICS output increased
+from 104,654 to 171,713 in the same five-year period. But also the OECD
+publication output in Health Science Journals and Life Science journals
+stagnated across after a peak in 2020.
 
-figure b compares oa articles with total articles in hybrid journals in
-the final year of your study. Trend line indicates it highligths that in
-2022, china has been the most prodi´cutive country, followed by the usa
-and india. it shows taht mainly the west and european coutrnie, in
-particular above a
+Figure B and C presents a breakdown by countries for the publication
+year 2022. Figure B compares total publication output with the number of
+open access articles published during the final year investigated,
+highlighting that in 2022, china has been the most productive country,
+followed by the USA and India. However, West and Nord European countries
+like recorded a comparable high number of open access articles, mainly
+due to transformative agreements. Nonetheless, China and the US recorded
+large open access market shares of xxx resp. xxx, although country-wide
+transformative agreements were not implemented.
 
-in tersm of market share the uk alone contrib by . surpringsly, with not
-conevrage ndd. countries with gugh rates of ar ein particular
-nethrrlnacd sewden and suisse. the former two already introduced long
-ihsitrory of
-
-sCountries wirh compatrabel large open access
-
-it furthermore highligths oecd countries an
+Figure highlights the development of hybrid open access and shows the
+top 20 most productive countries in terms of articles published in
+hybrid journals included in transformative agreements between 2018 and
+2022. In particular, the UK, Netherlands, and Sweden were hybrid affin,
+wheras in othe rcountries like Gemrany a large grwoth could be observed
+from 2020 obwards where the large DEAL agreements have becpome in place.
+The high open access rates in Netherlands ,s witzerlands, and Sweden
+conforms the braod implementation of agreemnts across a lrge number
+publishers where whereas in othe rcountries, agreements were limited to
+a fewer number of publishers. Take for isntance germany, were a deal
+with Elsevier was not in place in 2022. But also publication limits or
+of elegible inistutions and article types might contribute to the fact
+taht even in countries with a broad impleemntation, 100% is not reached.
+Again, the figure points to countries with low hybrid open access, in
+particular non OECD countries.
 
 <img src="fig/country_patch-1.png" width="99%" style="display: block; margin: auto;" />
 
 ### Supplements
 
-<img src="fig/country_by_publisher-1.png" width="99%" style="display: block; margin: auto;" />
+<img src="fig/unnamed-chunk-10-1.png" width="99%" style="display: block; margin: auto;" />
 
 [^1]: <https://web.archive.org/web/20180414062853id_/http://www.liber2015.org.uk/wp-content/uploads/2015/03/Springer-Compact.pdf>
