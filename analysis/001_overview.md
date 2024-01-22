@@ -1,6 +1,6 @@
 Overview
 ================
-2024-01-19
+2024-01-22
 
 # Results
 
@@ -16,25 +16,27 @@ contributed 328,957 open access articles to the total.
 
 <div class="figure" style="text-align: center">
 
-<img src="fig/unnamed-chunk-2-1.png" alt="Growth of open access in hybrid journals through transformative agreements between 2018 and 2022 per publication year. The blue areas represent open access through transformative agreements, as indicated by the affiliation with institutions that had a corresponding transformative agreement in place at the time of publication (according to the first author affiliation data in OpenAlex matched with journal and institutional data from cOAlition S Transformative Agreements Public Data). (A) Proportion of open access articles in hybrid journals per year (according to the total number of articles indexed in Crossref). (B) Percentage of hybrid open access via agreements per year. Boxplots show the proportion of open access articles by individual hybrid journals (C) and individual open access uptake rates by individual hybrid journals and open access funding (D) per publication year. Horizontal lines denote lower quartile, median, and upper quartile, with whiskers extending to ±1.5 of interquartile range. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available at the time of this study." width="99%" />
+<img src="fig/unnamed-chunk-2-1.png" alt="Relative growth of open access in hybrid journals through transformative agreements between 2018 and 2022 per publication year  according to the total number of articles indexed in Crossref. The blue areas represent open access through transformative agreements, as indicated by the affiliation with institutions that had a corresponding transformative agreement in place at the time of publication according to the first author affiliation data in OpenAlex matched with journal and institutional data from cOAlition S Transformative Agreements Public Data. Grey areas depict open access articles where no link to an agreement could be established. (A) Proportion of open access articles in hybrid journals per year. (B) Percentage of hybrid open access via agreements per year. Boxplots show the proportion of open access articles by individual hybrid journals (C) and individual open access uptake rates by individual hybrid journals and open access funding (D) per publication year. Horizontal lines correspond to the lower quartile, median, and upper quartile, with whiskers extending to ±1.5 of interquartile range. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available at the time of this study." width="99%" />
 <p class="caption">
-Growth of open access in hybrid journals through transformative
-agreements between 2018 and 2022 per publication year. The blue areas
-represent open access through transformative agreements, as indicated by
-the affiliation with institutions that had a corresponding
-transformative agreement in place at the time of publication (according
-to the first author affiliation data in OpenAlex matched with journal
-and institutional data from cOAlition S Transformative Agreements Public
-Data). (A) Proportion of open access articles in hybrid journals per
-year (according to the total number of articles indexed in Crossref).
-(B) Percentage of hybrid open access via agreements per year. Boxplots
-show the proportion of open access articles by individual hybrid
-journals (C) and individual open access uptake rates by individual
-hybrid journals and open access funding (D) per publication year.
-Horizontal lines denote lower quartile, median, and upper quartile, with
-whiskers extending to ±1.5 of interquartile range. The individual
-outliers are not shown. Note that data on transformative agreements
-ending before June 2021 were not available at the time of this study.
+Relative growth of open access in hybrid journals through transformative
+agreements between 2018 and 2022 per publication year according to the
+total number of articles indexed in Crossref. The blue areas represent
+open access through transformative agreements, as indicated by the
+affiliation with institutions that had a corresponding transformative
+agreement in place at the time of publication according to the first
+author affiliation data in OpenAlex matched with journal and
+institutional data from cOAlition S Transformative Agreements Public
+Data. Grey areas depict open access articles where no link to an
+agreement could be established. (A) Proportion of open access articles
+in hybrid journals per year. (B) Percentage of hybrid open access via
+agreements per year. Boxplots show the proportion of open access
+articles by individual hybrid journals (C) and individual open access
+uptake rates by individual hybrid journals and open access funding (D)
+per publication year. Horizontal lines correspond to the lower quartile,
+median, and upper quartile, with whiskers extending to ±1.5 of
+interquartile range. The individual outliers are not shown. Note that
+data on transformative agreements ending before June 2021 were not
+available at the time of this study.
 </p>
 
 </div>
@@ -708,90 +710,106 @@ from 7.6% (n = 15,003) to 18% (n = 39,494) , Health Science from 5.3% (n
 <!-- In particular, journals in the subject areas recorded large high rate (see supplement)-->
 This growth in the social sciences can be largely attributed to
 transformative agreements. In 2022, two-third of open access articles
-(67%, n = 34,759) could be attributed to transformative agreements.
-Figure C shows that this trend is consistent across Social Sciences
-journals. In 2022, 25% of Social Science journals were able to faciliate
-open access to at least every fourth article soley through
-transformative agreements. However, it is noteworthy that hybrid open
-access through transformative agreements played a comparable lesser role
-in the Life Sciences and Health Sciences. In these two subject areas,
-only about half of the open access articles can be linked to
-transformative agreements, both overall and on median average across
-journals. In contrast, the majority of Physical Science Journals, shows
-an increase of open access through transformative agreements compared to
-other options to publish open access in hybrid journals.
+(67%, n = 34,759) were published by first authors affiliated with
+participating institutions. Figure C shows that this trend is consistent
+across Social Sciences journals. In 2022, 25% of Social Science journals
+provided open access to at least every fourth article exclusively
+through transformative agreements. However, hybrid open access through
+transformative agreements played a comparable lesser role in the Life
+Sciences and Health Sciences. In these two subject areas, only about
+half of the open access articles can be linked to these agreements, both
+overall and on median average across journals. In contrast, the majority
+of Physical Science Journals, shows an increase of open access through
+transformative agreements compared to other options to publish open
+access in hybrid journals.
 
 <img src="fig/subject_panel-1.png" width="99%" style="display: block; margin: auto;" />
 
 ## Comparing countries
 
-When analysing the country affiliations of first authors, open access
-publishing in hybrid journals including through transformative
-agreements was almost exclusively prevalent in western economies between
-2018 and 2022. To highlight this trend, Figure 2A groups the country
-affiliation according to its membership in the intergovernmental
-organisations BRICS as of 2022, comprising the five countries Brazil,
-Russia, India, China and South Africa, and in the Organisation for
-Economic Co-operation and Development (OECD), consisting of 38
-membership countries. The residual category “Other” comprises the
-remaining countries. Together, OECD countries recorded 602,050 open
-access articles in hybrid journals between 2018 and 2022, representing
-81% of the investigated open access articles in hybrid journals in the
-five-year period. The gap between OECD and the other countries is even
-more pronounced when it comes to open access through transformative
-agreements. Overall, 310,712 of 328,957 open access articles were linked
-to an agreement, representing 94%. Focusing on publications from first
-authors affiliated with institutions based in an OECD country reveals an
-absolute and relative growth of hybrid open access. In the five-year
-period, the proportion of open access in hybrid journals increased from
-6.1% in 2018 to 26% in 2022. In contrast, BRICS recorded low growth
-rates, from 1.6% in 2018 to 3.7% in 2022.
+Between 2018 and 2022, Western economies almost exclusively dominated
+hybrid open access publishing through transformative agreements. During
+this period, first-authors affiliated with institutions from
+Organisation for Economic Co-operation and Development (OECD) member
+countries published 602,050 open access articles in hybrid journals,
+representing 81% of the investigated open access articles. This
+disparity between OECD nations and other countries becomes even more
+evident when considering open access through transformative agreements,
+as 310,712 of 328,957, or 94% of open access articles were associated
+with such agreements.
 
-It is worth noting that while the number of open access articles
-increased across OECD countries, the overall publication output
-decreased sharply, dropping to xxxx in 2022 from a peak of xxx articles
-in 2020. In stark contrast, the number of articles published in hybrid
-journals by first authors affiliated with institutions from BRICS
-countries increased steadily over the years. Upon inspection, this trend
-can be observed across publishers, although the shift towards BRICS is
-particularly prevalent across Elsevier’s hybrid journal portfolio. Upon
-closer examination, this trend can be observed across publishers,
+<img src="fig/country_patch-1.png" width="99%" style="display: block; margin: auto;" />
+
+Figure 2A shows the development of hybrid open access publishing by
+countries, comparing the OECD area with the BRICS, an intergovernmental
+organisation, which comprised the countries Brazil, Russia, India, China
+and South Africa in 2022. The residual category “Other” includes the
+remaining countries. From 2018 to 2022, the proportion of open access in
+hybrid journals increased from 6.1% in 2018 to 26% in 2022. On the other
+hand, BRICS recorded an low uptake, from 1.6% in 2018 to 3.7% in 2022.  
+Despite rise of open access across OECD countries, the overall
+publication output decreased sharply, dropping to 786,903 in 2022 after
+peaking 892,197 articles in 2020. In stark contrast, the number of
+articles published in hybrid journals by first authors affiliated with
+institutions from BRICS countries increased steadily over the years,
+more than doubling from 356,632 in 2018 to 786,903 in 2022. Upon closer
+examination, this trend can be observed across all big three publishers,
 although the shift towards BRICS is particularly evident in Elsevier’s
 hybrid journal portfolio, in particular with regard to articles
 published in Physical Sciences journals (see Supplement). While OECD
 publication output in Elsevier’s Physical Sciences journals declined
 from 112,822 articles in 2018 to 103,766 in 2022, BRICS output increased
-from 104,654 to 171,713 in the same five-year period. But also the OECD
+from 104,654 to 171,713 in the same five-year period. Furthermore, OECD
 publication output in Health Science Journals and Life Science journals
-stagnated across after a peak in 2020.
+stagnated across the investigated hybrid journal portfolios after a peak
+in 2020.
 
-Figure B and C presents a breakdown by countries for the publication
-year 2022. Figure B compares total publication output with the number of
-open access articles published during the final year investigated,
-highlighting that in 2022, china has been the most productive country,
-followed by the USA and India. However, West and Nord European countries
-like recorded a comparable high number of open access articles, mainly
-due to transformative agreements. Nonetheless, China and the US recorded
-large open access market shares of xxx resp. xxx, although country-wide
-transformative agreements were not implemented.
+To illustrate the situation in 2022, Figure B compares total publication
+output with the number of open access articles. With 391,530 articles,
+China was the most productive country, followed by the United States
+(268,965 articles) and India (87,428 articles). In contrast, West and
+Nord European countries published a considerable high number of open
+access articles, mainly due to transformative agreements. Particularly,
+Germany, Great Britain, the Netherlands, Sweden, Switzerland and Spain
+recorded an above-average open access share as indicated by the linear
+trend line. As represented by the point size, as well as it can been
+seen in Figure C, transformative agreements contributed to this market
+position of these countries. Interestingly, the United States had a
+notable open access market share of 15%, although transformative
+agreements contributed to a lesser extent. Similarly, China’s open
+access market share of 7.2 in 2022 was comparable to that of the
+Netherlands, which was (7.1%,).
 
-Figure highlights the development of hybrid open access and shows the
-top 20 most productive countries in terms of articles published in
-hybrid journals included in transformative agreements between 2018 and
-2022. In particular, the UK, Netherlands, and Sweden were hybrid affin,
-wheras in othe rcountries like Gemrany a large grwoth could be observed
-from 2020 obwards where the large DEAL agreements have becpome in place.
-The high open access rates in Netherlands ,s witzerlands, and Sweden
-conforms the braod implementation of agreemnts across a lrge number
-publishers where whereas in othe rcountries, agreements were limited to
-a fewer number of publishers. Take for isntance germany, were a deal
-with Elsevier was not in place in 2022. But also publication limits or
-of elegible inistutions and article types might contribute to the fact
-taht even in countries with a broad impleemntation, 100% is not reached.
-Again, the figure points to countries with low hybrid open access, in
-particular non OECD countries.
+<img src="fig/country_top_20_plot-1.png" width="99%" style="display: block; margin: auto;" />
 
-<img src="fig/country_patch-1.png" width="99%" style="display: block; margin: auto;" />
+Figure illustrates the development of hybrid open access from 2018 to
+2022, highlighting the top 20 most productive countries in terms of
+articles published in hybrid journals that were included in
+transformative agreements over the five-year period. Notably, The
+Netherlands (27%), Sweden (24%), Poland (17%) and Great Britain (17%))
+exhibited a relatively high level of uptake in 2018 which continued to
+increase in the following years. In 2022, Sweden had the highest
+proportion of open-access articles relative to its publication output
+(78%), followed by the Netherlands (67%) and Switzerland (57%), with
+these countries benefiting from transformative agreements. In Germany,
+however, hybrid open access only began to increase from 2019 onwards
+after the successful negotiation of nationwide agreements with Wiley
+(July 2019) and Springer Nature (January 2020). Prior to this, only a
+few organisations had agreements in place, for the example the Max
+Planck Society with Springer Compact.
+
+Since 2021, there has been a general trend towards hybrid open access
+among many western countries, primarily driven by transformative
+agreements. However, proliferation of transformative agreements differe
+across these countries. For instance, Germany successfully negotiated an
+agreement with Elsevier not until 2023. Additionally, publication limits
+or eligibility criteria for institutions and article types may explain
+why even countries with widespread agreement implementation do not
+achieve 100% hybrid open access. Interestingly, in Japan and the US
+other options than transformative agreements were the main driver for
+the increase in hybrid open access. Once again, the graph highlights
+countries with low hybrid open access, particularly non-OECD countries,
+where only a few or no agreements were in place.
 
 ### Supplements
 
