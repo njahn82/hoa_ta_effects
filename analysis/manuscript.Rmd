@@ -1,0 +1,1270 @@
+---
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    template: apa6.sty
+csl: apa.csl
+bibliography: references.bib
+---
+
+
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  echo = FALSE,
+  fig.width = 6,
+  fig.asp = 0.618,
+  out.width = "99%",
+  fig.align = "center",
+  dpi = 300,
+  dev = c("png", "pdf"),
+  fig.path = "fig/"
+)
+options(scipen = 999, digits = 2)
+knitr::knit_hooks$set(
+  inline = function(x) {
+    if (is.numeric(x)) {
+      return(prettyNum(x, big.mark = ","))
+    } else{
+      return(x)
+    }
+  }
+)
+```
+
+```{r dependencies}
+library(tidyverse, warn.conflicts = FALSE)
+library(kableExtra)
+```
+
+```{r data, cache=TRUE}
+library(hoaddata)
+
+ta_oa_inst <- readr::read_csv(here::here("data", "ta_oa_inst.csv.gz"))
+
+```
+# Introduction
+
+# Methods and data
+
+This study combines data from multiple publicly available data sources as visualised in Figure 1. 
+Data gathering involved transformative agreement data retrieved from the cOAlition S Journal Checker Tool, which provided information about journal portfolios and participating institutions. 
+After identification of hybrid journals, Crossref served as the primary data source for article-level metadata including Creative Commons (CC) license information to determine open access articles on publisher websites.
+OpenAlex provided first author affiliation metadata that were subsequently linked to the transformative agreement data to identify open access articles published through these agreements. 
+In total, the compiled data set consists of `r hoaddata::jn_ind |> filter(!cr_year %in% c("2017", "2023")) |> distinct(issn_l, cr_year, jn_all) |> pull(jn_all) |> sum()` articles published in `r hoaddata::jn_ind |> filter(!cr_year %in% c("2017", "2023")) |> distinct(issn_l) |> nrow()` hybrid journals between 2018 and 2022. 
+
+```{r data_workflow, echo=FALSE, fig.cap="Data collection workflow to obtain article-level transformative agreement data"}
+knitr::include_graphics(here::here("analysis", "data_collection_workflow.pdf"))
+```
+
+## Transformative agreement and hybrid journal data
+
+```{r journal_oa_exclusion}
+oa_journal_status <- readr::read_csv(here::here("data", "oa_journal_status.csv")) 
+
+# OA journal total
+n_oa_journals <- oa_journal_status %>%
+  filter(openalex == TRUE | doaj == TRUE | bielefeld == TRUE) %>% 
+  distinct(issn_l) %>%
+  nrow()
+# By source
+#
+# GOLD OA
+bielefeld <- oa_journal_status %>%
+  filter(bielefeld == TRUE) %>% 
+  distinct(issn_l)  %>%
+  pull()
+# DOAJ
+doaj <- oa_journal_status %>%
+  filter(doaj == TRUE) %>% 
+  distinct(issn_l) %>%
+  pull()
+# OpenAlex venue
+openalex <- oa_journal_status %>%
+  filter(openalex == TRUE) %>% 
+  distinct(issn_l) %>%
+  pull()
+my_venn <- list(`GOLD OA` = bielefeld, `DOAJ` = doaj, `OpenAlex` = openalex)
+
+p <-
+  ggvenn::ggvenn(
+    my_venn,
+    fill_color = c("grey55",
+          "steelblue2",
+          "lightsalmon"),
+    digits = 0,
+    text_color = "black",
+    text_size = 3,
+    set_name_size = 4
+  )
+```
+
+Data gathering started with obtaining journals included in transformative agreements using the cOAlition S’ Journal Checker Tool publicly available Transformative Agreement Data dump. 
+The dump consisted of multiple online Google spreadsheets where each data file represented one agreement listed in the ESAC Transformative Agreement Registry. 
+Each file comprised information about journals and institutions involved per agreement. 
+Because the Journal Checker Tool only collected data about active transformative agreements, four different snapshots were used for this analysis:the archived version from July 2021, July 2022, May 2023 and the most current dump downloaded on 11 December 2022. 
+This ensured that transformative agreements, which ended in 2021, were also included in the analysis. 
+Agreements ending before 2021 could not be obtained.
+Overall, the combined Transformative Agreement Data dumps contained `r  length(unique(hoaddata::jct_hybrid_jns$esac_id))` agreements.
+
+The Transformative Agreement Data dumps linked agreements to journals represented by journal names and ISSNs. 
+After mapping ISSN variants to the corresponding linking ISSN (ISSN-L) as provided by The ISSN International Centre.
+Journals were associated to publishers using the ESAC ID, a unique identifier for transformative agreements in the ESAC Transformative Agreement Registry.
+
+Because transformative agreements can include both full open access and hybrid journals, journal data were complemented with information about a journal's open access status using multiple sources: the Directory of Open Access Journals (DOAJ) downloaded on 4 October 2022, OpenAlex (September 2022 dump) and the the Bielefeld list of GOLD OA journals. 
+In total, `r n_oa_journals` full open access journals were excluded.
+Figure shows a substantial overlap between the three data sources of
+`r round(length(unique(Reduce(intersect, my_venn))) / length(unique(Reduce(union, my_venn)))* 100,0)`%.
+However, combining different data sources considerably extended the journal matching to exclude full open access journals from transformative agreements.
+The Gold OA journals dataset alone adds `r length(unique(Reduce(setdiff, my_venn)))` journals, while the DOAJ comprised `r length(setdiff(my_venn$DOAJ, union(my_venn[["GOLD OA"]], my_venn$OpenAlex)))` full open access journals not listed in either of the other two sources. 
+These full open access journals were mostly launched in 2022.
+
+## Article metadata
+
+## Data Analysis
+
+# Results
+
+```{r overview_data_prep}
+ta_oa_growth <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  group_by(cr_year) |>
+  summarise(ta_oa = n_distinct(doi))
+hybrid_oa_growth <- hoaddata::cc_articles |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  group_by(cr_year) |>
+  summarise(oa_all = n_distinct(doi))
+ta_df <- inner_join(ta_oa_growth, hybrid_oa_growth) |>
+  mutate(ta_oa_prop = ta_oa / oa_all) |>
+  mutate(no_ta = oa_all - ta_oa, 
+         no_ta_prop = 1 - ta_oa_prop) |>
+  mutate(cr_year = as.factor(cr_year))
+# year all
+year_all <-
+  hoaddata::jn_ind |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  distinct(issn_l, cr_year, jn_all) |> 
+  group_by(cr_year) |> 
+  summarise(n = sum(jn_all))
+
+## Hybrid Journals
+ n_hybrid_jns_all <- hoaddata::jn_ind |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  distinct(issn_l) |>
+   nrow()
+ 
+## Hybrid Journals with at least one OA article
+n_hybrid_jns <- hoaddata::cc_articles |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  group_by(issn_l) |>
+  summarise(oa_all = n_distinct(doi)) |> 
+  nrow()
+
+## Hybrid Journals with at least one OA article
+n_ta_jns <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  distinct(issn_l) |>
+  nrow()
+
+## Hybrid Journals with at least one TA-OA article
+n_tas_with_oa <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  distinct(ta_journal_portfolio) |>
+  nrow()
+
+## Open access volume
+n_oa <-  hoaddata::cc_articles |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  distinct(doi) |>
+  nrow()
+
+## Total
+n_total <- hoaddata::jn_ind |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  distinct(issn_l, cr_year, jn_all) |>
+  pull(jn_all) |>
+  sum()
+
+## TA total
+n_tas_with_oa <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  distinct(ta_journal_portfolio) |>
+  nrow()
+
+## TA article total
+n_ta_oa <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  distinct(doi) |>
+  nrow()
+```
+
+## Overview
+
+Between 2018 and 2022, a total of `r n_hybrid_jns` out of `r n_hybrid_jns_all` hybrid journals in transformative agreements published at least one open access article under a Creative Commons license.
+During this period, these hybrid journals provided open access to `r n_oa` out of `r n_total` articles, representing a five-year open access proportion of `r n_oa / n_total * 100`%.
+Authors who could make use of transformative agreements at the time of publication contributed `r n_ta_oa` open access articles to the total.
+
+
+```{r area_oa_over_the_years}
+oa_ta_plot_df <- ta_df |>
+  select(cr_year, ta_oa, no_ta) |>
+  pivot_longer(cols = c(ta_oa, no_ta), names_to = "type", values_to = "value") |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
+  inner_join(year_all)
+  # plot
+oa_ta_plot <-
+  ggplot(oa_ta_plot_df, aes(cr_year, value / n, fill = type, group = type)) +
+  geom_area(color = "#000000",
+            linewidth = 0.15) +
+  scale_fill_manual(
+    NULL,
+    values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"),
+    labels = c(no_ta = "Other", ta_oa = "Agreement"),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::percent_format(),
+    limits = c(0, .15),
+    breaks = c(0, .05, .1, .15)
+  ) +
+  theme_minimal() +
+  labs(y = "Hybrid OA Uptake", x = NULL) +
+  theme(
+    legend.position = "top",
+    legend.justification = "left",
+    axis.text.x = element_blank()
+  )
+```
+
+```{r ta_share_plot}
+ta_share_plot <- ta_df |>
+  select(cr_year, ta_oa_prop, no_ta_prop) |>
+  pivot_longer(cols = c(ta_oa_prop, no_ta_prop), names_to = "type", values_to = "value") |>
+  filter(!cr_year %in%  c("2017", "2023"), type == "ta_oa_prop") |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), value, group = 1)) +
+  geom_bar(stat = "identity", fill = "#56B4E9", color = "#000000", linewidth = 0.15) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), breaks = c(0, 0.25, 0.5),
+                     labels = scales::percent) +
+  theme_minimal() +
+  labs(y = "Percentage\nof Hybrid OA\nvia Agreement", x = "Publication Year")
+```
+
+```{r journal_boxplot}
+jn_hybrid_oa_growth <- hoaddata::cc_articles |>
+  filter(issn_l != "0027-8424") |>
+  group_by(cr_year, issn_l) |>
+  summarise(oa_all = n_distinct(doi)) |>
+  mutate(cr_year = factor(cr_year))
+# year all
+jn_year_all <-
+  hoaddata::jn_ind |>
+  filter(issn_l != "0027-8424") |>
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  distinct(issn_l, cr_year, jn_all) |> 
+  group_by(cr_year, issn_l) |> 
+  summarise(n = sum(jn_all))
+
+oa_jn_box_df <- left_join(jn_hybrid_oa_growth, jn_year_all) |>
+  mutate(prop = oa_all / n) |> 
+  filter(!cr_year %in%  c("2017", "2023"))
+oa_jn_box <- oa_jn_box_df |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), prop)) +
+  geom_boxplot(outlier.shape = NA) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
+                     labels = scales::percent) +
+  coord_cartesian(ylim = c(0,0.65)) +
+  theme_minimal() +
+  labs(y = "OA Uptake per Hybrid Journal", x = "Publication Year")
+```
+
+```{r}
+ta_oa_growth <- ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424") |>
+  group_by(cr_year, issn_l) |>
+  summarise(ta_oa = n_distinct(doi))
+hybrid_oa_growth <- hoaddata::cc_articles |>
+  filter(issn_l != "0027-8424") |>
+  group_by(cr_year, issn_l) |>
+  summarise(oa_all = n_distinct(doi))
+ta_df <- left_join(hybrid_oa_growth, ta_oa_growth) |>
+  mutate(across(everything(), .fns = ~replace_na(.,0))) |>
+  mutate(no_ta = oa_all - ta_oa) |>
+  mutate(cr_year = as.factor(cr_year))
+
+summary_all <- inner_join(ta_df, jn_year_all, by = c("cr_year", "issn_l")) |>
+  mutate(prop_ta_oa = ta_oa / n,
+         prop_no_ta = no_ta / n) |>
+  ungroup() |>
+  distinct(cr_year, issn_l, prop_ta_oa, prop_no_ta) |>
+  pivot_longer(cols = c(prop_ta_oa, prop_no_ta))
+# plot
+box_ta_prop <- summary_all |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
+  # With at least one OA article
+  filter(value > 0) |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), value, fill = name)) +
+  geom_boxplot(outlier.shape = NA, varwidth = TRUE) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
+                     labels = scales::percent) +
+  coord_cartesian(ylim = c(0,0.65)) +
+  scale_fill_manual(NULL, values = c(prop_no_ta = "#b3b3b3a0", prop_ta_oa = "#56B4E9"), labels = c(prop_no_ta = "Other", prop_ta_oa = "Agreement"), guide = FALSE) +
+  theme_minimal() +
+  labs(y = NULL, x = "Publication Year")
+```
+
+```{r}
+#| fig-cap: "Relative growth of open access in hybrid journals through transformative agreements between 2018 and 2022 per publication year  according to the total number of articles indexed in Crossref. The blue areas represent open access through transformative agreements, as indicated by the affiliation with institutions that had a corresponding transformative agreement in place at the time of publication according to the first author affiliation data in OpenAlex matched with journal and institutional data from cOAlition S Transformative Agreements Public Data. Grey areas depict open access articles where no link to an agreement could be established. (A) Proportion of open access articles in hybrid journals per year. (B) Percentage of hybrid open access via agreements per year. Boxplots show the proportion of open access articles by individual hybrid journals (C) and individual open access uptake rates by individual hybrid journals and open access funding (D) per publication year. Horizontal lines correspond to the lower quartile, median, and upper quartile, with whiskers extending to ±1.5 of interquartile range. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available at the time of this study."
+
+library(patchwork)
+layout = "
+EEE
+ACD
+BCD"
+wrap_plots(
+  E = guide_area(),
+  A = oa_ta_plot,
+  B = ta_share_plot,
+  C = oa_jn_box,
+  D = box_ta_prop,
+  design = layout,
+  widths = c(0.4, 0.3, 0.3),
+  heights = c(0.2, 1, .5),
+  guides = "collect") &
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.direction = "horizontal",
+    panel.grid.minor = element_blank(),
+                panel.border = element_rect(color = "grey50", fill = NA),
+    axis.title=element_text(size = 10)) &
+    plot_annotation(tag_levels = 'A')
+```
+
+```{r}
+# in text data
+oa_by_year <- oa_ta_plot_df |>
+  group_by(cr_year) |>
+  summarise(oa = sum(value),
+            articles = n) |>
+  mutate(prop = oa / articles * 100) |>
+  distinct()
+```
+
+Figure 2A shows a moderate growth in the proportion of open access articles in hybrid journals, comparing the overall open access uptake and the impact of transformative agreements on this trend.
+Over the five-years period from 2018 to 2022, open access increased from `r oa_by_year |> filter(cr_year == "2018") |> pull(prop)`% (n = `r oa_by_year |> filter(cr_year == "2018") |> pull(oa)`) to `r oa_by_year |> filter(cr_year == "2022") |> pull(prop)`% (n = `r oa_by_year |> filter(cr_year == "2022") |> pull(oa)`). 
+At the same time, the total article volume of the investigated journals grew from `r oa_by_year |> filter(cr_year == "2018") |> pull(articles)` in 2018 to `r oa_by_year |> filter(cr_year == "2022") |> pull(articles)` in 2022.
+
+Figure 2B highlights that the majority of open access articles in hybrid journals were made available through transformative agreements in 2021 and 2022, contributing `r oa_ta_plot_df |> filter(cr_year == "2022", type == "ta_oa") |> pull(value) / oa_by_year |> filter(cr_year == "2022") |> pull(oa) * 100`% of the total open access article volume in 2022.
+However, there was also a notable growth in open access provision through individual publication fees, which increased from `r oa_ta_plot_df |> filter(cr_year == "2018", type == "no_ta") |> mutate(prop = value / n * 100) |> pull(prop)`% (n = `r oa_ta_plot_df |> filter(cr_year == "2018", type == "no_ta") |> pull(value)`) in 2018 to  `r oa_ta_plot_df |> filter(cr_year == "2022", type == "no_ta") |> mutate(prop = value / n * 100) |> pull(prop)`% (n = `r oa_ta_plot_df |> filter(cr_year == "2022", type == "no_ta") |> pull(value)`). This suggests that publishers were able to gain equally from individual and institutional open access publishing options.
+
+Figure 2C depicts the substantial variations among the hybrid journals included in transformative agreements in terms of open access uptake.
+Although the median generally follows the trend shown in Figure 2A, the farther stretch of upper quartiles and whiskers over the years illustrates that an increasing number of journals published an above-average proportion of open access articles. 
+In 2022, 25% of hybrid journals (n = `r oa_jn_box_df |> filter(cr_year == "2022") |> mutate(top25 = quantile(prop, .75)) |> filter(prop >= top25) |> nrow()`) had an open access uptake of `r oa_jn_box_df |> filter(cr_year == "2022") |> pull(prop) |> quantile(0.75)*100`%, and `r (oa_jn_box_df |> filter(cr_year == "2022", prop >= 0.5) |> nrow()) / length(unique(oa_jn_box_df$issn_l)) *100`% of journals (n = `r oa_jn_box_df |> filter(cr_year == "2022", prop >= 0.5) |> nrow()`) provided the majority of their articles under a Creative Commons license in the same year. 
+These journals were, on average, smaller (M = `r oa_jn_box_df |> filter(cr_year == "2022", prop >= 0.5) |> pull(n) |> mean()`, SD = `r oa_jn_box_df |> filter(cr_year == "2022", prop >= 0.5) |> pull(n) |> sd()`) than those with an open access share below 50% (M = `r oa_jn_box_df |> filter(cr_year == "2022", prop <= 0.5) |> pull(n) |> mean()`, SD = `r oa_jn_box_df |> filter(cr_year == "2022", prop <= 0.5) |> pull(n) |> sd()`). 
+Notable exception of large journals with an above-average open access proportion were Physical Review D, a high-energy physics journal covered by the SCOAP3 consortium that provided open access to `r oa_jn_box_df |> filter(cr_year == "2022", issn_l == "2470-0010") |> pull(oa_all)` out of `r oa_jn_box_df |> filter(cr_year == "2022", issn_l == "2470-0010") |> pull(n)` articles in 2022, Astronomy and Physics (`r oa_jn_box_df |> filter(cr_year == "2022", issn_l == "0004-6361") |> pull(oa_all)` out of `r oa_jn_box_df |> filter(cr_year == "2022", issn_l == "0004-6361") |> pull(n)` articles in 2022 were open access), which shifted to a subscribe to open business model for all accepted articles as of April 2022, the Journal of Fluid Mechanics (`r oa_jn_box_df |> filter(cr_year == "2022", issn_l == "0022-1120") |> pull(oa_all)` of `r oa_jn_box_df |> filter(cr_year == "2022", issn_l == "0022-1120") |> pull(n)` articles in 2022 were open access) and Bioinformatics (`r oa_jn_box_df |> filter(cr_year == "2022", issn_l == "1367-4803") |> pull(oa_all)` out of `r oa_jn_box_df |> filter(cr_year == "2022", issn_l == "1367-4803") |> pull(n)` articles in 2022 were open access), which flipped to full open access as of January 2023.
+
+When comparing the impact of open access trough transformative agreements across journals, it shows that for many journals these agreements substantially contributed to the growth of open access over the years (Figure 2D). 
+Examples of such journals include those with a scope on specific countries or regions, where also transformative agreements were implemented. 
+For instance, in 2022, the Germany-based journals Zeitschrift für Erziehungswissenschaft and Zeitschrift für Politikwissenschaft, as well as the Scandinavian Political Studies adressing the Nordic countries, achieved an overall open access uptake of more than 90% just through transformative agreements. 
+Despite the rise in transformative agreements, it is worth noting that other means of publishing open access in hybrid journals remained common. 
+In total, `r summary_all |> filter(cr_year == "2022", value > 0, name == "prop_no_ta") |> nrow()` journals published open access articles from authors affiliated with institutions without transformative agreements in place, while `r summary_all |> filter(cr_year == "2022", value > 0, name == "prop_ta_oa") |> nrow()` journals published at least one open access article through a transformative agreement in the same year.
+
+## Publishing market
+
+```{r}
+jn_ind_jct <- hoaddata::jct_hybrid_jns |>
+  inner_join(hoaddata::jn_ind, by = "issn_l") |>
+  filter(issn_l != "0027-8424")
+
+ta_active <- ta_oa_inst |>
+  filter(issn_l != "0027-8424") |>
+  filter(ta_active == TRUE, !is.na(cc)) |>
+  group_by(cr_year, issn_l, esac_publisher) |>
+  summarise(ta_oa = n_distinct(doi)) |>
+  mutate(cr_year = as.character(cr_year))
+
+jn_ind_jct_oa <- jn_ind_jct |>
+  filter(!is.na(cc)) |>
+  distinct(cr_year, issn_l, esac_publisher, cc, cc_total, jn_all) |>
+  group_by(cr_year, issn_l, esac_publisher, jn_all) |>
+  summarise(oa = sum(cc_total, na.rm = TRUE))
+
+jn_ind_jct_all <- jn_ind_jct |>
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  distinct(cr_year, issn_l, esac_publisher, jn_all) 
+
+publisher_df <- left_join(jn_ind_jct_all, jn_ind_jct_oa) |>
+  mutate(cr_year = as.character(cr_year)) |>
+  left_join(ta_active) |>
+  mutate(across(everything(), .fns = ~replace_na(.,0))) |>
+   mutate(no_ta = oa - ta_oa) |>
+    mutate(
+    publisher = case_when(
+      esac_publisher == "Elsevier" ~ "Elsevier",
+      esac_publisher == "Springer Nature" ~ "Springer Nature",
+      esac_publisher == "Wiley" ~ "Wiley",
+      is.character(esac_publisher) ~ "Other"
+    )
+  ) |>
+  mutate(publisher =
+           forcats::fct_relevel(
+             publisher,
+             c("Elsevier", "Springer Nature", "Wiley", "Other") 
+           )) |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
+  # Journal transfers across publishers grouped in publisher
+  select(-esac_publisher) |>
+  distinct()
+
+## plot
+publisher_plot_df <- publisher_df |> 
+  pivot_longer(cols = c(ta_oa, no_ta), names_to = "type", values_to = "value")
+
+
+#+ publisher ta shares
+publisher_ta_prop <- publisher_plot_df |>
+  filter(type == "ta_oa") |>
+  group_by(cr_year, publisher) |>
+  summarize(ta_oa = sum(value), oa = sum(oa), jn_all = sum(jn_all)) |>
+  mutate(prop = ta_oa / oa) 
+
+
+oa_publisher <- publisher_plot_df |>
+  group_by(cr_year, publisher, type) |>
+  summarise(value = sum(value))
+all_publisher <- publisher_plot_df |>
+  distinct(cr_year, issn_l, publisher, jn_all) |>
+  group_by(cr_year, publisher) |>
+  summarise(jn_all = sum(jn_all))
+
+publisher_summary_df <- inner_join(oa_publisher, all_publisher) |>
+  mutate(prop = value / jn_all)
+
+
+publisher_prop <-
+  ggplot(publisher_summary_df, aes(
+    gsub("^20", "'", as.character(cr_year)),
+    prop,
+    fill = type,
+    group = type
+  )) +
+  geom_area(color = "#000000",
+            linewidth = 0.15) +
+  facet_wrap( ~ publisher, nrow = 1) +
+  scale_fill_manual(
+    "Hybrid OA",
+    values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"),
+    labels = c(no_ta = "Other", ta_oa = "Agreement"),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::percent_format(),
+    breaks = c(0.05, 0.1, 0.15, 0.2, 0.25)
+  ) +
+  theme_minimal() +
+  labs(y = "Hybrid OA Uptake", x = NULL) +
+  theme(
+    legend.position = "top",
+    legend.justification = "left",
+    axis.text.x = element_blank()
+  )
+
+publisher_boxplot <- publisher_plot_df |>
+  filter(value > 0) |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), value / jn_all, fill = type)) +
+  geom_boxplot(outlier.shape = NA,
+               show.legend = FALSE,
+               varwidth = TRUE) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
+                     labels = scales::percent) +
+  scale_fill_manual(
+    NULL,
+    values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"),
+    labels = c(no_ta = "Other", ta_oa = "Agreement")
+  ) +
+  coord_cartesian(ylim = c(0, 0.65)) +
+  facet_wrap( ~ publisher, nrow = 1) +
+  labs(y = "OA Uptake\nby Hybrid Journal", x = "Publication Year") +
+  theme_minimal() +
+  theme(strip.background = element_blank(),
+        strip.text.x = element_blank())
+
+publisher_ta_prop_plot <- publisher_ta_prop |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), prop)) +
+  geom_bar(stat = "identity",
+           fill = "#56B4E9",
+            color = "#000000",
+           linewidth = 0.15) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    breaks = c(0, 0.25, 0.5, 0.75),
+    limits = c(0, .75),
+    labels = scales::percent
+  ) +
+  facet_wrap( ~ publisher, nrow = 1) +
+  theme_minimal() +
+  labs(y = "Percentage\nof Hybrid OA\nvia Agreement", x = NULL) +
+  theme(
+    axis.text.x = element_blank(),
+    strip.background = element_blank(),
+    strip.text.x = element_blank()
+  )
+```
+
+```{r publisher_summary_table}
+publisher_article_total_table <- publisher_df |>
+  group_by(publisher) |>
+  summarise(oa_journals = n_distinct(issn_l),
+            publisher_total = sum(jn_all)) |>
+  mutate(
+    jn_perc = oa_journals / sum(oa_journals),
+    jn_cum = cumsum(oa_journals) / sum(oa_journals),
+    perc = publisher_total / sum(publisher_total),
+    cum = cumsum(publisher_total) / sum(publisher_total)
+  ) |>
+  relocate(publisher_total, .after = jn_cum)
+
+publisher_article_oa_table <- publisher_summary_df |>
+  group_by(publisher) |>
+  summarise(oa_total = sum(value)) |>
+  mutate(oa_perc = oa_total / sum(oa_total),
+         oa_cum = cumsum(oa_total) / sum(oa_total))
+
+publisher_article_ta_oa_table <- publisher_summary_df |>
+  filter(type == "ta_oa") |>
+  group_by(publisher) |>
+  summarise(ta_oa_total = sum(value)) |>
+  mutate(
+    ta_oa_perc = ta_oa_total / sum(ta_oa_total),
+    ta_oa_cum = cumsum(ta_oa_total) / sum(ta_oa_total)
+  )
+
+publisher_league_tbl <-
+  inner_join(publisher_article_total_table, publisher_article_oa_table) |>
+  inner_join(publisher_article_ta_oa_table)
+```
+
+```{r}
+publisher_league_tbl |>
+  mutate(across(contains(c("perc", "cum")), ~ paste(round(., 3) * 100))) |>
+  kbl(
+    booktabs = TRUE, format.args = list(big.mark = ","), digits = 1, escape = TRUE, position = "H",
+    caption ="Hybrid open access through transformative agreements market shares 2018-2022",
+    col.names = c(
+      "Publisher",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%"
+    )
+  ) |>
+  kable_styling(font_size = 10, position = "center") |>
+  add_header_above(c(
+    " " = 1,
+    "Hybrid journals" = 3,
+    "Articles" = 3,
+    "OA articles" = 3,
+    "TA OA articles" = 3
+  ))
+```
+
+Analysing hybrid open access across publishers between 2018 and 2022 reveals a large market concentration. 
+Although `r length(unique(jn_ind_jct_all$esac_publisher))` publishers offered transformative agreements, the big three commercial publishers Elsevier, Springer Nature, and Wiley, accounted for `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(jn_cum) * 100`% of total article volume published (see Table ).
+Together, they published `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(oa_total) |> sum()` open access articles, representing `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_cum) * 100`% of the open access articles in hybrid journals.
+Elsevier, Springer Nature, and Wiley made `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(ta_oa_total) |> sum()` articles open access in hybrid journals through transformative agreements, resulting in an even larger market share of `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(ta_oa_cum)*100`%.
+However, there are differences among the three large publishers. Although Elsevier published the largest volume of articles (n = `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(publisher_total)`, `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(cum)*100`%), it published a relatively low number of open access articles, including those that can be associated with transformative agreements.
+In contrast, Springer Nature and Wiley provided open access to a larger proportion of their articles (`r (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_total)) / (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(publisher_total)) * 100`% of Springer Nature articles and `r (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_total)) / (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(publisher_total)) * 100`% of Wiley articles were open acccess), leading to higher open access market shares (`r publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_perc)*100`% Springer Nature resp. `r publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_perc)*100`% Wiley).
+This  difference between Elsevier on the one hand and Springer Nature and Wiley on the other can  be attributed to transformative agreements, as the latter made the majority of their open access articles available through such deals (Springer Nature `r ((publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(ta_oa_total)) / (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_total)) * 100)`% resp. Wiley `r (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(ta_oa_total)) / (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_total)) * 100`%).
+
+```{r, fig.asp=0.8}
+library(patchwork)
+design = "E
+A
+B
+C"
+wrap_plots(
+  E = guide_area(),
+  A = publisher_prop,
+  B = publisher_ta_prop_plot,
+  C = publisher_boxplot,
+  design = design,
+  guides = "collect",
+  heights = c(0, 0.4, 0.3, 0.7)
+) &
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.direction = "horizontal",
+    panel.grid.minor = element_blank(),
+                panel.border = element_rect(color = "grey50", fill = NA),
+    axis.title=element_text(size = 10)) &
+    plot_annotation(tag_levels = 'A') 
+```
+
+
+Figure 2 takes a closer look into the growth of hybrid open access across publishers by year with a focus on open articles enabled by transformative agreements. 
+Although all publishers show a general long-term trend towards transformative agreements, Figure 2A and 2B indicate that, in particular, Wiley's has experienced a substantial increase in its open access share from `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Wiley") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Wiley") |> pull(value) |> sum()`) in 2018 to `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley") |> pull(prop) |> sum()*100`%  (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley") |> pull(value) |> sum()`) in 2022, rperesenting an 4.5-fold increase. 
+In contrast, Elsevier's hybrid journals deonstrated a more modest increase, from `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Elsevier") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Elsevier") |> pull(value) |> sum()`) in 2018 to `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier") |> pull(value) |> sum()`) in 2022, which is a relatively low open access share compared to the general trend.
+In 2018, Springer Nature had the largest open access proportion among the three publishers of `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Springer Nature") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Springer Nature") |> pull(value) |> sum()`), but experienced a relatively slower growth, resulting in `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(value) |> sum()`) of articles being open access in Springer Nature hybrid journals in 2022.
+
+The varying degrees of uptake of open access across the three major publishers can be attributed to distinct approaches to transformative agreements. 
+Springer Nature, for example, began in 2015 offering selected consortia, such as the Max Planck Society, the Swedish Bibsam consortium, and the Finnish FinELib consortium, open access agreements for its hybrid journal portfolio under the name Springer Compact[^springercompact].
+However, these agreements were not included in the data as they concluded prior to the start of the transformative agreement data collection in June 2021. 
+Nonetheless, the results suggest the importance of central agreements for Springer Nature's hybrid open access business over the past five years (Figure 2B).
+In 2022, `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature", type == "ta_oa") |> pull(value) / publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(value) |> sum()*100`% (n = `r  publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature", type == "ta_oa") |> pull(value)`) of open access articles in f Springer Nature  hybrid journals were enabled through transformative agreements.
+In the same year, `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley", type == "ta_oa") |> pull(value) / publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley") |> pull(value) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley", type == "ta_oa") |> pull(value)`) of Wiley's open access articles could be linked to transformative agreements in 2022. 
+In contrast, Elsevier published fewer than half of its open access articles through transformative agreements (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier", type == "ta_oa") |> pull(value) `; `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier", type == "ta_oa") |> pull(value) / publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier") |> pull(value) |> sum()*100`%).  
+
+```{r}
+pub_75 <- publisher_plot_df |> filter(value > 0) |> mutate(prop = value /jn_all) |> group_by(publisher, type, cr_year) |> summarise(
+  top25 = quantile(prop, 0.75),
+  median = median(prop),
+  top10 = quantile(prop, 0.9))
+```
+
+The increasing trend towards transformative agreements can be also observed at the journal-level (Figure 2).
+While no substantial differences between open access enabled through transformative agreements and other revenue source could observed across Elsevier journals, the distribution of open access across Springer Nature and Wiley hybrid journals indicates that the growth is not limited to a few journals, but extends across the portfolio. 
+In particular, Wiley's upper quantile, which represents the top 25% of journals in terms of the proportion of open access articles from transformative agreements, increased markedly from `r pub_75 |> filter(publisher == "Wiley", type == "ta_oa", cr_year == "2020") |> pull(top25) * 100`% in 2020 to `r pub_75 |> filter(publisher == "Wiley", type == "ta_oa", cr_year == "2022") |> pull(top25) * 100`% in 2022. At the same time, the median proportion grew from `r pub_75 |> filter(publisher == "Wiley", type == "ta_oa", cr_year == "2020") |> pull(median) * 100`% to  `r pub_75 |> filter(publisher == "Wiley", type == "ta_oa", cr_year == "2022") |> pull(median) * 100`%.
+It is interesting to note that a small but increasing number of journals from these two publishers are providing open access to the majority of articles through transformative agreements.
+Wiley recorded `r publisher_plot_df |>  mutate(prop = value / jn_all)  |> filter(cr_year == "2022", prop > 0.5, type == "ta_oa", publisher == "Wiley") |> nrow()` and Springer Nature `r publisher_plot_df |>  mutate(prop = value / jn_all)  |> filter(cr_year == "2022", prop > 0.5, type == "ta_oa", publisher == "Springer Nature") |> nrow()` hybrid journals with an open access share above 50% that could be solely attributed to transformative agreements. 
+Upon inspection, these journals were mainly society or local language journals with a small yearly article volume.
+
+
+```{r subject_data_prep}
+jn_issnl_ajsc <-
+  readr::read_csv(here::here("data", "jn_issnl_ajsc.csv")) |>
+  select(issn_l, top_level, subject_area, ajcs)
+subject_df <- left_join(jn_ind_jct_all, jn_ind_jct_oa) |>
+  mutate(cr_year = as.character(cr_year)) |>
+  left_join(ta_active) |>
+  mutate(across(everything(), .fns = ~ replace_na(., 0))) |>
+  mutate(no_ta = oa - ta_oa) |>
+  left_join(jn_issnl_ajsc, by = "issn_l") 
+
+top_level_by_year_jn <- subject_df |>
+  # with at least one
+  filter(oa > 0) |>
+  distinct(cr_year, issn_l, jn_all, top_level) |>
+  group_by(cr_year, issn_l, top_level) |>
+  summarise(n = sum(jn_all)) |>
+  mutate(fractions_factor = n / sum(n)) |>
+  mutate(fractions = n * fractions_factor) |>
+  ungroup() |> 
+  group_by(cr_year, top_level) |>
+  summarise(articles_n = sum(n),
+            articles_frac = sum(fractions)) |>
+  arrange(top_level, cr_year)
+
+top_level_by_year_oa_frac <- subject_df |>
+   # with at least one
+  filter(oa > 0) |>
+  select(-ajcs, -subject_area, -esac_publisher) |>
+  distinct(cr_year, issn_l, top_level, .keep_all = TRUE) |>
+  group_by(cr_year, issn_l, top_level) |>
+  summarise(n = sum(jn_all)) |>
+  mutate(fractions_factor = n / sum(n)) |>
+  select(-n)
+
+top_level_by_year_oa <- top_level_by_year_oa_frac |>
+  inner_join(subject_df) |>
+     # with at least one
+  filter(oa > 0) |>
+  select(-ajcs, -subject_area, -esac_publisher) |>
+  distinct(cr_year, issn_l, top_level, .keep_all = TRUE) |>
+  mutate(across(c(oa, ta_oa, no_ta),  function(x) x * fractions_factor, .names = "frac_{.col}")) |>
+  ungroup() |> 
+  group_by(cr_year, top_level) |>
+  summarise(oa_n = sum(oa),
+            oa_frac = sum(frac_oa),
+            ta_oa = sum(ta_oa),
+            ta_oa_frac= sum(frac_ta_oa),
+            no_ta = sum(no_ta),
+            no_ta_fractions = sum(frac_no_ta)) |>
+  arrange(top_level, cr_year) |>
+  inner_join(top_level_by_year_jn)
+```
+
+## Journal subjects
+
+Table presents a high-level overview of hybrid open access by AJCS subject area using fractionalised counting to account for journals belonging to more than one category. 
+Between 2018 and 2022, most hybrid journals with at least one open articles could be attributed to the social sciences including the humanities.
+However, these journals published the fewest number of articles, whereas physical sciences journals recorded most articles, followed by the health sciences and the life sciences. 
+In terms of open access,  physical sciences journals accounted for more than one third of articles published in the five-years period, followed by the health science, the social sciences and the life sciences.
+
+
+```{r subject_summary_table}
+jn_fract <- subject_df |>
+  # with at least one
+  filter(oa > 0) |>
+  distinct(issn_l, top_level) |>
+  group_by(issn_l, top_level) |>
+  summarise(n = n_distinct(issn_l)) |>
+  mutate(fractions_factor = n / sum(n)) |>
+  mutate(fractions = n * fractions_factor) |>
+  ungroup() |> 
+  group_by(top_level) |>
+  summarise(jn_frac = sum(fractions)) |>
+  arrange(top_level)
+
+
+subject_tbl <- top_level_by_year_oa |>
+  inner_join(jn_fract, by = "top_level") |>
+  filter(!top_level %in% c("Multidisciplinary", NA)) |>
+  group_by(top_level, jn_frac) |>
+  summarise(articles_frac = sum(articles_frac),
+            oa_frac = sum(oa_frac),
+            ta_oa_frac = sum(ta_oa_frac)) |>
+  ungroup() |>
+  mutate(
+    jn_perc = jn_frac / sum(jn_frac),
+    jn_cum = cumsum(jn_frac) / sum(jn_frac),
+    perc = articles_frac / sum(articles_frac),
+    cum = cumsum(articles_frac) / sum(articles_frac),
+    oa_perc = oa_frac / sum(oa_frac),
+    oa_cum = cumsum(oa_frac) / sum(oa_frac),
+    ta_oa_perc = ta_oa_frac / sum(ta_oa_frac),
+    ta_oa_cum = cumsum(ta_oa_frac) / sum(ta_oa_frac)
+  ) |>
+  select(top_level, jn_frac, jn_perc, jn_cum, articles_frac, perc, cum, 
+         oa_frac, oa_perc, oa_cum, ta_oa_frac,ta_oa_perc,  ta_oa_cum)
+
+subject_tbl |>
+  mutate(across(contains(c("perc", "cum")), ~ paste(round(., 3) * 100))) |>
+  kbl(
+    booktabs = TRUE, format.args = list(big.mark = ","), digits = 1, escape = TRUE, position = "H",
+    caption ="Hybrid open access through transformative agreements by journal subject 2018-2022",
+    col.names = c(
+      "Journal subject",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%",
+      "Total",
+      "%",
+      "C%"
+    )
+  ) |>
+  add_header_above(c(
+    " " = 1,
+    "Hybrid journals" = 3,
+    "Articles" = 3,
+    "OA articles" = 3,
+    "TA OA articles" = 3
+  ))
+```
+
+
+```{r subject_plots}
+subject_trend_plot <- top_level_by_year_oa |>
+  filter(top_level != "Multidisciplinary") |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
+  select(cr_year, top_level, contains("frac"),-oa_frac) |>
+  pivot_longer(
+    cols = c(ta_oa_frac, no_ta_fractions),
+    names_to = "type",
+    values_to = "value"
+  ) |>
+  mutate(prop = value / articles_frac) |>
+  ggplot(aes(
+    gsub("^20", "'", as.character(cr_year)),
+    prop,
+    fill = type,
+    group = type
+  )) +
+    geom_area(color = "#000000",
+            linewidth = 0.15) +
+  facet_wrap( ~ top_level, nrow = 1) +
+  scale_fill_manual(
+    NULL,
+    values = c(
+      no_ta_fractions = "#b3b3b3a0",
+      ta_oa_frac = "#56B4E9"
+    ),
+    labels = c(no_ta_fractions = "Other", ta_oa_frac = "Agreement"),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::percent_format(),
+    breaks = c(0.05, 0.1, 0.15, 0.2, 0.25)
+  ) +
+  theme_minimal() +
+  labs(y = "Hybrid OA Uptake", x = NULL) +
+  theme(
+    legend.position = "top",
+    legend.justification = "left",
+    axis.text.x = element_blank()
+  )
+
+subject_ta_trend_plot <- top_level_by_year_oa |>
+  filter(top_level != "Multidisciplinary") |>
+  filter(!cr_year %in%  c("2017", "2023")) |>
+  mutate(prop = ta_oa_frac / oa_frac) |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), prop)) +
+  geom_bar(stat = "identity", fill = "#56B4E9", color = "#000000",
+            linewidth = 0.15) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), breaks = c(0, 0.25,0.5,0.75), limits = c(0, .75),
+                     labels = scales::percent) +
+  facet_wrap(~top_level, nrow = 1) +
+  theme_minimal() +
+  labs(y = "Percentage\nof Hybrid OA\nvia Agreement", x = NULL) +
+  theme(
+    axis.text.x = element_blank(),
+    strip.background = element_blank(),
+    strip.text.x = element_blank())
+subject_box_trend <- subject_df |>
+   # with at least one
+  select(-ajcs, -subject_area, -esac_publisher) |>
+  distinct(cr_year, issn_l, top_level, .keep_all = TRUE) |>
+  pivot_longer(cols = c(ta_oa, no_ta), names_to = "type", values_to = "value") |>
+  filter(value > 0) |>
+  filter(top_level != "Multidisciplinary", !cr_year %in% c("2017", "2023")) |>
+  ggplot(aes(gsub("^20", "'", as.character(cr_year)), value / jn_all, fill = type)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE, varwidth = TRUE) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
+                     labels = scales::percent) +
+  scale_fill_manual("Hybrid OA", values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"), labels = c(no_ta = "Other", ta_oa = "Agreement")) +
+  coord_cartesian(ylim = c(0,0.55)) +
+  facet_wrap(~top_level, nrow = 1) +
+  labs(y = "OA Uptake\nby Hybrid Journal", x = "Publication Year") +
+  theme_minimal() +
+    theme(strip.background = element_blank(),
+    strip.text.x = element_blank()
+    )
+```
+
+Figure presents the relative growth of hybrid open access by subject area between 2018-2022. In particular, Social Sciences and Humanties journals accounted for the strongest growth in the five-years period from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Social Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Social Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(value) |> sum()`), followed by the Life Science from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Life Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Life Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Life Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Life Sciences") |> pull(value) |> sum()`) , Health Science from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Health Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Health Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Health Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Health Sciences") |> pull(value) |> sum()`) and Physical Sciences from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Physical Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Physical Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Physical Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Physical Sciences") |> pull(value) |> sum()`). 
+<!-- In particular, journals in the subject areas recorded large high rate (see supplement)-->
+This growth in the social sciences can be largely attributed to transformative agreements. In 2022, two-third of open access articles (`r subject_ta_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(prop) * 100`%, n = `r subject_ta_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(ta_oa_frac)`) were published by first authors affiliated with participating institutions. 
+Figure C shows that this trend is consistent across Social Sciences journals.
+In 2022, 25% of Social Science journals provided open access to at least every fourth article exclusively through transformative agreements.
+However, hybrid open access through transformative agreements played a comparable lesser role in the Life Sciences and Health Sciences. 
+In these two subject areas, only about half of the open access articles can be linked to these agreements, both overall and on median average across journals.
+In contrast, the majority of Physical Science Journals, shows an increase of open access through transformative agreements compared to other options to publish open access in hybrid journals.
+
+
+```{r subject_panel, fig.asp=0.8}
+library(patchwork)
+design = "E
+A
+B
+C"
+wrap_plots(
+  E = guide_area(),
+  A = subject_trend_plot,
+  B = subject_ta_trend_plot,
+  C = subject_box_trend,
+  design = design,
+  guides = "collect",
+  heights = c(0, 0.4, 0.3, 0.7)
+) &
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.direction = "horizontal",
+    panel.grid.minor = element_blank(),
+                panel.border = element_rect(color = "grey50", fill = NA),
+    axis.title=element_text(size = 10)) &
+    plot_annotation(tag_levels = 'A') 
+```
+
+
+
+```{r coutnry_data_prep}
+country_all <- hoaddata::jn_aff |>
+  filter(!cr_year %in% c(2017, 2023), issn_l != "0027-8424") |>
+  # only with cc
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  distinct(issn_l, cr_year, country_code, articles_total) |>
+  group_by(cr_year, country_code) |>
+  summarise(all = sum(articles_total))
+
+country_oa <- hoaddata::cc_articles |>
+  filter(!cr_year %in% c(2017, 2023), issn_l != "0027-8424") |>
+  group_by(cr_year, country_code) |>
+  summarise(oa = n_distinct(doi))
+
+country_codes <- readr::read_csv(here::here("data", "ror_country_codes.csv"))
+country_ta <-  ta_oa_inst |>
+  filter(ta_active == TRUE, !is.na(cc), issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  left_join(country_codes) |>
+  group_by(cr_year, country_code) |>
+  summarise(ta_oa = n_distinct(doi))
+
+country_df <- country_all |>
+  left_join(country_oa, by = c("cr_year", "country_code")) |>
+  left_join(country_ta, by = c("cr_year", "country_code")) |>
+  distinct() |>
+  ungroup() |>
+  mutate(cr_year = as.character(cr_year)) |>
+  mutate(across(c(oa, ta_oa), .fns = ~replace_na(.,0))) |>
+  filter(!is.na(country_code)) |>
+  mutate(
+    country_name = countrycode::countrycode(country_code, origin = "iso2c", destination = "country.name")
+  )
+
+
+# Top 20 in terms of articles published
+top_20 <- country_df |>
+  filter(!is.na(country_code)) |>
+  group_by(country_code, country_name) |>
+  summarise(n = sum(all)) |>
+  arrange(desc(n)) |>
+  head(20) 
+
+## Order of multiples, sort by the most productive (Top 20)
+
+country_multiple_df <- country_df |>
+  mutate(country_name_fct = forcats::fct_other(country_code, keep = top_20$country_code)) |>
+  mutate(country_name_fct = forcats::fct_relevel(country_name_fct, top_20$country_code, "Other")) |>
+  group_by(country_name_fct, cr_year) |>
+  summarise(
+    all_total = sum(all),
+    oa_total = sum(oa),
+    ta_oa_total = sum(ta_oa)
+  ) |>
+  mutate(prop = oa_total / all_total) |>
+  # remove cases where we could not retrieve a country name |>
+  filter(!is.na(country_name_fct))
+
+# Prepare facet heading
+facet_labels <- country_multiple_df |>
+  group_by(country_name_fct) |>
+  summarise(total = sum(all_total)) |>
+  mutate(prop = total / sum(total)) |>
+  ungroup() |>
+  mutate(total_string = case_when(
+    total < 1000 ~ as.character(total),
+    total < 1000000 ~ paste0(format(round(total / 1e3, 1), trim = TRUE), "K"),
+    total >= 1000000 ~ paste0(format(round(total / 1e6, 2), trim = TRUE), "M")
+  )) |>
+  mutate(
+    facet_labels = glue::glue(
+      '**{country_name_fct}**<br>
+      {total_string} | {paste(round(prop * 100, 1), "%")}'
+    )
+  ) |>
+  distinct(country_name_fct, facet_labels)
+
+country_facet_labels <- as.character(facet_labels$facet_labels)
+names(country_facet_labels) <- facet_labels$country_name_fct
+
+top_20_plot_df <- 
+  country_multiple_df |> 
+  mutate(no_ta = oa_total - ta_oa_total) |>
+  rename(ta_oa = ta_oa_total) |>
+  pivot_longer(
+  cols = c(no_ta, ta_oa),
+  values_to = "value",
+  names_to = "type") 
+```
+
+```{r, country_plot, fig.asp=0.8}
+country_plot <- ggplot(top_20_plot_df, aes(
+    gsub("^20", "'", as.character(cr_year)),
+    value / all_total,
+    group = type,
+    fill = type
+  )) +
+  geom_area(color = "#000000",
+            linewidth = 0.15,
+            stat = "identity") +
+scale_fill_manual(
+    NULL,
+    values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"),
+    labels = c(no_ta = "Other", ta_oa = "Agreement"),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  facet_wrap( ~ country_name_fct,
+              nrow = 3,
+              labeller = as_labeller(country_facet_labels)) +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 1L),
+    expand = expansion(mult = c(0, 0.05)),
+    breaks = scales::breaks_extended(4)
+  ) +
+  theme_minimal() +
+  labs(y = "Hybrid OA Uptake", x = "2018 - 2022") +
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.direction = "horizontal",
+    axis.text.x = element_blank(),
+    panel.grid.minor = element_blank(),
+                panel.border = element_rect(color = "grey50", fill = NA),
+    axis.title=element_text(size = 10),
+    strip.text = ggtext::element_markdown(size = 7),
+    plot.subtitle = ggtext::element_markdown(hjust = 0.5),
+    panel.spacing = unit(1, "lines")
+  )
+```
+
+## Comparing countries
+
+
+```{r}
+oecd <- readr::read_csv(here::here("data", "oecd.csv")) |>
+  mutate(country_code = countrycode::countrycode(iso3, "iso3c", "iso2c"))
+
+
+country_scatter_df <- country_df |>
+#  filter(cr_year == "2022", !is.na(country_code)) |>
+  mutate(cat = case_when(
+    country_code %in% oecd$country_code ~ "OECD",
+    country_code %in% c("BR", "CN", "IN", "RU", "ZA") ~ "BRICS",
+    .default = "Other"
+  ))
+
+oecd_stats <- readr::read_csv(here::here("data", "oecd_stats.csv"))
+oecd_stats_global <- oecd_stats |> 
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  group_by(cat) |> summarise(articles = sum(articles), oa = sum(oa), ta_oa = sum(ta_oa))
+```
+
+```{r country_bar_chart_top_20}
+top_20_df <- country_scatter_df |>
+  filter(cr_year == "2022") |>
+  mutate(country_name_fct = forcats::fct_other(country_name, keep = top_20$country_name)) |>
+  mutate(country_name_fct = forcats::fct_relevel(country_name_fct, top_20$country_name, "Other")) |>
+  group_by(country_name_fct, country_code, cat) |>
+  summarise(all = sum(all),
+            oa = sum(oa),
+            ta_oa = sum(ta_oa), .groups = "drop") |>
+  head(20) |>
+  mutate(cat_labels = case_when(
+   cat == "OECD" ~ glue::glue("<span style = 'color: #3fc1c9'>{country_code}</span>"),
+   cat == "BRICS" ~ glue::glue("<span style = 'color: #fc5185'>{country_code}</span>"),
+   cat == "Other" ~ glue::glue("<span style = 'color: #e1e1e1'>{country_code}</span>")
+  )) |>
+  mutate(cat_labels = fct_inorder(cat_labels))
+
+
+top_20_plot <- top_20_df |>
+  mutate(no_ta = oa - ta_oa) |>
+  pivot_longer(
+  cols = c(no_ta, ta_oa),
+  values_to = "value",
+  names_to = "type") |>
+  ggplot(aes(reorder(as.character(country_code),  value), value / sum(value), fill = type)) +
+    geom_bar(stat = "identity", color = "#000000", linewidth = 0.15) +
+   scale_fill_manual(
+    NULL,
+    values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"),
+    labels = c(no_ta = "Other", ta_oa = "Agreement"),
+    guide = FALSE) +
+  coord_flip() +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 1L),
+    expand = expansion(mult = c(0, 0.05)),
+    breaks = scales::breaks_extended(4)
+  ) +
+  theme_minimal() +
+#  theme(axis.text.y = ggtext::element_markdown()) +
+  labs(x = NULL, y = "% of Hybrid OA published\nin 2022")
+
+```
+
+```{r}
+country_scatter_22 <- country_scatter_df |>
+  filter(cr_year == "2022", !is.na(country_code), all > 10000) |>
+  ggplot(aes(all, oa)) +
+  geom_point(aes(fill = cat, size = ta_oa), pch = 21, alpha = 0.7) +
+  scale_fill_manual(NULL, values = c("OECD" = "#d01c8b", "BRICS" = "#4dac26", "Other" = "#f7f7f7")) +
+  geom_smooth(aes(all, oa), method=lm) +
+  scale_size("Agreement", guide = FALSE) +
+  ggrepel::geom_text_repel(
+    data = filter(country_scatter_df, cr_year == 2022, ta_oa > 5000 | country_code %in% c("CN", "IN", "BR", "RU", "IR")),
+    aes(x = all, y = oa, label = country_code),
+            min.segment.length = .15,
+    force = 5,
+    segment.color = "grey10",
+    segment.size = 0.5,
+    segment.alpha = 0.8,
+    color = "grey10", 
+    size = 3,
+    box.padding = 0.3) +
+  scale_y_log10(labels =  scales::number_format(big.mark = ",")) +
+  scale_x_log10(labels =  scales::number_format(big.mark = ",")) +
+  theme_minimal() +
+  labs(x = "Total articles in hybrid journals in 2022", y = "OA articles") 
+
+oecd_stats <- readr::read_csv(here::here("data", "oecd_stats.csv"))
+oecd_stats_df <- oecd_stats |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  group_by(cr_year, cat) |>
+  summarise(all = sum(articles, na.rm = TRUE), oa = sum(oa,na.rm = TRUE), ta_oa = sum(ta_oa, na.rm = TRUE)) |>
+  mutate(closed = all - oa,
+         oa_other = oa - ta_oa) |>
+  pivot_longer(cols = c(ta_oa, oa_other, closed), names_to = "oa_type") |>
+  mutate(cat = ifelse(is.na(cat), "Other", cat))
+
+country_bar <- ggplot(oecd_stats_df, aes(gsub("^20", "'", as.character(cr_year)), value, group = oa_type, fill = oa_type)) +
+  geom_area(color = "#000000",
+            linewidth = 0.15) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels =  scales::number_format(big.mark = ",")) +
+  facet_wrap(~ cat) +
+  scale_fill_manual(NULL, values = c(oa_other = "#b3b3b3a0", ta_oa = "#56B4E9", closed = "#e1e1e1a0"),
+                    labels = c(oa_other = "Other", ta_oa = "Agreement", closed = "NA"),  guide = guide_legend(reverse = TRUE)) +
+  theme_minimal() +
+  labs(x = "Publication year", y = "Total articles")
+```
+
+```{r country_by_publisher}
+publisher_mapping <-  hoaddata::jct_hybrid_jns |>
+  distinct(issn_l, esac_publisher) 
+subject_mapping <- subject_df |>
+  distinct(issn_l, top_level)
+country_jn_all <- oecd_stats |>
+  filter(!cr_year %in% c(2017, 2023), issn_l != "0027-8424") |>
+  # only with cc
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  inner_join(publisher_mapping, by = "issn_l") |>
+  inner_join(subject_mapping, by = "issn_l") |>
+  # Publisher encoding
+   mutate(
+    publisher = case_when(
+      esac_publisher == "Elsevier" ~ "Elsevier",
+      esac_publisher == "Springer Nature" ~ "Springer Nature",
+      esac_publisher == "Wiley" ~ "Wiley",
+      is.character(esac_publisher) ~ "Other"
+    )
+  ) |>
+  mutate(publisher =
+           forcats::fct_relevel(
+             publisher,
+             c("Elsevier", "Springer Nature", "Wiley", "Other") 
+           ))  |> 
+  group_by(cr_year, publisher, cat, top_level) |>
+  summarise(all = sum(articles),
+            oa = sum(oa),
+            ta_oa = sum(ta_oa), .groups = "drop") |>
+  mutate(closed = all - oa,
+         oa_other = oa - ta_oa) 
+
+publ_subject_output_df <- country_jn_all |>
+  distinct(cr_year, publisher, top_level, cat, all) |>
+  filter(!top_level %in% c("Multidisciplinary", NA))
+ 
+pub_subject_output_plot <-  ggplot(publ_subject_output_df, aes(gsub("^20", "'", as.character(cr_year)), all, fill = cat)) +
+  geom_bar(stat = "identity", position = position_dodge2(preserve = "single")) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels =  scales::number_format(big.mark = ",")) +
+  scale_fill_manual(NULL, values = c("OECD" = "#d01c8b", "BRICS" = "#4dac26", "Other" = "#f7f7f7")) +
+  facet_grid(publisher ~ top_level) +
+  theme_minimal() +
+  labs(x = "Publication year", y = "Total articles")
+
+subject_output_plot <- publ_subject_output_df |>
+  group_by(cr_year, top_level, publisher) |>
+  summarise(all = sum(all)) |>
+  ggplot(aes(cr_year, all)) +
+  geom_bar(stat = "identity") +
+  facet_grid(top_level ~ publisher) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels =  scales::number_format(big.mark = ",")) +
+   theme_minimal() +
+  labs(x = "Publication year", y = "Total articles")
+
+publisher_output_plot <-
+  publ_subject_output_df |>
+  group_by(cr_year, cat, publisher) |>
+  summarise(all = sum(all)) |>
+  ggplot(aes(cr_year, all)) +
+  geom_bar(stat = "identity") +
+  facet_grid(cat ~ publisher) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels =  scales::number_format(big.mark = ",")) +
+   theme_minimal() +
+  labs(x = "Publication year", y = "Total articles")
+```
+
+
+Between 2018 and 2022, Western economies almost exclusively dominated hybrid open access publishing through transformative agreements. 
+During this period, first-authors affiliated with institutions from Organisation for Economic Co-operation and Development (OECD) member countries published `r oecd_stats_global |> filter(cat == "OECD") |> pull(oa)` open access articles in hybrid journals, representing `r oecd_stats_global |> filter(cat == "OECD") |> pull(oa) / n_oa * 100`% of the investigated open access articles.
+This disparity between OECD nations and other countries becomes even more evident when considering open access through transformative agreements, as  `r oecd_stats_global |> filter(cat == "OECD") |> pull(ta_oa)` of `r n_ta_oa`, or `r oecd_stats_global |> filter(cat == "OECD") |> pull(ta_oa) / n_ta_oa*100`% of open access articles were associated with such agreements.
+
+
+```{r country_patch, fig.asp=0.9}
+library(patchwork)
+wrap_plots(
+  A = country_bar,
+  B = country_scatter_22,
+  C = top_20_plot,
+  design = "
+  AC
+  BC",
+ # guides = "collect",
+  widths = c(0.7, 0.3),
+  heights = c(0.5,0.5)
+) &
+  theme(
+    panel.grid.minor = element_blank(),
+                panel.border = element_rect(color = "grey50", fill = NA),
+    axis.title=element_text(size = 10),
+    legend.position = "top", 
+    legend.justification = "right") &
+    plot_annotation(tag_levels = 'A') 
+```
+
+Figure 2A shows the development of hybrid open access publishing by countries, comparing the OECD area with the BRICS, an intergovernmental organisation,  which comprised the countries Brazil, Russia, India, China and South Africa in 2022.
+The residual category "Other" includes the remaining countries. 
+From 2018 to 2022, the proportion of open access in hybrid journals increased from `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022. 
+On the other hand, BRICS recorded an low uptake, from `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022.  
+Despite rise of open access across OECD countries, the overall publication output decreased sharply, dropping to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022 after peaking `r country_bar$data |> filter(cat == "OECD", cr_year == "2020") |> distinct(all) |> pull(all)` articles in 2020. 
+In stark contrast, the number of articles published in hybrid journals by first authors affiliated with institutions from BRICS countries increased steadily over the years, more than doubling from `r country_bar$data |> filter(cat == "BRICS", cr_year == "2018") |> distinct(all) |> pull(all)` in 2018 to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022. 
+Upon closer examination, this trend can be observed across all big three publishers, although the shift towards BRICS is particularly evident in Elsevier's hybrid journal portfolio, in particular with regard to articles published in Physical Sciences journals (see Supplement). 
+While OECD publication output in Elsevier's Physical Sciences journals declined from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` articles in 2018 to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` in 2022, BRICS output increased from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` in the same five-year period.
+Furthermore, OECD publication output in Health Science Journals and Life Science journals stagnated across the investigated hybrid journal portfolios after a peak in 2020. 
+
+To illustrate the situation in 2022, Figure B compares total publication output with the number of open access articles. 
+With `r country_scatter_df |> filter(cr_year == "2022", country_code == "CN") |> pull(all)` articles, China was the most productive country, followed by the United States (`r country_scatter_df |> filter(cr_year == "2022", country_code == "US") |> pull(all)` articles) and India (`r country_scatter_df |> filter(cr_year == "2022", country_code == "IN") |> pull(all)` articles). 
+In contrast, West and Nord European countries published a considerable high number of open access articles, mainly due to transformative agreements. 
+Particularly, Germany, Great Britain, the Netherlands, Sweden, Switzerland and Spain recorded an above-average open access share as indicated by the linear trend line.
+As represented by the point size, as well as it can been seen in Figure C, transformative agreements contributed to this market position of these countries. 
+Interestingly, the United States had a notable open access market share of `r top_20_plot$data |> distinct(country_code, oa, all) |> mutate(prop = oa / sum(oa)) |> filter(country_code == "US") |> pull(prop) * 100`%, although transformative agreements contributed to a lesser extent. Similarly, China's open access market share of `r top_20_plot$data |> distinct(country_code, oa, all) |> mutate(prop = oa / sum(oa)) |> filter(country_code == "CN") |> pull(prop) * 100` in 2022 was comparable to that of the Netherlands, which was (`r  top_20_plot$data |> distinct(country_code, oa, all) |> mutate(prop = oa / sum(oa)) |> filter(country_code == "NL") |> pull(prop) * 100`%,).
+
+```{r country_top_20_plot, fig.asp=0.8}
+country_plot
+```
+
+Figure illustrates the development of hybrid open access from 2018 to 2022, highlighting the top 20 most productive countries in terms of articles published in hybrid journals that were included in transformative agreements over the five-year period. 
+Notably, The Netherlands (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "NL") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), Sweden (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "SE") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), Poland (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "PL") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%) and Great Britain (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "GB") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%)) exhibited a relatively high level of uptake in 2018 which continued to increase in the following years. 
+In 2022, Sweden had the highest proportion of open-access articles relative to its publication output (`r country_plot$data |> filter(cr_year == "2022", country_name_fct == "SE") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), followed by the Netherlands (`r country_plot$data |> filter(cr_year == "2022", country_name_fct == "NL") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%) and Switzerland (`r country_plot$data |> filter(cr_year == "2022", country_name_fct == "CH") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), with these countries benefiting from transformative agreements.
+In Germany, however, hybrid open access only began to increase from 2019 onwards after the successful negotiation of nationwide agreements with Wiley (July 2019) and Springer Nature (January 2020). Prior to this, only a few organisations had agreements in place, for the example the Max Planck Society with Springer Compact.
+
+Since 2021, there has been a general trend towards hybrid open access among many western countries, primarily driven by transformative agreements.
+However, proliferation of transformative agreements differe across these countries.
+For instance, Germany successfully negotiated an agreement with Elsevier not until 2023. 
+Additionally, publication limits or eligibility criteria for institutions and article types may explain why even countries with widespread agreement implementation do not achieve 100% hybrid open access. 
+Interestingly, in Japan and the US other options than transformative agreements were the main driver for the increase in hybrid open access.
+Once again, the graph highlights countries with low hybrid open access, particularly non-OECD countries, where only a few or no agreements were in place.
+
+
+### Supplements
+
+```{r}
+pub_subject_output_plot
+```
+
+[^springercompact]: <https://web.archive.org/web/20180414062853id_/http://www.liber2015.org.uk/wp-content/uploads/2015/03/Springer-Compact.pdf> 
