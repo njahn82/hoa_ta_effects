@@ -76,7 +76,8 @@ subject_jn_df <- matched_jns |>
   distinct() |>
   mutate(ajcs = strsplit(all_science_journal_classification_codes_asjc, ";")) |>
   unnest(ajcs) |>
-  mutate(top_level_code = str_extract(ajcs, "\\d{2}")) |>
+  mutate(top_level_code = str_extract(ajcs, "\\d{2}"),
+         code =  str_extract(ajcs, "\\d{4}")) |>
   inner_join(ajsc_mapped, by = "top_level_code") |>
   rename(top_level = subject_area, subject_area = description) |> 
   select(-all_science_journal_classification_codes_asjc, -ajcs) |>

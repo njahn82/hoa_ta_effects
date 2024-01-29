@@ -36,3 +36,10 @@ FROM (
 tb <- bq_project_query("subugoe-collaborative", oa_status_sql)
 oa_journal_status <- bq_table_download(tb)
 readr::write_csv(oa_journal_status, here::here("data", "oa_journal_status.csv"))
+
+#' Obtain journals with an proportion of above 0.95
+tb <- bq_project_query("subugoe-collaborative", 
+                       query = "SELECT * FROM `hoa-article.hoaddata_nov23.cc_oa_prop`")
+oa_prop <- bq_table_download(tb)
+readr::write_csv(oa_prop, here::here("data", "oa_prop.csv"))
+
