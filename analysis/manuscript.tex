@@ -63,15 +63,16 @@ najko.jahn@sub.uni-goettingen.de
 \section{Methods and data}\label{methods-and-data}}
 
 This study combines data from multiple publicly available data sources
-as visualised in Figure 1. Transformative agreement data retrieved from
-the cOAlition S Journal Checker Tool provided information about journal
-portfolios and participating institutions. After identification of
-hybrid journals, Crossref served as the primary data source for
-article-level metadata including Creative Commons (CC) license
-information to determine open access articles on publisher websites.
-OpenAlex provided first author affiliation metadata that were
-subsequently linked to the transformative agreement data to identify
-open access articles published through these agreements.
+as diagrammatically shown in Figure \ref{fig:data_workflow}. Initially,
+transformative agreement data retrieved from the cOAlition S Journal
+Checker Tool provided information about journal portfolios and
+participating institutions. After identification of hybrid journals,
+Crossref served as the primary data source for article-level metadata
+including Creative Commons (CC) license information to determine open
+access availability on publisher websites. To identify open access
+articles published through transformative agreements, first author
+affiliations from OpenAlex were subsequently linked to eligible
+institutions according to the transformative agreement data.
 
 \begin{figure}
 
@@ -87,27 +88,31 @@ open access articles published through these agreements.
 data}\label{transformative-agreement-and-hybrid-journal-data}}
 
 Data gathering started with obtaining journals included in
-transformative agreements using the publicly available Transformative
+transformative agreements from the publicly available Transformative
 Agreement Data dump\footnote{\url{https://journalcheckertool.org/transformative-agreements/}}
 used by the cOAlition S Journal Checker Tool.\footnote{\url{https://www.coalition-s.org/blog/enabling-accurate-results-within-the-journal-checker-tool/}}
 The dump consisted of multiple online Google spreadsheets where each
 data file represented one agreement listed in the ESAC Transformative
 Agreement Registry.\footnote{\url{https://esac-initiative.org/about/transformative-agreements/agreement-registry/}}
-Each file comprised information about journals and institutions involved
-per agreement. Because the Journal Checker Tool only provided data about
-active transformative agreements, data representing expired
-transformative agreements were constantly removed. Therefore, four
-different snapshots were used for this analysis: self-archived version
-from July 2021, July 2022, and May 2023, as well as the most current
-dump downloaded on 11 December 2023. This ensured that transformative
-agreements, which ended in 2021, were included in the analysis.
-Agreements ending before 2021 could not be obtained. Overall, the
-combined Transformative Agreement Data dumps contained 729 out of 869
-agreements listed in the ESAC registry by December 2023.
+From the retrieved spreadsheet files, journals and institutions involved
+per agreement were obtained.
+
+A limitation of using the Journal Checker Tool to study the development
+of transformative agreements over time is that it only provided data
+about active transformative agreements. As a result, expired
+transformative agreements were constantly removed from the publicly
+available data dump. To address this, four different snapshots were
+safeguarded and combined for this study: self-archived versions from
+July 2021, July 2022, and May 2023, as well as the most current dump
+downloaded on 11 December 2023. This ensured that transformative
+agreements, which ended from 2021 onwards, were included. Overall, the
+four combined Transformative Agreement Data dumps used in this study
+contained 729 out of 869 agreements listed in the ESAC registry by
+December 2023.
 
 The Transformative Agreement Data dumps link agreements to journals
 represented by journal names and ISSN. After mapping ISSN variants to
-the corresponding linking ISSN (ISSN-L) as provided by The ISSN
+the corresponding linking ISSN (ISSN-L) as provided by the ISSN
 International Centre, journals were associated to publishers using the
 ESAC ID, a unique identifier for transformative agreements in the ESAC
 Transformative Agreement Registry. Because transformative agreements can
@@ -116,40 +121,45 @@ complemented with information about a journal's open access status using
 multiple sources: the Directory of Open Access Journals (DOAJ)
 downloaded on 12 December 2023\footnote{\url{https://doaj.org/csv}},
 OpenAlex (November 2023) and the the Bielefeld list of GOLD OA journals
-(Bruns et al., 2022). In total, 3,439 full open access journals were
-excluded based on ISSN matching. Figure shows an overlap between the
-three data sources of 72\%. However, combining different data sources
-considerably extended the journal matching to exclude full open access
-journals from transformative agreements. The Gold OA journals dataset
-alone adds 176 journals, while the DOAJ comprised 10 full open access
-journals not listed in either of the other two sources. These full open
-access journals were mostly launched in 2022.
+(Bruns et al., 2022). As shown in Figure \ref{fig:method_fig}A,
+combining different data sources considerably extended the journal
+matching to exclude full open access journals from transformative
+agreements. In total, 3,439 full open access journals were excluded
+based on ISSN matching. The overlap between the three data sources was
+72\%. The Gold OA journals dataset alone added 176 journals, while the
+DOAJ comprised 10 full open access journals not listed in either of the
+other two sources. These full open access journals were mostly launched
+in 2022.
 
-\hypertarget{article-metadata}{%
-\subsection{Article metadata}\label{article-metadata}}
+\hypertarget{article-and-author-metadata}{%
+\subsection{Article and author
+metadata}\label{article-and-author-metadata}}
 
 After identifying hybrid journals included in transformative agreements,
-article metadata was retrieved from Crossref and mapped to OpenAlex for
-obtaining author metadata including affiliations. The Crossref November
-2023 database snapshot was used to determine the journals' yearly
-publication volume for the five-year period 2018 to 2022. Because
-Crossref metadata lacked information to distinguish between research
-articles and other types of journal content, only articles published in
-regular issues indicated by non-numeric pagination were included.
-Furthermore, an expanded version of Unpaywall's paratext recognition
-approach was applied to exclude non-scholarly journal content such as
-table of contents.
+article metadata was retrieved from Crossref\textless!. November 2023
+database snapshot for the five-year period 2018 to 2022. Because
+Crossref metadata lacked information to distinguish between original
+research articles including review and other types of journal content,
+which are often not covered by transformative agreements (Borrego et
+al., 2020), only articles published in regular issues indicated by
+non-numeric pagination were included. Furthermore, an expanded version
+of Unpaywall's paratext recognition approach was applied to exclude
+non-scholarly journal content such as table of contents.
 
 Open access articles in hybrid journals were identified through Creative
 Commons (CC) license information in Crossref metadata. License
 information relative to the ``accepted manuscript (AM)'' version were
 not considered. Crossref was used for open access identification because
-transformative agreements generally require publishers to deposit CC
-license information. Comparing Crossref license coverage with OpenAlex,
-which re-uses open access evidence from Unpaywall, a widely used open
-access discovery service, revealed a slight discrepancy between these
-two data sources. Overall, 742,369 articles with CC license were
-retrieved using Crossref, while 950,260 articles were tagged as
+transformative agreements workflows generally require publishers to
+deliver CC license information to this DOI registration agency (Geschuhn
+\& Stone, 2017). Comparing Crossref license coverage with OpenAlex,
+which re-uses open access evidence from Unpaywall, not all publisher
+provide such license information a widely used open access discovery
+service that also parses journal websites for open content licenses
+(Piwowar et al., 2018), demonstrates the ongoing challenges to identify
+open access articles in hybrid journals (Jahn et al., 2021;
+Martín-Martín et al., 2018). Overall, 742,369 articles with CC license
+were retrieved using Crossref, while 950,260 articles were tagged as
 ``hybrid'' in OpenAlex. The biggest differences concerned articles
 published between 2018 and 2020. In 2022, however, Crossref and OpenAlex
 open access numbers only differ slightly (249,511 records using Crossref
@@ -158,7 +168,10 @@ furthermore observed among some publishers that presumably did not
 provide CC license information to Crossref including AIP Publishing,
 American Physiological Society and Emerald. Crossref license metadata
 was more complete with regard to articles from the publisher Wiley and
-American Chemical Society.
+American Chemical Society. Finally, inconsistent open access status
+information in previous OpenAlex versions was observed (Jahn et al.,
+2023). According to the OpenAlex release notes, fixing this issue was
+still ongoing, which might also explain this discrepancy.
 
 After retrieving article metadata, the publication volume including open
 access was calculated per journal. To improve the identification of
@@ -170,7 +183,7 @@ Author metadata are crucial for the planning and evaluation of
 transformative agreements (Geschuhn \& Stone, 2017; Schimmer et al.,
 2015), in particular information about corresponding authors who are
 generally responsible to arrange open access publication (Borrego et
-al., 2020). Author affiliations were retrieved from OpenAlex. However,
+al., 2020). Here, affiliations were retrieved from OpenAlex. However,
 because of low coverage, this study focused on first authors and their
 affiliations. First authors typically contribute most to a paper and are
 often considered lead author research papers (Larivière et al., 2016).
@@ -179,29 +192,46 @@ metadata in OpenAlex, whereas the coverage of articles with
 corresponding author information was around 54\%.
 
 To assess the impact of transformative agreements to hybrid open access,
-eligible institutions per agreement as listed in the Transformative
-Agreement Data dump. According to the documentation, data about
-participating institutions were crowd-sourced from the agreements and
-consortia that successfully negotiated an agreement. Eligible were
-automatically matched to first author affiliations recorded by OpenAlex
-using the ROR-ID. The matching also took into account the duration of an
-agreement according to the ESAC registry. Upon inspection,
-Transformative Agreement Data did not cover associated institutions
-comprehensively like university hospitals or institutes of large
-research organisations like the Max Planck Society. To improve the
-matching, Transformative Agreement Data was automatically enriched with
-associated institutions.
+participating institutions from the Transformative Agreement Data dump,
+which were crowd-sourced from the agreements and consortia that
+successfully negotiated an agreement, were matched with first author
+affiliations recorded by OpenAlex using the ROR-ID. The matching also
+took into account the duration of an agreement according to the ESAC
+registry. Upon inspection, Transformative Agreement Data did not cover
+associated institutions comprehensively like university hospitals or
+institutes of large research organisations like the Max Planck Society.
+To improve the matching, Transformative Agreement Data was automatically
+enriched with associated institutions using OpenAlex's insitution data.
 
 In total, the compiled data set consists of 8,922,146 articles published
-in 12,857 hybrid journals between 2018 and 2022. Hybrid journals
-included in transformative agreements represented 40\% of total global
-output over the same time period according to Crossref, while full open
-access journals
+in 12,857 hybrid journals between 2018 and 2022 (see Figure
+\ref{fig:method_fig}. Hybrid journals included in transformative
+agreements represented 40\% of total global output over the same time
+period according to Crossref, while full open access journals accounted
+for 0\% of total article volume.
 
-\begin{center}\includegraphics[width=0.99\linewidth]{fig/method_fig-1} \end{center}
+\begin{figure}
+
+{\centering \includegraphics[width=0.99\linewidth]{fig/method_fig-1} 
+
+}
+
+\caption{Initial data characteristics. (A) Full open access journals included in transformative agreements by evidence source Directory of Open Access Journals (DOAJ), OpenAlex and the Bielefeld GOLD OA list. (B) Number of articles in Crossref by journal types. The blue bars show the overall article volume of hybrid journals in transformative agreements, which were initially included in the study, in comaprision with full open access journals according to OpenAlex. The remainder represents closed access journals not covered by transformative agreements.}\label{fig:method_fig}
+\end{figure}
 
 \hypertarget{data-analysis}{%
 \subsection{Data Analysis}\label{data-analysis}}
+
+Throughout this mostly automated data gathering and analysis process, we
+used tools from the Tidyverse (Wickham et al., 2019) for the R
+programming language (R Core Team, 2020). The resulting data is openly
+available through an R package, hoaddata. Following Marwick et al.
+(2018), hoaddata contains not only the datasets used in the data
+analysis. It also includes codeused to compile the data by connecting it
+the cloud-based Google Big Query data warehouse, where the big scholarly
+data from Crossref, OpenAlex and Unpaywall were imported. To increase
+the computational reproducibility, the R package was automatically built
+using GitHub Actions, a continuous integration service.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -548,11 +578,42 @@ required to make {``offsetting''} work for the open access transition.
 \emph{Insights the {UKSG} Journal}, \emph{30}(3), 103--114.
 \url{https://doi.org/10.1629/uksg.391}
 
+\leavevmode\vadjust pre{\hypertarget{ref-jahn2023}{}}%
+Jahn, N., Haupka, N., \& Hobert, A. (2023). \emph{Analysing and
+reclassifying open access information in OpenAlex}. Blog post.
+\url{https://subugoe.github.io/scholcomm_analytics/posts/oalex_oa_status/}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Jahn_2021}{}}%
+Jahn, N., Matthias, L., \& Laakso, M. (2021). Toward transparency of
+hybrid open access through publisher-provided metadata: An article-level
+study of elsevier. \emph{Journal of the Association for Information
+Science and Technology}, \emph{73}(1), 104--118.
+\url{https://doi.org/10.1002/asi.24549}
+
 \leavevmode\vadjust pre{\hypertarget{ref-Larivi_re_2016}{}}%
 Larivière, V., Desrochers, N., Macaluso, B., Mongeon, P., Paul-Hus, A.,
 \& Sugimoto, C. R. (2016). Contributorship and division of labor in
 knowledge production. \emph{Social Studies of Science}, \emph{46}(3),
 417--435. \url{https://doi.org/10.1177/0306312716650046}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Mart_n_Mart_n_2018}{}}%
+Martín-Martín, A., Costas, R., Leeuwen, T. van, \& López-Cózar, E. D.
+(2018). Evidence of open access of scientific publications in google
+scholar: A large-scale analysis. \emph{Journal of Informetrics},
+\emph{12}(3), 819--841. \url{https://doi.org/10.1016/j.joi.2018.06.012}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Marwick_2018}{}}%
+Marwick, B., Boettiger, C., \& Mullen, L. (2018). Packaging data
+analytical work reproducibly using r (and friends). \emph{The American
+Statistician}, \emph{72}(1), 80--88.
+\url{https://doi.org/10.1080/00031305.2017.1375986}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Piwowar_2018}{}}%
+Piwowar, H., Priem, J., Larivière, V., Alperin, J. P., Matthias, L.,
+Norlander, B., Farley, A., West, J., \& Haustein, S. (2018). The state
+of {OA}: A large-scale analysis of the prevalence and impact of open
+access articles. \emph{{PeerJ}}, \emph{6}, e4375.
+\url{https://doi.org/10.7717/peerj.4375}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Schimmer_2015}{}}%
 Schimmer, R., Geschuhn, K., \& Vogler, A. (2015). \emph{{Disrupting the

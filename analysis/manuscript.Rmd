@@ -53,10 +53,10 @@ ta_oa_inst <- readr::read_csv(here::here("data", "ta_oa_inst.csv.gz"))
 
 # Methods and data
 
-This study combines data from multiple publicly available data sources as visualised in Figure 1. 
-Transformative agreement data retrieved from the cOAlition S Journal Checker Tool provided information about journal portfolios and participating institutions. 
-After identification of hybrid journals, Crossref served as the primary data source for article-level metadata including Creative Commons (CC) license information to determine open access articles on publisher websites.
-OpenAlex provided first author affiliation metadata that were subsequently linked to the transformative agreement data to identify open access articles published through these agreements. 
+This study combines data from multiple publicly available data sources as diagrammatically shown in Figure \ref{fig:data_workflow}. 
+Initially, transformative agreement data retrieved from the cOAlition S Journal Checker Tool provided information about journal portfolios and participating institutions. 
+After identification of hybrid journals, Crossref served as the primary data source for article-level metadata including Creative Commons (CC) license information to determine open access availability on publisher websites.
+To identify open access articles published through transformative agreements, first author affiliations from OpenAlex were subsequently linked to eligible institutions according to the transformative agreement data.
 
 
 ```{r data_workflow, echo=FALSE, fig.cap="Data collection workflow to obtain article-level transformative agreement data"}
@@ -111,48 +111,49 @@ p <-
   labs(xlab = NULL, xlab = NULL)
 ```
 
-Data gathering started with obtaining journals included in transformative agreements using the publicly available Transformative Agreement Data dump[^tadump] used by the cOAlition S Journal Checker Tool.[^checkertool] 
-The dump consisted of multiple online Google spreadsheets where each data file represented one agreement listed in the ESAC Transformative Agreement Registry.[^esacregistry] 
-Each file comprised information about journals and institutions involved per agreement. 
-Because the Journal Checker Tool only provided data about active transformative agreements, data representing expired transformative agreements were constantly removed. Therefore, four different snapshots were used for this analysis: self-archived version from July 2021, July 2022, and May 2023, as well as the most current dump downloaded on 11 December 2023. 
-This ensured that transformative agreements, which ended in 2021, were included in the analysis.
-Agreements ending before 2021 could not be obtained.
-Overall, the combined Transformative Agreement Data dumps contained `r  length(unique(hoaddata::jct_hybrid_jns$esac_id))` out of `r length(unique(esac_df$ID))` agreements listed in the ESAC registry by December 2023. 
+Data gathering started with obtaining journals included in transformative agreements from the publicly available Transformative Agreement Data dump[^tadump] used by the cOAlition S Journal Checker Tool.[^checkertool] 
+The dump consisted of multiple online Google spreadsheets where each data file represented one agreement listed in the ESAC Transformative Agreement Registry.[^esacregistry]
+From the retrieved spreadsheet files, journals and institutions involved per agreement were obtained.
+
+A limitation of using the Journal Checker Tool to study the development of transformative agreements over time is that it only provided data about active transformative agreements.
+As a result, expired transformative agreements were constantly removed from the publicly available data dump. 
+To address this, four different snapshots were safeguarded and combined for this study: self-archived versions from July 2021, July 2022, and May 2023, as well as the most current dump downloaded on 11 December 2023.
+This ensured that transformative agreements, which ended from 2021 onwards, were included.
+<!-- Agreements ending before 2021 could not be obtained.-->
+Overall, the four combined Transformative Agreement Data dumps used in this study contained `r  length(unique(hoaddata::jct_hybrid_jns$esac_id))` out of `r length(unique(esac_df$ID))` agreements listed in the ESAC registry by December 2023. 
 
 The Transformative Agreement Data dumps link agreements to journals represented by journal names and ISSN. 
-After mapping ISSN variants to the corresponding linking ISSN (ISSN-L) as provided by The ISSN International Centre, journals were associated to publishers using the ESAC ID, a unique identifier for transformative agreements in the ESAC Transformative Agreement Registry.
+After mapping ISSN variants to the corresponding linking ISSN (ISSN-L) as provided by the ISSN International Centre, journals were associated to publishers using the ESAC ID, a unique identifier for transformative agreements in the ESAC Transformative Agreement Registry.
 Because transformative agreements can include both full open access and hybrid journals, the data were complemented with information about a journal's open access status using multiple sources: the Directory of Open Access Journals (DOAJ) downloaded on 12 December 2023[^doaj], OpenAlex (November 2023) and the the Bielefeld list of GOLD OA journals [@goldoa]. 
+As shown in Figure \ref{fig:method_fig}A, combining different data sources considerably extended the journal matching to exclude full open access journals from transformative agreements.
 In total, `r n_oa_journals` full open access journals were excluded based on ISSN matching.
-Figure shows an overlap between the three data sources of
-`r round(length(unique(Reduce(intersect, my_venn))) / length(unique(Reduce(union, my_venn)))* 100,0)`%.
-However, combining different data sources considerably extended the journal matching to exclude full open access journals from transformative agreements.
-The Gold OA journals dataset alone adds `r length(unique(Reduce(setdiff, my_venn)))` journals, while the DOAJ comprised `r length(setdiff(my_venn$DOAJ, union(my_venn[["GOLD OA"]], my_venn$OpenAlex)))` full open access journals not listed in either of the other two sources. 
+The overlap between the three data sources was `r round(length(unique(Reduce(intersect, my_venn))) / length(unique(Reduce(union, my_venn)))* 100,0)`%.
+The Gold OA journals dataset alone added `r length(unique(Reduce(setdiff, my_venn)))` journals, while the DOAJ comprised `r length(setdiff(my_venn$DOAJ, union(my_venn[["GOLD OA"]], my_venn$OpenAlex)))` full open access journals not listed in either of the other two sources. 
 These full open access journals were mostly launched in 2022.
 
-## Article metadata
+## Article and author metadata
 
-After identifying hybrid journals included in transformative agreements, article metadata was retrieved from Crossref and mapped to OpenAlex for obtaining author metadata including affiliations. 
-The Crossref November 2023 database snapshot was used to determine the journals’ yearly publication volume for the five-year period 2018 to 2022. 
-Because Crossref metadata lacked information to distinguish between research articles and other types of journal content, only articles published in regular issues indicated by non-numeric pagination were included.
+After identifying hybrid journals included in transformative agreements, article metadata was retrieved from Crossref<!. <!-- and mapped to OpenAlex for obtaining author metadata including affiliations. --> November 2023 database snapshot for the five-year period 2018 to 2022. 
+Because Crossref metadata lacked information to distinguish between original research articles including review and other types of journal content, which are often not covered by transformative agreements [@Borrego_2020], only articles published in regular issues indicated by non-numeric pagination were included.
 Furthermore, an expanded version of Unpaywall’s paratext recognition approach was applied to exclude non-scholarly journal content such as table of contents.
 
 Open access articles in hybrid journals were identified through Creative Commons (CC) license information in Crossref metadata. 
 License information relative to the "accepted manuscript (AM)" version were not considered. 
-Crossref was used for open access identification because transformative agreements generally require publishers to deposit CC license information.
-Comparing Crossref license coverage with OpenAlex, which re-uses open access evidence from Unpaywall, a widely used open access discovery service, revealed a slight discrepancy between these two data sources.
+Crossref was used for open access identification because transformative agreements workflows generally require publishers to deliver CC license information to this DOI registration agency [@Geschuhn_2017].
+Comparing Crossref license coverage with OpenAlex, which re-uses open access evidence from Unpaywall, not all publisher provide such license information a widely used open access discovery service that also parses journal websites for open content licenses [@Piwowar_2018], demonstrates the ongoing challenges to identify open access articles in hybrid journals [@Mart_n_Mart_n_2018; @Jahn_2021].
 Overall, `r hoaddata::cr_upw |> filter(cr_year %in% 2018:2022, cat == "Global", issn_l != "0027-8424") |> distinct(issn_l, cr_year, cr_hybrid_total) |> pull(cr_hybrid_total) |> sum()` articles with CC license were retrieved using Crossref, while `r hoaddata::cr_upw |> filter(cr_year %in% 2018:2022, cat == "Global", issn_l != "0027-8424") |> distinct(issn_l, cr_year, upw_hybrid_total) |> pull(upw_hybrid_total) |> sum()` articles were tagged as "hybrid" in OpenAlex. 
 The biggest differences concerned articles published between 2018 and 2020.
 In 2022, however, Crossref and OpenAlex open access numbers only differ slightly (`r hoaddata::cr_upw |> filter(cr_year %in% 2022, cat == "Global", issn_l != "0027-8424") |> distinct(issn_l, cr_year, cr_hybrid_total) |> pull(cr_hybrid_total) |> sum()` records using Crossref vs. `r hoaddata::cr_upw |> filter(cr_year %in% 2022, cat == "Global", issn_l != "0027-8424") |> distinct(issn_l, cr_year, upw_hybrid_total) |> pull(upw_hybrid_total) |> sum()` in OpenAlex).
 Upon inspection, notable difference could be furthermore observed among some publishers that presumably did not provide CC license information to Crossref including AIP Publishing, American Physiological Society and Emerald.
 Crossref license metadata was more complete with regard to articles from the publisher Wiley and American Chemical Society.
-<!-- During the data collection, inconsistent open access status information in previous OpenAlex versions was observed [@jahn2023], which might explain this discrepancy.-->
+Finally, inconsistent open access status information in previous OpenAlex versions was observed [@jahn2023]. According to the OpenAlex release notes, fixing this issue was still ongoing, which might also explain this discrepancy.
 
 After retrieving article metadata, the publication volume including open access was calculated per journal. 
 To improve the identification of hybrid journals, journals with an open access proportion above 95% were excluded.
 This further step allowed to remove additional `r length(unique(oa_prop$issn_l))` full open access journals.
 
 Author metadata are crucial for the planning and evaluation of transformative agreements [@Schimmer_2015; @Geschuhn_2017], in particular information about corresponding authors who are generally responsible to arrange open access publication [@Borrego_2020]. 
-Author affiliations were retrieved from OpenAlex.
+Here, affiliations were retrieved from OpenAlex.
 However, because of low coverage, this study focused on first authors and their affiliations.
 First authors typically contribute most to a paper and are often considered lead author research papers [@Larivi_re_2016]. 
 Overall, around 90% of studied articles had first author affiliation metadata in OpenAlex, whereas the coverage of articles with corresponding author information was around 54%.
@@ -202,22 +203,27 @@ cr_stats_plot <- cr_stats |>
   ) 
 ```
 
-To assess the impact of transformative agreements to hybrid open access, eligible institutions per agreement as listed in the Transformative Agreement Data dump. 
-According to the documentation, data about participating institutions were crowd-sourced from the agreements and consortia that successfully negotiated an agreement.
-Eligible were automatically matched to first author affiliations recorded by OpenAlex using the ROR-ID.
+To assess the impact of transformative agreements to hybrid open access, participating institutions from the Transformative Agreement Data dump, which were crowd-sourced from the agreements and consortia that successfully negotiated an agreement, were matched with first author affiliations recorded by OpenAlex using the ROR-ID.
 The matching also took into account the duration of an agreement according to the ESAC registry.
-Upon inspection, Transformative Agreement Data did not cover  associated institutions comprehensively like university hospitals or institutes of large research organisations like the Max Planck Society. 
-To improve the matching, Transformative Agreement Data was automatically enriched with associated institutions. 
+Upon inspection, Transformative Agreement Data did not cover associated institutions comprehensively like university hospitals or institutes of large research organisations like the Max Planck Society. To improve the matching, Transformative Agreement Data was automatically enriched with associated institutions using OpenAlex's insitution data.
 
-In total, the compiled data set consists of `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l, cr_year, jn_all) |> pull(jn_all) |> sum()` articles published in `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l) |> nrow()` hybrid journals between 2018 and 2022. 
-Hybrid journals included in transformative agreements represented `r cr_stats |> filter(src == "hoad") |> pull(n_articles) |> sum() / cr_stats |> pull(n_articles) |> sum() * 100`%  of total global output over the same time period according to Crossref, while full open access journals
+In total, the compiled data set consists of `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l, cr_year, jn_all) |> pull(jn_all) |> sum()` articles published in `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l) |> nrow()` hybrid journals between 2018 and 2022 (see Figure \ref{fig:method_fig}. 
+Hybrid journals included in transformative agreements represented `r cr_stats |> filter(src == "hoad") |> pull(n_articles) |> sum() / cr_stats |> pull(n_articles) |> sum() * 100`%  of total global output over the same time period according to Crossref, while full open access journals accounted for
+`r cr_stats |> filter(src == "gold") |> pull(n_articles) |> sum() / cr_stats |> pull(n_articles) |> sum() * 100`% of total article volume.
 
-```{r method_fig, fig.asp=0.55}
+
+```{r method_fig, fig.asp=0.55, fig.cap="Initial data characteristics. (A) Full open access journals included in transformative agreements by evidence source Directory of Open Access Journals (DOAJ), OpenAlex and the Bielefeld GOLD OA list. (B) Number of articles in Crossref by journal types. The blue bars show the overall article volume of hybrid journals in transformative agreements, which were initially included in the study, in comaprision with full open access journals according to OpenAlex. The remainder represents closed access journals not covered by transformative agreements."}
 (p | cr_stats_plot) + plot_annotation(tag_levels = 'A') +  plot_layout(widths = c(0.6, 0.4))
 ```
 <!-- To reflect the increasing trend towards multiple and cross-country affiliations (Hottenrott et al., 2021; Larivière et al., 2015), articles were counted once per country. -->
 
 ## Data Analysis
+
+Throughout this mostly automated data gathering and analysis process, we used tools from the Tidyverse (Wickham et al., 2019) for the R programming language (R Core Team, 2020). 
+The resulting data is openly available through an R package, hoaddata. 
+Following @Marwick_2018, hoaddata contains not only the datasets used in the data analysis. It also includes codeused to compile the data by connecting it the cloud-based Google Big Query data warehouse, where the big scholarly data from Crossref, OpenAlex and Unpaywall were imported.
+To increase the computational reproducibility, the R package was automatically built using GitHub Actions, a continuous integration service.
+
 
 # Results
 
