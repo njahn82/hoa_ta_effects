@@ -51,18 +51,38 @@ library(hoaddata)
 ta_oa_inst <- readr::read_csv(here::here("data", "ta_oa_inst.csv.gz"))
 
 ```
+
 # Introduction
 
-For over two decades, hybrid open access journal publishing, which makes some articles freely available under an open license while others remain behind a paywall, has been discussed as a  model for transitioning the subscription system to full open access [@Prosser_2003].
+For over two decades, hybrid open access journal publishing, which makes some articles openly available while others remain behind a paywall, has been discussed as a  model for transitioning the subscription system to full open access [@Prosser_2003].
 The idea was that when journals publish more and more open access articles, they could reduce revenues from subscriptions, while libraries and funders could change their funding models and shift expenditures from subscription to open access. 
 However, initial approaches, mainly based on publication fees, also called article processing charges (APCs), did not contribute substantially to an large open access uptake. 
-In 2012 ddd - at the same time
+In 2009, Springer reported open access to 1% of articles in hybrid journals [@Dallmeier_2010].
+Other publishers also recorded a low uptake.
+In 2011, only 1-2% of articles in over 4,300 hybrid journals from large publishers were open access [@Bj_rk_2012], growing to around 4% between 2011 and 2013 [@Laakso_2016]. 
 
-Tthe introduction of transformative agreements, a collective term for agreements starting from mid-2015, has resulted in a new push for hybrid open access. In particular, the Max Planck Society's Berlin 2020 initiative and plan has advocated these types of agreements as a transitional means to progress with open access. As a result, more than 800 transformative agreements have been tracked so far, which have been instrumental in funding activities and controversies. today, all publsiehrs offer such agreements
+With the introduction of central funding mechanisms for hybrid open access publication fees in a few countries since 2012, notably in the UK, an increase in open access could be observed [@Bj_rk_2017; @Jubb_2017; @Robinson_Garcia_2020]. 
+However, this shift in funding policy towards hybrid open access also added to the overall cost of publishing, which includes subscriptions spending and the administrative efforts required to handle payments [@Pinfield_2016].
+Moreover, established large commercial publishers, which already dominated the publishing market [@Larivi_re_2015], disproportionately benefited from hybrid open access funding in comparison to full open access publishers [@Jahn_2016; @Butler_2023; @Shu_2023].
 
-Advocates of these agreements argue that they not only overcome the issue of double-dipping but also help to shift library spending from subscriptions to publications, streamline expenditures, and offer more value than big deals, which focus on large publishers.  A few agreements can impact an institution's open access share, resulting in a significant proportion of open access content. increase transparency 
+As a consequence, libraries and their consortia began to develop licensing strategies aimed at avoiding such ‘double dipping’ scenarios, in which well-established commercial publishers gain twice from reading and publication fees, as well as to increase publisher-provided immediate open access [@BJ_RK_2014; @Schimmer_2015].
+These considerations resulted into transformative agreements, which cover a broad range of successfully negotiated contracts between library consortia and publishers from mid-2010s onwards where institutional spending for subscriptions are re-purposed for open access publishing [@Borrego_2020].
+These transformative agreements seek to control costs while allowing a transitional phase for publishing more open access articles [@Hinchliffe_2019]. 
+At the same time, they aim at a higher degree of transparency than previous subscription-only Big Deals, which bundled access to large journal portfolios of commercial publishers [@Bergstrom_2014].
+However, the focus of transformative agreements remains primarily on these publishers with large hybrid journals and subscription-only portfolios [@Borrego_2020]. 
+<!-- national negotiations, oa2020 -->
+For example, the nationwide DEAL consortium in Germany, which includes universities and academic institutions, collectively cancelled their subscriptions with Elsevier from 2017 onwards to negotiate a transformative agreement [@Fraser_2023]. 
 
-However, opponents of transformative agreements perceive continued reliance on big deals as problematic. They argue that the focus on large publishers perpetuates the business relationships that led to the serial crisis and lacks evidence that this leads to a reduction of In addition, concerns over inequality abound. could not benn mass removal 
+The introduction of transformative agreements aligns with funding policy changes, such as  the decision made by the  cOAlition S, a consortium of national funders including the European Commission, to no longer provide financial support for individual publication fees when publishing in hybrid journals.
+ According ot its Plan S, they only accept hybrid open access through transformative agreements "during a transition period that should be as short as possible" [@Schiltz_2018]. 
+Specifically, cOAlition S funders agreed to support hybrid open access solely through transformative agreements from 1 January 2021, until the end of 2024.
+The German Research Foundation (DFG) has also extended its financial support for hybrid open access through transformative agreements, despite not being part of cOAlition S. Previously, the DFG only provided funding for full open access journals [@Jahn_2016].
+
+Advocates of these agreements argue that they not only overcome the issue standardiazation of double-dipping but also help to shift library spending from subscriptions to publications, streamline expenditures, and offer more value than big deals, which focus on large publishers.  A few agreements can impact an institution's open access share, resulting in a significant proportion of open access content. increase transparency 
+
+However, opponents of transformative agreements perceive continued reliance on big deals as problematic. They argue that the focus on large publishers perpetuates the business relationships that led to the serial crisis and lacks evidence that this leads to a reduction of In addition, concerns over inequality abound. trnasparency differ and now nsns 
+
+could not benn mass removal 
 
 Effects can be seen, mixed consequences. some countries who have introduced this fundign effects netherlands, sweden. no in germany, elsevier deal to price reduction and first steps towards mroe privacy. however, main goals associated woth trnasofrtiomative, the transition of the journal landscape not achivned, publsiehrs were not able to meet growtht raget, sweden did not see the flipping and has 
 
@@ -1319,7 +1339,7 @@ During this period, first-authors affiliated with institutions from Organisation
 This disparity between OECD nations and other countries becomes even more evident when considering open access through transformative agreements, as  `r oecd_stats_global |> filter(cat == "OECD") |> pull(ta_oa)` of `r n_ta_oa`, or `r oecd_stats_global |> filter(cat == "OECD") |> pull(ta_oa) / n_ta_oa*100`% of open access articles were associated with such agreements.
 
 
-```{r countrypatch, fig.asp=0.9}
+```{r country_patch, fig.asp=0.9, fig.cap="Development of hybrid open access publishing by countries"}
 library(patchwork)
 wrap_plots(
   A = country_bar,
@@ -1328,7 +1348,6 @@ wrap_plots(
   design = "
   AC
   BC",
- # guides = "c  ollect",
   widths = c(0.7, 0.3),
   heights = c(0.5,0.5)
 ) &
@@ -1341,7 +1360,7 @@ wrap_plots(
     plot_annotation(tag_levels = 'A') 
 ```
 
-Figure \ref{fig:countrypatch}A shows the development of hybrid open access publishing by countries, comparing the OECD area with the BRICS, an intergovernmental organisation, which comprised the countries Brazil, Russia, India, China and South Africa in 2022.
+Figure \ref{fig:country_patch}A shows the development of hybrid open access publishing by countries, comparing the OECD area with the BRICS, an intergovernmental organisation, which comprised the countries Brazil, Russia, India, China and South Africa in 2022.
 The residual category "Other" includes the remaining countries. 
 From 2018 to 2022, the proportion of open access in hybrid journals increased from `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022. 
 On the other hand, BRICS recorded an low uptake, from `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022.  
@@ -1351,18 +1370,18 @@ Upon closer examination, this trend can be observed across all big three publish
 While OECD publication output in Elsevier's Physical Sciences journals declined from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` articles in 2018 to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` in 2022, BRICS output increased from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` in the same five-year period.
 Furthermore, OECD publication output in Health Science Journals and Life Science journals stagnated across the investigated hybrid journal portfolios after a peak in 2020. 
 
-To illustrate the situation in 2022, \ref{fig:countrypatch}B compares total publication output with the number of open access articles. 
+To illustrate the situation in 2022, \ref{fig:country_patch}B compares total publication output with the number of open access articles. 
 With `r country_scatter_df |> filter(cr_year == "2022", country_code == "CN") |> pull(all)` articles, China was the most productive country, followed by the United States (`r country_scatter_df |> filter(cr_year == "2022", country_code == "US") |> pull(all)` articles) and India (`r country_scatter_df |> filter(cr_year == "2022", country_code == "IN") |> pull(all)` articles). 
 In contrast, West and Nord European countries published a considerable high number of open access articles, mainly due to transformative agreements. 
 Particularly, Germany, Great Britain, the Netherlands, Sweden, Switzerland and Spain recorded an above-average open access share as indicated by the linear trend line.
 As represented by the point size, as well as it can been seen in Figure \ref{fig:country_patch}C, transformative agreements contributed to this market position of these countries. 
 Interestingly, the United States had a notable open access market share of `r top_20_plot$data |> distinct(country_code, oa, all) |> mutate(prop = oa / sum(oa)) |> filter(country_code == "US") |> pull(prop) * 100`%, although transformative agreements contributed to a lesser extent. Similarly, China's open access market share of `r top_20_plot$data |> distinct(country_code, oa, all) |> mutate(prop = oa / sum(oa)) |> filter(country_code == "CN") |> pull(prop) * 100` in 2022 was comparable to that of the Netherlands, which was (`r  top_20_plot$data |> distinct(country_code, oa, all) |> mutate(prop = oa / sum(oa)) |> filter(country_code == "NL") |> pull(prop) * 100`%,).
 
-```{r countrytop20plot, fig.asp=0.8}
+```{r country_top_20_plot, fig.asp=0.8, fig.cap="Top 20 countries"}
 country_plot
 ```
 
-Figure \ref{fig:countrytop20plot} illustrates the development of hybrid open access from 2018 to 2022, highlighting the top 20 most productive countries in terms of articles published in hybrid journals that were included in transformative agreements over the five-year period. 
+Figure \ref{fig:country_top_20_plot} illustrates the development of hybrid open access from 2018 to 2022, highlighting the top 20 most productive countries in terms of articles published in hybrid journals that were included in transformative agreements over the five-year period. 
 Notably, The Netherlands (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "NL") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), Sweden (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "SE") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), Poland (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "PL") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%) and Great Britain (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "GB") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%)) exhibited a relatively high level of uptake in 2018 which continued to increase in the following years. 
 In 2022, Sweden had the highest proportion of open-access articles relative to its publication output (`r country_plot$data |> filter(cr_year == "2022", country_name_fct == "SE") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), followed by the Netherlands (`r country_plot$data |> filter(cr_year == "2022", country_name_fct == "NL") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%) and Switzerland (`r country_plot$data |> filter(cr_year == "2022", country_name_fct == "CH") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), with these countries benefiting from transformative agreements.
 In Germany, however, hybrid open access only began to increase from 2019 onwards after the successful negotiation of nationwide agreements with Wiley (July 2019) and Springer Nature (January 2020). Prior to this, only a few organisations had agreements in place, for the example the Max Planck Society with Springer Compact.
