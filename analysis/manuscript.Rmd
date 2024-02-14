@@ -55,38 +55,57 @@ ta_oa_inst <- readr::read_csv(here::here("data", "ta_oa_inst.csv.gz"))
 # Introduction
 
 For over two decades, hybrid open access journal publishing, which makes some articles openly available while others remain behind a paywall, has been discussed as a  model for transitioning the subscription system to full open access [@Prosser_2003].
-The idea was that when journals publish more and more open access articles, they could reduce revenues from subscriptions, while libraries and funders could change their funding models and shift expenditures from subscription to open access. 
+The idea was that when journals increasingly publish open access articles, they could reduce revenues from subscriptions, while libraries and funders could change their funding models and shift expenditures from subscription to open access. 
 However, initial approaches, mainly based on publication fees, also called article processing charges (APCs), did not contribute substantially to an large open access uptake. 
 In 2009, Springer reported open access to 1% of articles in hybrid journals [@Dallmeier_2010].
 Other publishers also recorded a low uptake.
 In 2011, only 1-2% of articles in over 4,300 hybrid journals from large publishers were open access [@Bj_rk_2012], growing to around 4% between 2011 and 2013 [@Laakso_2016]. 
 
-With the introduction of central funding mechanisms for hybrid open access publication fees in a few countries since 2012, notably in the UK, an increase in open access could be observed [@Bj_rk_2017; @Jubb_2017; @Robinson_Garcia_2020]. 
-However, this shift in funding policy towards hybrid open access also added to the overall cost of publishing, which includes subscriptions spending and the administrative efforts required to handle payments [@Pinfield_2016].
+With the introduction of central funding mechanisms for hybrid open access publication fees in some European countries since 2012 an increase in open access could be observed [@Bj_rk_2017; @Piwowar_2018; @Jubb_2017; @Huang_2020].
+For example, studying university output, @Robinson_Garcia_2020 estimated a median uptake of 7.1% in the period 2014-2017. 
+In particular, British (17%), Austrian (15%) and Dutch (13%) universities contributed to this trend. 
+However, this shift in funding policy towards hybrid open access also added to the overall cost of publishing, which includes subscription spending and the administrative efforts required to handle payments [@Pinfield_2016].
 Moreover, established large commercial publishers, which already dominated the publishing market [@Larivi_re_2015], disproportionately benefited from hybrid open access funding in comparison to full open access publishers [@Jahn_2016; @Butler_2023; @Shu_2023].
 
 As a consequence, libraries and their consortia began to develop licensing strategies aimed at avoiding such ‘double dipping’ scenarios, in which well-established commercial publishers gain twice from reading and publication fees, as well as to increase publisher-provided immediate open access [@BJ_RK_2014; @Schimmer_2015].
-These considerations resulted into transformative agreements, which cover a broad range of successfully negotiated contracts between library consortia and publishers from mid-2010s onwards where institutional spending for subscriptions are re-purposed for open access publishing [@Borrego_2020].
-These transformative agreements seek to control costs while allowing a transitional phase for publishing more open access articles [@Hinchliffe_2019]. 
-At the same time, they aim at a higher degree of transparency than previous subscription-only Big Deals, which bundled access to large journal portfolios of commercial publishers [@Bergstrom_2014].
-However, the focus of transformative agreements remains primarily on these publishers with large hybrid journals and subscription-only portfolios [@Borrego_2020]. 
-<!-- national negotiations, oa2020 -->
-For example, the nationwide DEAL consortium in Germany, which includes universities and academic institutions, collectively cancelled their subscriptions with Elsevier from 2017 onwards to negotiate a transformative agreement [@Fraser_2023]. 
+These considerations resulted into transformative agreements, which cover a broad range of successfully negotiated contracts between library consortia and publishers from mid-2010s onwards where institutional spending for subscriptions are re-purposed for open access publishing [@Borrego_2020; @Hinchliffe_2019].
+Transformative agreements seek to control costs while allowing a transitional phase for publishing more open access articles. 
+Although transformative agreements mainly focus on large hybrid journals and subscription-only portfolios of commercial publishers,  they aim at a higher degree of transparency than previous big deals, where contracts including payments were confidential [@Bergstrom_2014].
+<!-- For example, the nationwide DEAL consortium in Germany, which includes universities and academic institutions, collectively cancelled their subscriptions with Elsevier from 2017 onwards to negotiate a transformative agreement [@Fraser_2023]. -->
 
-The introduction of transformative agreements aligns with funding policy changes, such as  the decision made by the  cOAlition S, a consortium of national funders including the European Commission, to no longer provide financial support for individual publication fees when publishing in hybrid journals.
- According ot its Plan S, they only accept hybrid open access through transformative agreements "during a transition period that should be as short as possible" [@Schiltz_2018]. 
+The introduction of transformative agreements aligns with funding policy changes, such as the decision made by the cOAlition S, a consortium of national funders including the European Commission, to no longer provide financial support for individual publication fees when publishing in hybrid journals.
+According ot its Plan S, they only accept hybrid open access through transformative agreements "during a transition period that should be as short as possible" [@Schiltz_2018]. 
 Specifically, cOAlition S funders agreed to support hybrid open access solely through transformative agreements from 1 January 2021, until the end of 2024.
-The German Research Foundation (DFG) has also extended its financial support for hybrid open access through transformative agreements, despite not being part of cOAlition S. Previously, the DFG only provided funding for full open access journals [@Jahn_2016].
+Notably, the German Research Foundation (DFG), despite not being part of cOAlition S, has also extended its financial support for hybrid open access through transformative agreements [@Mittermaier_2021]. Previously, the DFG only provided funding for full open access journals [@Jahn_2016].
 
-Advocates of these agreements argue that they not only overcome the issue standardiazation of double-dipping but also help to shift library spending from subscriptions to publications, streamline expenditures, and offer more value than big deals, which focus on large publishers.  A few agreements can impact an institution's open access share, resulting in a significant proportion of open access content. increase transparency 
+By the end of 2023, many transformative agreements were implemented, but the outcomes were mixed.
+The ESAC Transformative Agreement Registry[^esacregistry], the largest source of disclosure, recorded more than 800 transformative agreements, resulting in up to 900.000 open access articles published in both full open access and hybrid journals according to the accompanying ESAC Market Watch[^esacmarketwatch]. 
+National consortia reported increased open access volume, streamlined payment and monitoring procedures, as well as extensive utilization of open access options by the researchers they serve [@Marques_2020; @Hinchliffe_2019; @Parmhed_2023]. 
+The ongoing standardisation of transformative agreements contributed to improved transparency in terms of contracts and publisher-provided article metadata [@Marques_2019].
+However, with the growing trend toward transformative agreements, continued reliance on big deals is perceived as problematic, perpetuating the business relationships that led to the serial crisis. 
+Whether transformative agreements lead to reduced pricing remains uncertain [@Borrego_2023].
+A substantial transition of hybrid journals towards full OA could not be observed [@Momeni_2021; @Matthias_2019], and the focus on large commercial publishers has led to concerns regarding inequality, because transformative agreements continue to target institutions from high-income countries [@Klebel_2023; @Butler_2023]. 
+Besides, an editorial-board resignation raised concerns that publishers' desire to maximize journal publication volume "without regard to quality" is a consequence of transformative agreements [@Goodin_2023].
 
-However, opponents of transformative agreements perceive continued reliance on big deals as problematic. They argue that the focus on large publishers perpetuates the business relationships that led to the serial crisis and lacks evidence that this leads to a reduction of In addition, concerns over inequality abound. trnasparency differ and now nsns 
+The controversies surrounding hybrid open access and transformative agreements have led to varying practical conclusions. 
+For instance, the Swedish BIBSAM consortium recommended to only support agreements for publishing in full open access journals.
+Likewise, most cOAlition S funders will discontinue financial support for transformative agreements from 2024 onwards [@Liverpool_2023].
+The consortium also removed most hybrid journals from its Transformative Journal program in 2023 due to their failure to meet self-defined open access growth targets. 
+In contrast, the German DEAL consortium signed a cost-effective five-year transformative agreement with Elsevier starting in 2024, while also renewing its contracts with Springer Nature and Wiley until the end of 2028.
 
-could not benn mass removal 
+Against this background, the research objective of this study is to investigate the open access uptake of hybrid journals between 2018 and 2022, and the extent to which open access in hybrid journals can be attributed to transformative agreements.
+Previous quantitative science studies were able to investigate transformative agreements relative to specific countries [@P_l_nen_2020; @Huang_2020; @Haucap_2021; @Wenaas_2022; @Taubert_2023] and journal portfolios [@Pieper_2018; @Bakker_2024; @Fraser_2023; @Jahn_2022; @Momeni_2023].
+Others have focused soley on APC list prices [@Zhang_2022; @Shu_2023], not accounting for the peculiarities of transformative agreements. 
+Similarly, bibliometric databases, even though many allow the retrieval of open access articles in hybrid journals, do not directly attribute them to specific transformative agreements.
 
-Effects can be seen, mixed consequences. some countries who have introduced this fundign effects netherlands, sweden. no in germany, elsevier deal to price reduction and first steps towards mroe privacy. however, main goals associated woth trnasofrtiomative, the transition of the journal landscape not achivned, publsiehrs were not able to meet growtht raget, sweden did not see the flipping and has 
+The present study aims at a large-scale investigation using openly available data sources to answer the following research questions:
 
-This study contributes
+- What are the number and proportion of open access articles in hybrid journals published under transformative agreements between 2018-2022?
+- Who is publishing open access in hybrid journals enabled by transformative agreements, and who is not?
+
+The results of the study will be group by publishers, subjects and countries to account for the controversies.
+
+
 
 
 # Methods and data
@@ -1405,6 +1424,8 @@ pub_subject_output_plot
 [^tadump]: <https://journalcheckertool.org/transformative-agreements/>
 
 [^esacregistry]: <https://esac-initiative.org/about/transformative-agreements/agreement-registry/>
+
+[^esacmarketwatch]: <https://esac-initiative.org/market-watch/>
 
 [^doaj]: <https://doaj.org/csv>
 
