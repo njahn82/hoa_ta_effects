@@ -54,7 +54,7 @@ ta_oa_inst <- readr::read_csv(here::here("data", "ta_oa_inst.csv.gz"))
 
 # Introduction
 
-For over two decades, hybrid open access journal publishing, which makes some articles openly available while others remain behind a paywall, has been discussed as a  model for transitioning the subscription system to full open access [@Prosser_2003].
+For over two decades, hybrid open access journal publishing, which makes some articles openly available while others remain behind a paywall, has been discussed as a means for transitioning the subscription system to full open access [@Prosser_2003].
 The idea was that when journals increasingly publish open access articles, they could reduce revenues from subscriptions, while libraries and funders could change their funding models and shift expenditures from subscription to open access. 
 However, initial approaches, mainly based on publication fees, also called article processing charges (APCs), did not contribute substantially to a large open access uptake. 
 In 2009, Springer reported open access to 1% of articles in hybrid journals [@Dallmeier_2010].
@@ -280,9 +280,10 @@ Hybrid journals included in transformative agreements represented `r cr_stats |>
 
 ## Data Analysis
 
-Throughout this mostly automated data gathering and analysis process, we used tools from the Tidyverse (Wickham et al., 2019) for the R programming language (R Core Team, 2020). 
-The resulting data is openly available through an R package, hoaddata. 
-Following @Marwick_2018, hoaddata contains not only the datasets used in the data analysis. It also includes code used to compile the data by connecting it the cloud-based Google Big Query data warehouse, where the big scholarly data from Crossref, OpenAlex and Unpaywall were imported.
+Throughout this mostly automated data gathering and analysis process, tools from the Tidyverse (Wickham et al., 2019) for the R programming language (R Core Team, 2020) were used. 
+The resulting data is openly available through an R package, hoaddata, version 0.2.91 
+Following @Marwick_2018, hoaddata contains not only the datasets used in the data analysis. 
+It also includes code used to compile the data by connecting it the cloud-based Google Big Query data warehouse, where the big scholarly data from Crossref, OpenAlex and Unpaywall were imported.
 To increase the computational reproducibility, the R package was automatically built using GitHub Actions, a continuous integration service.
 
 
@@ -479,7 +480,7 @@ box_ta_prop <- summary_all |>
 ```
 
 ```{r results_overview}
-#| fig-cap: "Relative growth of open access in hybrid journals in transformative agreements between 2018 and 2022 per publication year. The blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established (according to matching OpenAlex first author affiliations matched with cOAlition S transformative agreement data). (A) Proportion of open access articles in hybrid journals per year. (B) Percentage of hybrid open access via agreements per year. Boxplots show the proportion of open access articles by individual hybrid journals (C) and individual open access uptake rates by individual hybrid journals and open access funding (D) per publication year. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available for this study."
+#| fig-cap: "Relative growth of open access in hybrid journals in transformative agreements between 2018 and 2022 per publication year. The blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. (A) Proportion of open access articles in hybrid journals per year. (B) Percentage of hybrid open access via agreements per year. Boxplots show the proportion of open access articles by individual hybrid journals (C) and individual open access uptake rates by individual hybrid journals and open access funding (D) per publication year. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available for this study."
 
 
 layout = "
@@ -618,7 +619,7 @@ publisher_prop <-
             linewidth = 0.15) +
   facet_wrap( ~ publisher, nrow = 1) +
   scale_fill_manual(
-    "Hybrid OA",
+    NULL,
     values = c(no_ta = "#b3b3b3a0", ta_oa = "#56B4E9"),
     labels = c(no_ta = "Other", ta_oa = "Agreement"),
     guide = guide_legend(reverse = TRUE)
@@ -711,6 +712,12 @@ publisher_league_tbl <-
   inner_join(publisher_article_ta_oa_table)
 ```
 
+
+Analysing hybrid open access across publishers between 2018 and 2022 reveals a large market concentration. 
+Although `r length(unique(jn_ind_jct_all$esac_publisher))` publishers offered transformative agreements, the big three commercial publishers Elsevier, Springer Nature, and Wiley, accounted for `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(jn_cum) * 100`% of total article volume published (see Table \ref{tab:publisher_league_table}).
+Together, they published `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(oa_total) |> sum()` open access articles, representing `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_cum) * 100`% of the open access articles in hybrid journals.
+Elsevier, Springer Nature, and Wiley made `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(ta_oa_total) |> sum()` articles open access in hybrid journals through transformative agreements, resulting in an even larger market share of `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(ta_oa_cum)*100`%.
+
 ```{r publisher_league_table}
 publisher_league_tbl |>
   mutate(across(contains(c("perc")), ~ paste(round(., 3) * 100))) |>
@@ -740,15 +747,16 @@ publisher_league_tbl |>
   ))
 ```
 
-Analysing hybrid open access across publishers between 2018 and 2022 reveals a large market concentration. 
-Although `r length(unique(jn_ind_jct_all$esac_publisher))` publishers offered transformative agreements, the big three commercial publishers Elsevier, Springer Nature, and Wiley, accounted for `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(jn_cum) * 100`% of total article volume published (see Table \ref{tab:publisher_league_table}).
-Together, they published `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(oa_total) |> sum()` open access articles, representing `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_cum) * 100`% of the open access articles in hybrid journals.
-Elsevier, Springer Nature, and Wiley made `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(ta_oa_total) |> sum()` articles open access in hybrid journals through transformative agreements, resulting in an even larger market share of `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(ta_oa_cum)*100`%.
-However, there are differences among the three large publishers. Although Elsevier published the largest volume of articles (n = `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(publisher_total)`, `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(cum)*100`%), it published a relatively low number of open access articles, including those that can be associated with transformative agreements.
+However, there are notable differences among the three large publishers. Although Elsevier published the largest volume of articles (n = `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(publisher_total)`, `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(cum)*100`%), it published a relatively low number of open access articles, including those that can be associated with transformative agreements.
 In contrast, Springer Nature and Wiley provided open access to a larger proportion of their articles (`r (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_total)) / (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(publisher_total)) * 100`% of Springer Nature articles and `r (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_total)) / (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(publisher_total)) * 100`% of Wiley articles were open acccess), leading to higher open access market shares (`r publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_perc)*100`% Springer Nature resp. `r publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_perc)*100`% Wiley).
 This  difference between Elsevier on the one hand and Springer Nature and Wiley on the other can  be attributed to transformative agreements, as the latter made the majority of their open access articles available through such deals (Springer Nature `r ((publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(ta_oa_total)) / (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_total)) * 100)`% resp. Wiley `r (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(ta_oa_total)) / (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_total)) * 100`%).
 
-```{r publisher_figure, fig.asp=0.8, fig.cap="Developement of open access in hybrid journals included in transformative agreements between 2018 and 2022 by publishers. The blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established (according to matching OpenAlex first author affiliations matched with cOAlition S transformative agreement data). (A) Proportion of open access articles in hybrid journals per year and publisher. (B) Percentage of hybrid open access via agreements per year and publisher. Boxplots (C) show individual open access uptake rates by individual hybrid journals and open access funding per publication year and publisher. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available for this study."}
+Figure \ref{fig:publisher_figure} takes a closer look into the growth of hybrid open access across publishers by year with a focus on open articles enabled by transformative agreements. 
+Although all publishers show a general long-term trend towards transformative agreements, Figure \ref{fig:publisher_figure}A and B indicate that, in particular, Wiley's has experienced a substantial increase in its open access share from `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Wiley") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Wiley") |> pull(value) |> sum()`) in 2018 to `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley") |> pull(prop) |> sum()*100`%  (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley") |> pull(value) |> sum()`) in 2022, representing an 4.5-fold increase. 
+In contrast, Elsevier's hybrid journals demonstrated a more modest increase, from `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Elsevier") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Elsevier") |> pull(value) |> sum()`) in 2018 to `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier") |> pull(value) |> sum()`) in 2022, which is a relatively low open access share compared to the general trend.
+In 2018, Springer Nature had the largest open access proportion among the three publishers of `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Springer Nature") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Springer Nature") |> pull(value) |> sum()`), but experienced a relatively slower growth, resulting in `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(value) |> sum()`) of articles being open access in Springer Nature hybrid journals in 2022.
+
+```{r publisher_figure, fig.asp=0.8, fig.cap="Developement of open access in hybrid journals included in transformative agreements between 2018 and 2022 by publishers. The blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. (A) Proportion of open access articles in hybrid journals per year and publisher. (B) Percentage of hybrid open access via agreements per year and publisher. Boxplots (C) show individual open access uptake rates by individual hybrid journals and open access funding per publication year and publisher. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available for this study."}
 library(patchwork)
 design = "E
 A
@@ -773,17 +781,11 @@ wrap_plots(
     plot_annotation(tag_levels = 'A') 
 ```
 
-
-Figure \ref{fig:publisher_figure} takes a closer look into the growth of hybrid open access across publishers by year with a focus on open articles enabled by transformative agreements. 
-Although all publishers show a general long-term trend towards transformative agreements, Figure \ref{fig:publisher_figure}A and B indicate that, in particular, Wiley's has experienced a substantial increase in its open access share from `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Wiley") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Wiley") |> pull(value) |> sum()`) in 2018 to `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley") |> pull(prop) |> sum()*100`%  (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley") |> pull(value) |> sum()`) in 2022, representing an 4.5-fold increase. 
-In contrast, Elsevier's hybrid journals demonstrated a more modest increase, from `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Elsevier") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Elsevier") |> pull(value) |> sum()`) in 2018 to `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier") |> pull(value) |> sum()`) in 2022, which is a relatively low open access share compared to the general trend.
-In 2018, Springer Nature had the largest open access proportion among the three publishers of `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Springer Nature") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Springer Nature") |> pull(value) |> sum()`), but experienced a relatively slower growth, resulting in `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(value) |> sum()`) of articles being open access in Springer Nature hybrid journals in 2022.
-
 The varying degrees of uptake of open access across the three major publishers can be attributed to distinct approaches to transformative agreements. 
 Springer Nature, for example, began in 2015 offering selected consortia, such as the Max Planck Society, the Swedish Bibsam consortium, and the Finnish FinELib consortium, open access agreements for its hybrid journal portfolio under the name Springer Compact[^springercompact].
 However, these agreements were not included in the data as they concluded prior to the start of the transformative agreement data collection in June 2021. 
 Nonetheless, the results suggest the importance of central agreements for Springer Nature's hybrid open access business over the past five years (Figure 2B).
-In 2022, `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature", type == "ta_oa") |> pull(value) / publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(value) |> sum()*100`% (n = `r  publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature", type == "ta_oa") |> pull(value)`) of open access articles in f Springer Nature  hybrid journals were enabled through transformative agreements.
+In 2022, `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature", type == "ta_oa") |> pull(value) / publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(value) |> sum()*100`% (n = `r  publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature", type == "ta_oa") |> pull(value)`) of open access articles in Springer Nature hybrid journals were enabled through transformative agreements.
 In the same year, `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley", type == "ta_oa") |> pull(value) / publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley") |> pull(value) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Wiley", type == "ta_oa") |> pull(value)`) of Wiley's open access articles could be linked to transformative agreements in 2022. 
 In contrast, Elsevier published fewer than half of its open access articles through transformative agreements (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier", type == "ta_oa") |> pull(value) `; `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier", type == "ta_oa") |> pull(value) / publisher_summary_df |> filter(cr_year == "2022", publisher == "Elsevier") |> pull(value) |> sum()*100`%).  
 
@@ -795,7 +797,7 @@ pub_75 <- publisher_plot_df |> filter(value > 0) |> mutate(prop = value /jn_all)
 ```
 
 The increasing trend towards transformative agreements can be also observed at the journal-level (Figure \ref{fig:publisher_figure}C).
-While no substantial differences between open access enabled through transformative agreements and other revenue source could observed across Elsevier journals, the distribution of open access across Springer Nature and Wiley hybrid journals indicates that the growth is not limited to a few journals, but extends across the portfolio. 
+While no substantial differences between open access enabled through transformative agreements and other revenue sources could observed across Elsevier journals, the distribution of open access across Springer Nature and Wiley hybrid journals indicates that the growth is not limited to a few journals, but extends across the portfolio. 
 In particular, Wiley's upper quantile, which represents the top 25% of journals in terms of the proportion of open access articles from transformative agreements, increased markedly from `r pub_75 |> filter(publisher == "Wiley", type == "ta_oa", cr_year == "2020") |> pull(top25) * 100`% in 2020 to `r pub_75 |> filter(publisher == "Wiley", type == "ta_oa", cr_year == "2022") |> pull(top25) * 100`% in 2022. At the same time, the median proportion grew from `r pub_75 |> filter(publisher == "Wiley", type == "ta_oa", cr_year == "2020") |> pull(median) * 100`% to  `r pub_75 |> filter(publisher == "Wiley", type == "ta_oa", cr_year == "2022") |> pull(median) * 100`%.
 It is interesting to note that a small but increasing number of journals from these two publishers are providing open access to the majority of articles through transformative agreements.
 Wiley recorded `r publisher_plot_df |>  mutate(prop = value / jn_all)  |> filter(cr_year == "2022", prop > 0.5, type == "ta_oa", publisher == "Wiley") |> nrow()` and Springer Nature `r publisher_plot_df |>  mutate(prop = value / jn_all)  |> filter(cr_year == "2022", prop > 0.5, type == "ta_oa", publisher == "Springer Nature") |> nrow()` hybrid journals with an open access share above 50% that could be solely attributed to transformative agreements. 
@@ -859,9 +861,9 @@ top_level_by_year_oa <- top_level_by_year_oa_frac |>
 ## Journal subjects
 
 Table \ref{tab:subject_summary_table} presents a high-level overview of hybrid open access by AJCS subject area using fractionalised counting to account for journals belonging to more than one category. 
-Between 2018 and 2022, most hybrid journals with at least one open articles could be attributed to the social sciences including the humanities.
-However, these journals published the fewest number of articles, whereas physical sciences journals recorded most articles, followed by the health sciences and the life sciences. 
-In terms of open access,  physical sciences journals accounted for more than one third of articles published in the five-years period, followed by the health science, the social sciences and the life sciences.
+Between 2018 and 2022, most hybrid journals with at least one open articles could be attributed to the category Social Sciences, which also includes the humanities.
+However, these journals published the fewest number of articles, whereas Physical Sciences journals recorded most articles, followed by the Health Sciences and the Life Sciences. 
+In terms of open access,  Physical Sciences journals accounted for more than one third of articles published in the five-years period, followed by the Health Science, the Social Sciences and the Life Sciences.
 
 
 ```{r subject_summary_table}
@@ -1010,14 +1012,9 @@ subject_box_trend <- subject_df |>
 Figure \ref{fig:subject_panel} presents the relative growth of hybrid open access by subject area between 2018-2022. In particular, Social Sciences and Humanties journals accounted for the strongest growth in the five-years period from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Social Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Social Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(value) |> sum()`), followed by the Life Science from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Life Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Life Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Life Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Life Sciences") |> pull(value) |> sum()`) , Health Science from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Health Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Health Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Health Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Health Sciences") |> pull(value) |> sum()`) and Physical Sciences from `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Physical Sciences") |> pull(prop) |> sum() * 100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2018", top_level == "Physical Sciences") |> pull(value) |> sum()`) to `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Physical Sciences") |> pull(prop) |> sum() *100`% (n = `r subject_trend_plot$data |> filter(cr_year == "2022", top_level == "Physical Sciences") |> pull(value) |> sum()`). 
 <!-- In particular, journals in the subject areas recorded large high rate (see supplement)-->
 This growth in the social sciences can be largely attributed to transformative agreements. In 2022, two-third of open access articles (`r subject_ta_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(prop) * 100`%, n = `r subject_ta_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(ta_oa_frac)`) were published by first authors affiliated with participating institutions (see \ref{fig:subject_panel}B). 
-Figure \ref{fig:subject_panel}C shows that this trend is consistent across Social Sciences journals.
-In 2022, 25% of Social Science journals provided open access to at least every fourth article exclusively through transformative agreements.
-However, hybrid open access through transformative agreements played a comparable lesser role in the Life Sciences and Health Sciences. 
-In these two subject areas, only about half of the open access articles can be linked to these agreements, both overall and on median average across journals.
-In contrast, the majority of Physical Science Journals, shows an increase of open access through transformative agreements compared to other options to publish open access in hybrid journals.
 
 
-```{r subject_panel, fig.asp=0.8}
+```{r subject_panel, fig.asp=0.8, fig.cap="Developement of open access in hybrid journals in transformative agreements between 2018 and 2022 by AJCS subject area. The blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. (A) Proportion of open access articles in hybrid journals per year and publisher. (B) Percentage of hybrid open access via agreements per year and publisher. Boxplots (C) show individual open access uptake rates by individual hybrid journals and open access funding per publication year and publisher. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available for this study."}
 library(patchwork)
 design = "E
 A
@@ -1043,6 +1040,11 @@ wrap_plots(
 ```
 
 
+Figure \ref{fig:subject_panel}C shows that this trend is consistent across Social Sciences journals.
+In 2022, 25% of Social Science journals provided open access to at least every fourth article exclusively through transformative agreements.
+However, hybrid open access through transformative agreements played a comparable lesser role in the Life Sciences and Health Sciences. 
+In these two subject areas, only about half of the open access articles can be linked to these agreements, both overall and on median average across journals.
+In contrast, the majority of Physical Science Journals, shows an increase of open access through transformative agreements compared to other options to publish open access in hybrid journals.
 
 ```{r coutnry_data_prep}
 country_all <- hoaddata::jn_aff |>
@@ -1352,12 +1354,21 @@ publisher_output_plot <-
 ```
 
 
-Between 2018 and 2022, Western economies almost exclusively dominated hybrid open access publishing through transformative agreements. 
+Between 2018 and 2022, high-income economies almost exclusively dominated hybrid open access publishing through transformative agreements. 
 During this period, first-authors affiliated with institutions from Organisation for Economic Co-operation and Development (OECD) member countries published `r oecd_stats_global |> filter(cat == "OECD") |> pull(oa)` open access articles in hybrid journals, representing `r oecd_stats_global |> filter(cat == "OECD") |> pull(oa) / n_oa * 100`% of the investigated open access articles.
 This disparity between OECD nations and other countries becomes even more evident when considering open access through transformative agreements, as  `r oecd_stats_global |> filter(cat == "OECD") |> pull(ta_oa)` of `r n_ta_oa`, or `r oecd_stats_global |> filter(cat == "OECD") |> pull(ta_oa) / n_ta_oa*100`% of open access articles were associated with such agreements.
 
+Figure \ref{fig:country_patch}A shows the development of hybrid open access publishing by countries, comparing the OECD area with the BRICS, an intergovernmental organisation, which comprised the countries Brazil, Russia, India, China and South Africa in 2022.
+The residual category "Other" includes the remaining countries. 
+From 2018 to 2022, the proportion of open access in hybrid journals increased from `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022. 
+On the other hand, BRICS recorded an low uptake, from `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022.  
+Despite rise of open access across OECD countries, the overall publication output decreased sharply, dropping to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022 after peaking `r country_bar$data |> filter(cat == "OECD", cr_year == "2020") |> distinct(all) |> pull(all)` articles in 2020. 
+In stark contrast, the number of articles published in hybrid journals by first authors affiliated with institutions from BRICS countries increased steadily over the years, more than doubling from `r country_bar$data |> filter(cat == "BRICS", cr_year == "2018") |> distinct(all) |> pull(all)` in 2018 to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022. 
+Upon closer examination, this trend can be observed across all big three publishers, although the shift towards BRICS is particularly evident in Elsevier's hybrid journal portfolio, in particular with regard to articles published in Physical Sciences journals. 
+While OECD publication output in Elsevier's Physical Sciences journals declined from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` articles in 2018 to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` in 2022, BRICS output increased from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` in the same five-year period.
+Furthermore, OECD publication output in Health Science Journals and Life Science journals stagnated across the investigated hybrid journal portfolios after a peak in 2020. 
 
-```{r country_patch, fig.asp=0.9, fig.cap="Development of hybrid open access publishing by countries"}
+```{r country_patch, fig.asp=0.9, fig.cap="Development of hybrid open access publishing by country. (A) presents the number of articles published in hybrid journals included in transformative agreement, distinguishing between BRICS as of 20222, OECD and other countries. (B) Scatterplot contrasting total articles with open access article volume in 2022, by country. Point size represents the number of articles enabled through transformative agreements. (C) Hybrid open access market share in 2022 by country. In (A) and (C), the blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. Country names are represented as ISO two-letter country codes."}
 library(patchwork)
 wrap_plots(
   A = country_bar,
@@ -1378,16 +1389,6 @@ wrap_plots(
     plot_annotation(tag_levels = 'A') 
 ```
 
-Figure \ref{fig:country_patch}A shows the development of hybrid open access publishing by countries, comparing the OECD area with the BRICS, an intergovernmental organisation, which comprised the countries Brazil, Russia, India, China and South Africa in 2022.
-The residual category "Other" includes the remaining countries. 
-From 2018 to 2022, the proportion of open access in hybrid journals increased from `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022. 
-On the other hand, BRICS recorded an low uptake, from `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022.  
-Despite rise of open access across OECD countries, the overall publication output decreased sharply, dropping to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022 after peaking `r country_bar$data |> filter(cat == "OECD", cr_year == "2020") |> distinct(all) |> pull(all)` articles in 2020. 
-In stark contrast, the number of articles published in hybrid journals by first authors affiliated with institutions from BRICS countries increased steadily over the years, more than doubling from `r country_bar$data |> filter(cat == "BRICS", cr_year == "2018") |> distinct(all) |> pull(all)` in 2018 to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022. 
-Upon closer examination, this trend can be observed across all big three publishers, although the shift towards BRICS is particularly evident in Elsevier's hybrid journal portfolio, in particular with regard to articles published in Physical Sciences journals (see Supplement). 
-While OECD publication output in Elsevier's Physical Sciences journals declined from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` articles in 2018 to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` in 2022, BRICS output increased from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` in the same five-year period.
-Furthermore, OECD publication output in Health Science Journals and Life Science journals stagnated across the investigated hybrid journal portfolios after a peak in 2020. 
-
 To illustrate the situation in 2022, \ref{fig:country_patch}B compares total publication output with the number of open access articles. 
 With `r country_scatter_df |> filter(cr_year == "2022", country_code == "CN") |> pull(all)` articles, China was the most productive country, followed by the United States (`r country_scatter_df |> filter(cr_year == "2022", country_code == "US") |> pull(all)` articles) and India (`r country_scatter_df |> filter(cr_year == "2022", country_code == "IN") |> pull(all)` articles). 
 In contrast, West and Nord European countries published a considerable high number of open access articles, mainly due to transformative agreements. 
@@ -1395,14 +1396,14 @@ Particularly, Germany, Great Britain, the Netherlands, Sweden, Switzerland and S
 As represented by the point size, as well as it can been seen in Figure \ref{fig:country_patch}C, transformative agreements contributed to this market position of these countries. 
 Interestingly, the United States had a notable open access market share of `r top_20_plot$data |> distinct(country_code, oa, all) |> mutate(prop = oa / sum(oa)) |> filter(country_code == "US") |> pull(prop) * 100`%, although transformative agreements contributed to a lesser extent. Similarly, China's open access market share of `r top_20_plot$data |> distinct(country_code, oa, all) |> mutate(prop = oa / sum(oa)) |> filter(country_code == "CN") |> pull(prop) * 100` in 2022 was comparable to that of the Netherlands, which was (`r  top_20_plot$data |> distinct(country_code, oa, all) |> mutate(prop = oa / sum(oa)) |> filter(country_code == "NL") |> pull(prop) * 100`%,).
 
-```{r country_top_20_plot, fig.asp=0.8, fig.cap="Top 20 countries"}
-country_plot
-```
-
 Figure \ref{fig:country_top_20_plot} illustrates the development of hybrid open access from 2018 to 2022, highlighting the top 20 most productive countries in terms of articles published in hybrid journals that were included in transformative agreements over the five-year period. 
 Notably, The Netherlands (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "NL") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), Sweden (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "SE") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), Poland (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "PL") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%) and Great Britain (`r country_plot$data |> filter(cr_year == "2018", country_name_fct == "GB") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%)) exhibited a relatively high level of uptake in 2018 which continued to increase in the following years. 
 In 2022, Sweden had the highest proportion of open-access articles relative to its publication output (`r country_plot$data |> filter(cr_year == "2022", country_name_fct == "SE") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), followed by the Netherlands (`r country_plot$data |> filter(cr_year == "2022", country_name_fct == "NL") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%) and Switzerland (`r country_plot$data |> filter(cr_year == "2022", country_name_fct == "CH") |> distinct(all_total, oa_total) |> mutate(prop = oa_total / all_total) |> pull(prop)*100`%), with these countries benefiting from transformative agreements.
 In Germany, however, hybrid open access only began to increase from 2019 onwards after the successful negotiation of nationwide agreements with Wiley (July 2019) and Springer Nature (January 2020). Prior to this, only a few organisations had agreements in place, for the example the Max Planck Society with Springer Compact.
+
+```{r country_top_20_plot, fig.asp=0.8, fig.cap="Development of open access in hybrid journals in transformative agreements between 2018 and 2022, by the Top 20 most productive countries in terms of total articles published in the five-years period. Blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. Country names are represented as ISO two-letter country codes"}
+country_plot
+```
 
 Since 2021, there has been a general trend towards hybrid open access among many western countries, primarily driven by transformative agreements.
 However, proliferation of transformative agreements differed across these countries.
@@ -1411,12 +1412,19 @@ Additionally, publication limits or eligibility criteria for institutions and ar
 Interestingly, in Japan and the US other options than transformative agreements were the main driver for the increase in hybrid open access.
 Once again, the graph highlights countries with low hybrid open access, particularly non-OECD countries, where only a few or no agreements were in place.
 
-
+<!--
 # Supplements
 
 ```{r}
-pub_subject_output_plot
+#pub_subject_output_plot
 ```
+
+-->
+# Discussion
+
+# Conclusions
+
+# References 
 
 [^springercompact]: <https://web.archive.org/web/20180414062853id_/http://www.liber2015.org.uk/wp-content/uploads/2015/03/Springer-Compact.pdf> 
 
