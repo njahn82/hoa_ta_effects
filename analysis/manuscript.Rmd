@@ -68,7 +68,7 @@ However, this shift in funding policy towards hybrid open access also added to t
 Moreover, established large commercial publishers, which already dominated the publishing market [@Larivi_re_2015], disproportionately benefited from hybrid open access funding in comparison to full open access publishers [@Jahn_2016; @Butler_2023; @Shu_2023].
 
 As a consequence, libraries and their consortia began to develop licensing strategies aimed at avoiding such ‘double dipping’ scenarios, in which well-established commercial publishers gain twice from reading and open access publishing, as well as to increase publisher-provided immediate open access [@BJ_RK_2014; @Schimmer_2015].
-These considerations resulted into transformative agreements, which cover a broad range of contracts between library consortia and publishers from mid-2010s onwards where institutional spending for subscriptions and open access publishing are considered together [@Borrego_2020; @Hinchliffe_2019].
+These considerations resulted into transformative agreements[^agreements], which cover a broad range of contracts between library consortia and publishers from mid-2010s onwards where institutional spending for subscriptions and open access publishing are considered together [@Borrego_2020; @Hinchliffe_2019].
 Transformative agreements seek to control costs while allowing a transitional phase for publishing more open access articles. 
 Similar to big deals, transformative agreements mainly bundle hybrid and subscription-only journals from commercial publishers, but aim at a higher degree of transparency than previous big deals, where contracts including payments were confidential [@Bergstrom_2014].
 <!-- For example, the nationwide DEAL consortium in Germany, which includes universities and academic institutions, collectively cancelled their subscriptions with Elsevier from 2017 onwards to negotiate a transformative agreement [@Fraser_2023]. -->
@@ -93,7 +93,7 @@ For instance, the Association of Swedish Higher Education Institutions (Sveriges
 högskoleförbund, SUHF) recommended to only support agreements for publishing in full open access journals [^sweden].
 Likewise, most cOAlition S funders will discontinue financial support for transformative agreements by the end of 2024 [@Liverpool_2023].
 The consortium also removed most hybrid journals from its Transformative Journal program in 2023 due to publishers' failure to meet self-defined open access growth targets [@Brainard_2023]. 
-In contrast, the German DEAL consortium signed a five-year transformative agreement with Elsevier starting in 2024, while also renewing its contracts with Springer Nature and Wiley until the end of 2028.
+In contrast, the German DEAL consortium signed a five-year transformative agreement with Elsevier starting in 2024, while also renewing its contracts with Springer Nature and Wiley until the end of 2028. At the same time, the Colombia Consortium signed the first transformative agreements in Latin America [@Mu_oz_V_lez_2024].
 
 Despite these controversies around transformative agreements as a means of transitioning journal publishing to full open access, there is limited evidence available on the adoption of open access in hybrid journals, and the extent to which this uptake can be attributed to transformative agreements.
 Previous studies have focused on specific countries [@P_l_nen_2020; @Huang_2020; @Haucap_2021; @Wenaas_2022; @Taubert_2023] or publisher portfolios [@Pieper_2018; @Bakker_2024; @Fraser_2023; @Jahn_2021; @Momeni_2023], while large-scale studies relied on self-reported agreement data [@Moskovkin_2022], or used APC pricing lists [@Shu_2023]. 
@@ -1425,16 +1425,49 @@ Once again, the graph highlights countries with low hybrid open access, particul
 -->
 # Discussion
 
-The primary aim of this study was to investigate the adoption of open access in hybrid journals through transformative agreements, presenting a novel approach based on open data. 
-The results indicate a steady increase, estimating that the majority of open access in hybrid journals in 2022 originate from institutions that had an transformative agreement in place. 
-Yet, the majority of research literature published in hybrid journals between 2018 and 2022 remained behind a publisher paywall. 
-Growth in the adoption of open access in hybrid journals through transformative agreements can be largely attributed to big three commercial publishers -- Elsevier, Springer Nature, and Wiley -- but varies across journals, publishers, subjects, and country affiliations. 
-Despite limitations regarding the data used, the findings indicate that the current level of implementation of transformative agreements is insufficient to bring about a large-scale transformation to full open access.
+The primary aim of this study was to investigate the adoption of open access in hybrid journals in transformative agreements, which were introduced as a temporal means to support the transition of subscription-based academic publishing to full open access.
+This study presents a novel approach based on open data, which leverages metadata on over 700 agreements and nine million journal articles to estimate the extent to which transformation agreement contribute to the transition of this journal business model based on institutional affiliation.
+The results highlight a strong growth in open access between 2018 and 2022, particularly driven by an increasing number of institutions that had transformative agreements in place. 
+Yet, the majority of research literature published in hybrid journals in this five-year period remained behind a publisher's paywall. 
+Growth in the adoption of open access in hybrid journals, in particular through transformative agreements, can be largely attributed to three large commercial publishers -- Elsevier, Springer Nature, and Wiley -- but varies substantially across journals, publishers, subjects, and country affiliations. 
+Despite the limitations of the data used, the findings indicate that the current level of implementation of transformative agreements is insufficient to bring about a large-scale transition to fully open access.
 
-Presenting an initial overview, some journals recorded substantial open access uptake rates through transformative agreements. Previous research indicate that these journals highlight specific areas where publisher portfolios already had strong market positions [@].  
+A key finding of the analysis is that transformative agreements increase market concentration. 
+Specifically, the three largest commercial publishers—Elsevier, Springer Nature, and Wiley—have increased their market share in the context of open access, particularly in regard to open access provided through transformative agreements.
+Together, the three publishers accounted for three-fourths of open access articles through transformative agreements, despite publishing less than half of the total publication volume published between 2018 and 2022.
+This observation aligns with previous research on shifts in the publishing market following the introduction of funding opportunities for hybrid open access [@Jahn_2016; @Butler_2023; @Shu_2023]. 
+Additionally, the results confirm previously observed variations by publisher, with Elsevier exhibiting a different development than Springer Nature and Wiley  [@Butler_2023; @Jahn_2021]. 
+However, it must be noted that the focus of transformative agreements on publishers with large hybrid journal portfolios is intentional [@ifla].
+Because of transformative agreements with a few large publishers, national consortia were able to substantially increased their country’s annual open access article volume [@Pinhasi_2021; @Huang_2020; @Taubert_2023; @Wenaas_2022]. 
+
+Moreover, this study presents varying levels of open access uptake through transformative agreements across journals, which can be attributed to the alignment of authors' affiliations and the availability of such agreements at their institutions.
+In line with previous research findings [@Butler_2023; @Jahn_2021], high uptake rates were observed across hybrid journals in the Social Sciences and Humanities.
+However, it is important to emphasise that these hybrid journals do not encompass the entire field.
+For example, a study by @Khanna_2022 found that approximately 60% of journals utilizing the open-source publishing platform Open Journal Systems (OJS) fall within the Social Sciences and Humanities. 
+In these fields, the majority of full open access journals are so-called "Diamond OA journals" that do not charge publication fees [@bosman_2021_4558704].
+Rather, this result can be more accurately attributed to the substantial proportion of authors from high-income countries who publish in these hybrid journals included in transformative agreements, particularly when journals are of local relevance, such as through the belonging to national societies or regional research scope.
+
+ <!--   [funding options in the humanities and social sicences] -->
+Surprisingly, the total publication output of high-income countries belonging to the OECD declined susbtantially between 2018 and 2022, while the BRICS countries recorded an steady increase. 
+Because the BRICS expansion can be exclusivley attributed to closed access articles, this developement has the potential to hinder the transition of academic journal publishing to full open access through transformative agreements. 
+In China, the most productive country according to the total article volume in hybrid journals, 
+(shu und zhang und das indische paper)
 
 
-# Conclusions
+other countries less represented and brazil diamond russia The Eastern Europe Expanded Collection
+
+but not coherent acorss all countries, in particular in the us. neverthelles china and us have susbtantial market shares when it comes to hybrid oa. 
+
+There are at least three potential limitations
+concerning the results of this study. A first limitation
+concerns … A second potential limitation is that …
+
+These data have some potential intervention implications. forst and formesot, the supprot recent pocliy decision highlighting a grew in oa at country-level, but questioning the. if thouse contracts, a transiliteration is ttoo short and might require a longer transiltierional period. the growtrh in brics however would require too impleis unboundling, other payment means and focus on alternative, in particular innovations like preprinting, diamond oa
+
+In terms of future research, it would be useful to extend the current findings by examining other oa types, combine oa with mobility. fianncials tudies are also required to assess claims of cost-sensitive, here, publisher and publsiher are required to increase transparency. at the same time, studies needed to assess these claim economically. data can be improved to entail more, in apritcular consortia could start to disclose funded articles as , with openapc already a cwors-orucing platform available. also libraries can contrbute to an improved catalogiuing of transformative agreements including participating insitutions, which is aligned with standards used in schoalrly communications like ror id.
+
+In summary, after more than tow decades, hybrid open access has not demonstrated a succesful menas. stduying transofrmative agreemnts, effects can be found at the -level of participating countries, but overlla uptake remains low, in particular with regard to publications from brocs countries, which country share rise, exclusively on the expense of closed access.  means 
+
 
 # References 
 
@@ -1451,3 +1484,5 @@ Presenting an initial overview, some journals recorded substantial open access u
 [^checkertool]: <https://www.coalition-s.org/blog/enabling-accurate-results-within-the-journal-checker-tool/>
 
 [^sweden]: <https://www.su.se/english/news/open-access-need-to-move-away-from-transformative-agreements-1.683787>
+
+[^agreements]: In this paper I use the term "transformative agreement", addressing also offsetting, read-and-publish or publish-and-read deals, and other variants [@Borrego_2020; @Hinchliffe_2019]. Although the term is critised as misleading and not useful to describe these agreements between library consortia and publishers [@budapest], it is widely used in policy discussions and in the research literature.
