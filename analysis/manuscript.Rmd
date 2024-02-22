@@ -1436,7 +1436,7 @@ Despite the limitations of the data used, the findings indicate that the current
 
 A key finding of the analysis is that transformative agreements increase market concentration. 
 Specifically, the three largest commercial publishers Elsevier, Springer Nature, and Wiley dominate, particularly in regard to open access provided through transformative agreements.
-Together, the three publishers accounted for three-fourths of open access articles through transformative agreements, despite publishing less than half of the total publication volume published between 2018 and 2022.
+Together, the three publishers accounted for three-fourths of open access articles through transformative agreements, while recording less than half of total publication volume published between 2018 and 2022.
 This observation aligns with previous research on shifts in the publishing market following the introduction of funding opportunities for hybrid open access [@Jahn_2016; @Butler_2023; @Shu_2023]. 
 Additionally, the results confirm previously observed variations by publisher, with Elsevier exhibiting a different development than Springer Nature and Wiley  [@Butler_2023; @Jahn_2021]. 
 However, it must be noted that the focus of transformative agreements on publishers with large hybrid journal portfolios is intentional [@ifla].
@@ -1461,37 +1461,36 @@ However, this policy focuses on centrally negotiated subscriptions and does not 
 
 But open access uptake also differs among OECD countries. 
 In the United States, for example, hybrid open access including transformative agreements plays a lesser role compared to some European countries. 
-The smallest share of federally funded research was hybrid open access between 2017 and 2021 [@Schares_2023]. 
-While some university consortia like the California Digital Library signed transformative agreements, others attempt to depart from big deals and unbundle large journal portfolios to address cost increases [@Brainard_2021; @Schares_2022].
+Between 2017 and 2021, hybrid open access contributed the least to make federally funded research articles openly available [@Schares_2023]. 
+While some university consortia like the California Digital Library have signed transformative agreements, others attempt to depart from big deals and unbundle large journal portfolios to address cost increases [@Brainard_2021; @Schares_2022].
 Despite the relatively low penetration of transformative agreements in China and the United States compared to Europe, 22% of open access in hybrid journals in 2022 originates from these two countries, indicating the availability of funding sources for publication fees.
 
 This large-scale study provides first empricial evidence about the influence of transformative agreements on the transition of hybrid journals to full open access. 
 However, several limitations needs to be acknowledged.
-From a data perspective, estimations of open access through transformative agreements were established by linking first author affiliations with publicly available agreement data from cOAlition S, and not through invoicing data because these data a usually not shared by publishers.
-Moreover, this study is unable to account for the various types of transformative agreements, particularly with regards to article types and  capping.
-Similarly, assessing the quality of the OpenAlex and Crossref data used, particularly in terms of affiliations and article types, in comparison with established bibliometric databases was beyond the scope of this analysis.
+From a data perspective, estimations of open access through transformative agreements were established by linking first author affiliations with publicly available agreement data from cOAlition S, and not through invoicing data, which is usually not shared.
+Moreover, this study is unable to account for the various types of transformative agreements, particularly with regards to article types and capping.
+Furthermore, assessing the quality of the OpenAlex and Crossref data used, particularly in terms of affiliations and article types, by comparing it with established bibliometric databases such as Scopus or Web of Science was beyond the scope of this analysis.
 Overall, the methodology is designed in such a way that the results underestimate rather than overestimate the adoption of open access through transformative agreements. 
 In addition, the data used in this study are openly available, along with the code used for this analysis.
 
-Additionally, it must be noted that the study period was significantly impacted by the COVID-19 pandemic, which led to an unprecedented number of publications as well as restrictions on migration flows, which could have influenced the country-specific results [@Aviv_Reuven_2021; @Zhao_2023]. 
-Furthermore, the study design did not consider emerging publication practices such as preprints [@Fraser_2021] and questionable special issues [@hanson2023strain], which have grown particularly rapidly since 2020. 
-Lastly, it should be emphasized that the study aims to estimate articles enabled through transformative agreements but does not address financial shifts due to a lack of data on expenditures.
+Additionally, it must be noted that the study period was significantly impacted by the COVID-19 pandemic, which led to an unprecedented number of publications as well as an reduction of international collaboration [@Aviv_Reuven_2021], which could explain the observed contrasting developements in OECD and BRICS countries. 
+Even before the pandemic, growth in publications in Europe were only due to internationally co-authored journal articles [@Kwiek_2020]. 
+Likewise, inflows from China to the US and European countries already declined before 2020 [@Zhao_2023].
+Furthermore, the study design did not consider emerging publication practices such as preprints [@Fraser_2021] and special issues [@hanson2023strain], which have grown rapidly since 2020. 
+Lastly, it should be emphasized that the study did not address financial shifts between suscriptiuons spending and open acces spayemnts while analysing hybrid open access through transformative agreements due to a lack of data on expenditures.
 
 This present study allows multiple strands of further research. 
 One is to complement this large-scale study with more specific evidence from individual countries or subjects, particularly those with low hybrid open access  rates.
 Incorporating full open access and subscription-based journals, as well as considering global trends in scholarly migration and collaboration could also be promising.
 Financial studies could build upon the presented study design and incorporate subscription and open access expenditures to evaluate the cost-effectiveness of transformative agreements.
 
-But the study also has practival implications for research funders and libraries. Of primary concern should be observed differences across countries, in particular the relationship between economic development and open access adoption.
-From a data perspective, the reporting of open access funding is not harmonised, but often crowd-sourced from various sources.
-To improve the assessment of transformative agreements, libraries and publishers could contribute by providing information about respective journal portfolios, participating institutions and open access invoicing.
+This study also has practival implications for research funders and libraries. Of primary concern should be the observed differences across countries, in particular the relationship between economic development and open access adoption.
+From a data perspective, the reporting of open access funding including transformative agreements is not harmonised, but often crowd-sourced from various sources.
+To improve the assessment of transformative agreements, libraries and publishers could agree on standards and services to publicly share information about respective journal portfolios, participating institutions and open access invoicing.
 
-In summary, the aim of this study was to provide empirical insights into the developement of hybrid open access following the introduction of transformative agreements. 
+In summary, this study provides empirical insights into the developement of hybrid open access following the introduction of transformative agreements. 
 The results are important for both researchers and stakeholders engaged in negotiating and evaluating these agreements. 
-The presented approach relies on open data, which enables follow-up studies and open access monitoring acitvties to further explore the role of transformative agreements in facilitating the shift towards full open access in academic publishing.
-
-
--->
+The presented approach relies on open data, which enables follow-up studies and open access monitoring acitvties to further explore the role of transformative agreements in transitioning academic publishing to full and equitable open access.
 
 # References 
 
