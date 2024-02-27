@@ -2,23 +2,23 @@
 
 ## Data
 
-*{hoaddata} version v0.2.82* provides journal-level and article-level data used.
+*{hoaddata} version v0.2.91* provides journal-level and article-level data used.
 
-<https://github.com/subugoe/hoaddata/releases/tag/v0.2.82>
+<https://github.com/subugoe/hoaddata/releases/tag/v0.2.91>
 
 This R package contains: 
 
 *Journal-level data*, retrieved from the cOAlition S public transformative
-agreement data on 8 May 2023
+agreement data on 11 December 2023
 
-<https://github.com/njahn82/jct_data/tree/4a017bba5ea72e86840d701420afc9d922e00266/data>
+<https://github.com/njahn82/jct_data/tree/a00138fa78bca769cc103caed715b2fab1375b6e/data>
 
 The code repository also contains code used to obtain the data.
 
 {hoaddata} also represents *article-level data* retrieved from
 
- - Crossref release 2023/10
- - OpenAlex release 2023-10-1
+ - Crossref release 2023/11
+ - OpenAlex release 2023-11-21
  
  as well as the code used to compile the data from SUB Göttingen Scholarly
  data warehouse.
@@ -26,11 +26,11 @@ The code repository also contains code used to obtain the data.
  The main dataset, providing article-level data about publications linked to 
  transformative agreements and institutions, is available as {hoaddata} 
  release asset: 
- <https://github.com/subugoe/hoaddata/releases/download/v0.2.82/ta_oa_inst.csv.gz>
+ <https://github.com/subugoe/hoaddata/releases/download/v0.2.91/ta_oa_inst.csv.gz>
  
 *Raw data for reproducibility*: To improve reproducibility, 
 the underying raw data used to compile {hoaddata} 
-version v0.2.82 is available via Google BigQuery `hoa-article.hoaddata_nov23`.
+version v0.2.92 is available via Google BigQuery `hoa-article.hoaddata_nov23`.
 
 *Subject classification* data was obtained from Scopus on 4 Oct 2023 and is
 stored in `data/jn_scopus_ind_subjects.csv`
