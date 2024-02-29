@@ -4,7 +4,7 @@
 
 This repository provides data and code used for the preprint
 
-Najko Jahn, 2024. *How open are hybrid journals included in transformative agreements?*
+Najko Jahn, 2024. *How open are hybrid journals included in transformative agreements?* <https://arxiv.org/abs/2402.18255>
 
 This repository is organized as a [research compendium](https://doi.org/10.7287/peerj.preprints.3192v2). A research compendium contains data, code, and text associated with it. 
 
