@@ -43,3 +43,35 @@ tb <- bq_project_query("subugoe-collaborative",
 oa_prop <- bq_table_download(tb)
 readr::write_csv(oa_prop, here::here("data", "oa_prop.csv"))
 
+tb_yearly <- bq_project_query("subugoe-collaborative", 
+                              query = "SELECT
+issn_l,
+cr_year,
+COUNT(DISTINCT doi) AS articles,
+SUM(cc) AS cc_articles
+FROM (
+  SELECT
+  cr.issn_l,
+  cr_year,
+  CASE
+  WHEN cc IS NOT NULL AND vor = 1 THEN 1
+  ELSE
+  0
+  END
+  AS cc,
+  doi
+  FROM
+  `hoa-article.hoaddata_nov23.cc_oa_prop` AS cc_oa
+  INNER JOIN
+  `hoa-article.hoaddata_nov23.cc_md_all` AS cr
+  ON
+  cc_oa.issn_l = cr.issn_l
+  WHERE
+  cr_year BETWEEN 2018
+  AND 2022 )
+GROUP BY
+cr_year,
+issn_l")
+
+oa_prop_yearly <- bq_table_download(tb_yearly)
+readr::write_csv(oa_prop_yearly, here::here("data", "oa_prop_yearly.csv"))
