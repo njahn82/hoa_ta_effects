@@ -67,7 +67,7 @@ In particular, British (17%), Austrian (15%) and Dutch (13%) universities stood 
 However, this shift in funding policy towards hybrid open access also added to the overall cost of publishing, which includes subscription spending and the administrative efforts required to handle payments [@Pinfield_2016].
 Moreover, large commercial publishers, which already dominated the publishing market [@Larivi_re_2015], disproportionately benefited from hybrid open access funding in comparison to full open access publishers [@Jahn_2016; @Butler_2023; @Shu_2023].
 
-As a consequence, libraries and their consortia began to develop licensing strategies aimed at avoiding such ‘double dipping’ scenarios, in which well-established commercial publishers gain twice from reading and open access publishing [@Mittermaier_2015], as well as to increase publisher-provided immediate open access [@BJ_RK_2014; @Schimmer_2015].
+As a consequence, libraries and their consortia began to develop licensing strategies aimed at avoiding such ‘double dipping’ scenarios, in which well-established commercial publishers gain twice from reading and open access publishing fees [@Mittermaier_2015], as well as to increase publisher-provided immediate open access [@BJ_RK_2014; @Schimmer_2015].
 These considerations resulted in transformative agreements[^agreements], which cover a broad range of contracts between library consortia and publishers from the mid-2010s onwards, where institutional spending for subscriptions and open access publishing are considered together [@Borrego_2020; @Hinchliffe_2019].
 Transformative agreements seek to control costs while allowing a transitional phase for publishing more open access articles. 
 Similar to big deals, transformative agreements mainly bundle hybrid and subscription-only journals from commercial publishers, but aim at a higher degree of transparency than previous big deals, where contracts including payments were confidential [@Bergstrom_2014].
@@ -79,7 +79,7 @@ Specifically, they agreed to support hybrid open access only through transformat
 Notably, despite not being part of cOAlition S, the German Research Foundation (DFG), has also extended its financial support for hybrid open access through transformative agreements [@Mittermaier_2021]. Previously, the DFG only provided funding for fully open access journals [@Jahn_2016].
 
 By the end of 2023, many transformative agreements had been implemented, but the interim outcomes were mixed.
-The ESAC Transformative Agreement Registry[^esacregistry], the largest resource for library consortia to publicly share their agreements, recorded more than 800 transformative agreements.
+The ESAC Transformative Agreement Registry[^esacregistry], the largest resource for library consortia to voluntarily and publicly share their agreements, recorded more than 800 transformative agreements.
 These agreements resulted in the publication of up to 900.000 open access articles published in both fully open access and hybrid journals, according to the accompanying ESAC Market Watch[^esacmarketwatch]. 
 Library consortia reported increased open access volume, streamlined payment and monitoring procedures, as well as extensive utilisation of open access options by the researchers they serve [@Marques_2020; @Pinhasi_2020; @Parmhed_2023]. 
 The ongoing standardisation of transformative agreements has contributed to improved transparency in terms of contracts and publisher-provided article metadata [@Marques_2019; @Pinhasi_2021].
