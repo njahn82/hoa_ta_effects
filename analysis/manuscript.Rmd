@@ -127,6 +127,18 @@ knitr::include_graphics(here::here("analysis", "data_collection_workflow.pdf"))
 ```{r journal_oa_exclusion}
 # ESAC 13 December snapshot
 esac_df <- readxl::read_xlsx(here::here("data", "esac.xlsx"), skip = 2) 
+
+# TA statistics
+## TAs in ESAC as of 13 December
+tas_in_esac <- esac_df |> 
+  distinct(ID)
+tas_in_esac_and_hoad <- esac_df |>
+  filter(ID %in% hoaddata::jct_hybrid_jns$esac_id) |>
+  filter(Publisher != "National Academy of Sciences")
+tas_in_esac_and_hoad_active_in_2018_22 <- tas_in_esac_and_hoad |>
+  filter(`End date` >= as.Date("2018-01-01") & `Start date` < as.Date("2023-01-01")) 
+
+
 #' OA journal check
 oa_journal_status <- readr::read_csv(here::here("data", "oa_journal_status.csv")) 
 oa_prop <- readr::read_csv(here::here("data", "oa_prop.csv"))
@@ -247,9 +259,9 @@ cr_stats_plot <- cr_stats |>
   scale_fill_manual(
     "Journal",
     values = c(
-      "hoad" = "#5789B6",
-      "other" = "#D8D4C9",
-      "gold" = "#DA6524"
+      "hoad" = "#998ec3",
+      "other" = "#f7f7f7",
+      "gold" = "#f1a340"
     ),
     labels = c(
       "hoad" = "Hybrid (TA)",
@@ -270,16 +282,17 @@ cr_stats_plot <- cr_stats |>
 ```
 
 To estimate the impact of transformative agreements on hybrid open access, participating institutions from the Transformative Agreement Data dump, which the cOAlition S crowd-sourced from  agreement documents and consortia, were matched with the first author affiliations recorded by OpenAlex using the ROR-ID.
-Matching also considered the duration of agreements according to the ESAC registry.
+Matching also considered the duration of agreements according to the ESAC registry. 
+`r length(unique(tas_in_esac_and_hoad_active_in_2018_22$ID))` agreements were active between 2018 and 2022.
 Upon inspection, Transformative Agreement Data did not comprehensively cover associated institutions, such as university hospitals or institutes of large research organisations such as the Max Planck Society.
 To improve the matching, Transformative Agreement Data were automatically enriched with ROR-IDs from associated organisations according to OpenAlex's institution entity data. 
 
-The so compiled data set consists of `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l, cr_year, jn_all) |> pull(jn_all) |> sum()` articles published in `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l) |> nrow()` hybrid journals included in at least one transformative agreement between 2018 and 2022 (see Figure \ref{fig:method_fig}B). 
+The so compiled data set consists of `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l, cr_year, jn_all) |> pull(jn_all) |> sum()` articles published in `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l) |> nrow()` hybrid journals included in at least one transformative agreement between 2018 and 2022 (see purple bars in Figure \ref{fig:method_fig}B). 
 These hybrid journals in transformative agreements represented `r cr_stats |> filter(src == "hoad") |> pull(n_articles) |> sum() / cr_stats |> pull(n_articles) |> sum() * 100`%  of the total global output over the same time period, according to Crossref, while fully open access journals recorded 
 `r cr_stats |> filter(is.na(src) & oa_status == "gold") |> pull(n_articles) |> sum() / cr_stats |> pull(n_articles) |> sum() * 100`%.
 
 
-```{r method_fig, fig.asp=0.55, fig.cap="Initial data characteristics. (A) Full open access journals included in transformative agreements by evidence source Directory of Open Access Journals (DOAJ), OpenAlex and the Bielefeld GOLD OA list. (B) Number of articles in Crossref by journal types. The blue bars show the overall article volume of hybrid journals in transformative agreements, which were initially included in the study, in comparision with full open access journals according to OpenAlex. The remainder represents subscription-based journals not covered by transformative agreements."}
+```{r method_fig, fig.asp=0.55, fig.cap="Initial data characteristics. (A) Full open access journals included in transformative agreements by evidence source Directory of Open Access Journals (DOAJ), OpenAlex and the Bielefeld GOLD OA list. (B) Number of articles in Crossref by journal types. The purple bars show the overall article volume of hybrid journals in transformative agreements, which were initially included in the study, in comparision with full open access journals according to OpenAlex. The remainder represents articles in subscription-based journals not covered by transformative agreements."}
 (p | cr_stats_plot) + plot_annotation(tag_levels = 'A') +  plot_layout(widths = c(0.6, 0.4))
 ```
 <!-- To reflect the increasing trend towards multiple and cross-country affiliations (Hottenrott et al., 2021; Larivière et al., 2015), articles were counted once per country. -->
@@ -372,10 +385,11 @@ n_ta_oa <- ta_oa_inst |>
 
 ## Overview
 
-Between 2018 and 2022, `r n_hybrid_jns` out of `r n_hybrid_jns_all` hybrid journals in transformative agreements published at least one open access article under a Creative Commons license.
-During this period, these hybrid journals provided open access to `r n_oa` out of `r n_total` articles, representing a five-year open access proportion of `r n_oa / n_total * 100`%.
-Authors who could make use of transformative agreements at the time of publication contributed `r n_ta_oa` open access articles.
-Overall, `r n_tas_with_oa` transformative agreements recorded at least one open access article from an eligible institution.
+Between 2018 and 2022, `r n_hybrid_jns` out of `r n_hybrid_jns_all` eligible hybrid journals in transformative agreements published at least one open access article under a Creative Commons license.
+These `r n_hybrid_jns` hybrid journals constituted the foundation for the subsequent analyses. 
+Collectively, they provided open access to `r n_oa` out of `r n_total` articles during the investigated period, representing a five-year open access proportion of `r n_oa / n_total * 100`%.
+Authors who could make use of transformative agreements at the time of publication contributed `r n_ta_oa` (`r n_ta_oa / n_oa * 100`%) open access articles.
+Overall, this investigation established a link between open access articles and eligible institutions for `r n_tas_with_oa` out of `r length(unique(tas_in_esac_and_hoad_active_in_2018_22$ID))` active transformative agreements between 2018 and 2022 through the analysis of publication metadata, including affiliations and agreement data. 
 
 
 ```{r area_oa_over_the_years}
