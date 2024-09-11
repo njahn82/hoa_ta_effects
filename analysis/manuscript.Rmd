@@ -200,7 +200,7 @@ After identifying hybrid journals included in transformative agreements, article
 Because Crossref metadata lacked information to distinguish between original research articles, including reviews, and other types of journal content, which are often not covered by transformative agreements [@Borrego_2020], only articles published in regular issues indicated by numeric pagination were included.
 Furthermore, paratext recognition was applied to exclude non-scholarly journal content such as table of contents.
 
-Open access articles in hybrid journals were identified using the Creative Commons (CC) license information in Crossref metadata. 
+Open access articles in hybrid journals were identified using the Creative Commons (CC) license information in Crossref metadata, with consideration of any CC variant. 
 License information relative to the "accepted manuscript (AM)" version was not considered. 
 Crossref was used for open access identification because transformative agreement workflows generally require publishers to deliver CC license information to this DOI registration agency [@Geschuhn_2017].
 
@@ -217,7 +217,6 @@ After retrieving the article metadata, the publication volume, including open ac
 To improve the identification of hybrid journals, journals with an open access proportion above 95% were excluded.
 This step allowed removing additional `r length(unique(oa_prop_yearly$issn_l))` fully open access journals.
 Together, these journals published `r sum(oa_prop_yearly$articles)` articles between 2018 and 2022. 
-
 
 Affiliation metadata about corresponding authors are crucial for the planning and evaluation of transformative agreements because they are considered responsible for arranging open access publication [@Schimmer_2015; @Geschuhn_2017; @Borrego_2020]. 
 For this study, country and institutional affiliations were retrieved from OpenAlex.
@@ -273,10 +272,10 @@ cr_stats_plot <- cr_stats |>
 To estimate the impact of transformative agreements on hybrid open access, participating institutions from the Transformative Agreement Data dump, which the cOAlition S crowd-sourced from  agreement documents and consortia, were matched with the first author affiliations recorded by OpenAlex using the ROR-ID.
 Matching also considered the duration of agreements according to the ESAC registry.
 Upon inspection, Transformative Agreement Data did not comprehensively cover associated institutions, such as university hospitals or institutes of large research organisations such as the Max Planck Society.
-To improve the matching, Transformative Agreement Data were automatically enriched with associated organisations using OpenAlex's institution entity data. 
+To improve the matching, Transformative Agreement Data were automatically enriched with ROR-IDs from associated organisations according to OpenAlex's institution entity data. 
 
-The so compiled data set consists of `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l, cr_year, jn_all) |> pull(jn_all) |> sum()` articles published in `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l) |> nrow()` hybrid journals between 2018 and 2022 (see Figure \ref{fig:method_fig}B). 
-Hybrid journals in transformative agreements represented `r cr_stats |> filter(src == "hoad") |> pull(n_articles) |> sum() / cr_stats |> pull(n_articles) |> sum() * 100`%  of the total global output over the same time period, according to Crossref, while fully open access journals recorded 
+The so compiled data set consists of `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l, cr_year, jn_all) |> pull(jn_all) |> sum()` articles published in `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l) |> nrow()` hybrid journals included in at least one transformative agreement between 2018 and 2022 (see Figure \ref{fig:method_fig}B). 
+These hybrid journals in transformative agreements represented `r cr_stats |> filter(src == "hoad") |> pull(n_articles) |> sum() / cr_stats |> pull(n_articles) |> sum() * 100`%  of the total global output over the same time period, according to Crossref, while fully open access journals recorded 
 `r cr_stats |> filter(is.na(src) & oa_status == "gold") |> pull(n_articles) |> sum() / cr_stats |> pull(n_articles) |> sum() * 100`%.
 
 
