@@ -389,7 +389,7 @@ Between 2018 and 2022, `r n_hybrid_jns` out of `r n_hybrid_jns_all` eligible hyb
 These `r n_hybrid_jns` hybrid journals constituted the foundation for the subsequent analyses. 
 Collectively, they provided open access to `r n_oa` out of `r n_total` articles during the investigated period, representing a five-year open access proportion of `r n_oa / n_total * 100`%.
 Authors who could make use of transformative agreements at the time of publication contributed `r n_ta_oa` (`r n_ta_oa / n_oa * 100`%) open access articles.
-Overall, this investigation established a link between open access articles and eligible institutions for `r n_tas_with_oa` out of `r length(unique(tas_in_esac_and_hoad_active_in_2018_22$ID))` active transformative agreements between 2018 and 2022 through the analysis of publication metadata, including affiliations and agreement data. 
+Overall, this investigation was able to establish a link between open access articles and eligible institutions for `r n_tas_with_oa` out of `r length(unique(tas_in_esac_and_hoad_active_in_2018_22$ID))` (`r n_tas_with_oa / length(unique(tas_in_esac_and_hoad_active_in_2018_22$ID)) * 100`%) active transformative agreements between 2018 and 2022 through the analysis of publication metadata, including affiliations and agreement data. 
 
 
 ```{r area_oa_over_the_years}
@@ -522,8 +522,8 @@ wrap_plots(
     legend.position = "top",
     legend.justification = "right",
     legend.direction = "horizontal",
-    panel.grid.minor = element_blank(),
-                panel.border = element_rect(color = "grey50", fill = NA),
+ #   panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "grey50", fill = NA),
     axis.title=element_text(size = 10)) &
     plot_annotation(tag_levels = 'A')
 ```
@@ -539,12 +539,12 @@ oa_by_year <- oa_ta_plot_df |>
 ```
 
 Figure \ref{fig:results_overview}A shows a moderate growth in the proportion of open access articles in hybrid journals, comparing the overall open access uptake and the impact of transformative agreements on this trend.
-Over the five-years period from 2018 to 2022, open access increased from `r oa_by_year |> filter(cr_year == "2018") |> pull(prop)`% (n = `r oa_by_year |> filter(cr_year == "2018") |> pull(oa)`) to `r oa_by_year |> filter(cr_year == "2022") |> pull(prop)`% (n = `r oa_by_year |> filter(cr_year == "2022") |> pull(oa)`). 
+Over the five-years period from 2018 to 2022, open access in hybrid journals increased from `r oa_by_year |> filter(cr_year == "2018") |> pull(prop)`% (n = `r oa_by_year |> filter(cr_year == "2018") |> pull(oa)`) to `r oa_by_year |> filter(cr_year == "2022") |> pull(prop)`% (n = `r oa_by_year |> filter(cr_year == "2022") |> pull(oa)`). 
 Simultaneously, the total article volume of the investigated journals rose from `r oa_by_year |> filter(cr_year == "2018") |> pull(articles)` in 2018 to `r oa_by_year |> filter(cr_year == "2022") |> pull(articles)` in 2022.
 
 Figure \ref{fig:results_overview}B highlights that the majority of hybrid open access was made available through transformative agreements in 2021 and 2022.
 In 2022, `r  oa_ta_plot_df |> filter(cr_year == "2022", type == "ta_oa") |> pull(value)` out of `r oa_by_year |> filter(cr_year == "2022") |> pull(oa)` open access articles were from eligible authors, representing `r oa_ta_plot_df |> filter(cr_year == "2022", type == "ta_oa") |> pull(value) / oa_by_year |> filter(cr_year == "2022") |> pull(oa) * 100`%.
-However, there was also a notable increase in open access provision through other means, presumably publication fees being not invoiced through transformative agreements, from `r oa_ta_plot_df |> filter(cr_year == "2018", type == "no_ta") |> mutate(prop = value / n * 100) |> pull(prop)`% (n = `r oa_ta_plot_df |> filter(cr_year == "2018", type == "no_ta") |> pull(value)`) in 2018 to  `r oa_ta_plot_df |> filter(cr_year == "2022", type == "no_ta") |> mutate(prop = value / n * 100) |> pull(prop)`% (n = `r oa_ta_plot_df |> filter(cr_year == "2022", type == "no_ta") |> pull(value)`) in 2022. 
+However, there was also a notable increase in open access provision through other means, presumably publication fees being not invoiced through transformative agreements as indicated by the grey area in \ref{fig:results_overview}A, from `r oa_ta_plot_df |> filter(cr_year == "2018", type == "no_ta") |> mutate(prop = value / n * 100) |> pull(prop)`% (n = `r oa_ta_plot_df |> filter(cr_year == "2018", type == "no_ta") |> pull(value)`) in 2018 to  `r oa_ta_plot_df |> filter(cr_year == "2022", type == "no_ta") |> mutate(prop = value / n * 100) |> pull(prop)`% (n = `r oa_ta_plot_df |> filter(cr_year == "2022", type == "no_ta") |> pull(value)`) in 2022. 
 <!-- This suggests that publishers were able to gain equally from individual and institutional open access publishing options.-->
 
 Figure \ref{fig:results_overview}C depicts the substantial variations among the hybrid journals included in transformative agreements in terms of open access uptake.
@@ -737,7 +737,7 @@ publisher_league_tbl <-
 ```
 
 Analysing hybrid open access across publishers between 2018 and 2022 reveals a large market concentration. 
-Although `r length(unique(jn_ind_jct_all$esac_publisher))` publishers offered transformative agreements, the three commercial publishers Elsevier, Springer Nature, and Wiley, accounted for `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(jn_cum) * 100`% of the total article volume published (see Table \ref{tab:publisher_league_table}).
+Although `r length(unique(jn_ind_jct_all$esac_publisher))` publishers offered transformative agreements, the three commercial publishers Elsevier, Springer Nature, and Wiley accounted for `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(jn_cum) * 100`% of hybrid journals, representing `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(publisher_total) |> sum()` or `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(cum) * 100`% of the total article volume (see Table \ref{tab:publisher_league_table}).
 Together, they published `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(oa_total) |> sum()` or `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_cum) * 100`% of the open access articles in hybrid journals.
 Elsevier, Springer Nature, and Wiley made `r publisher_league_tbl  |> filter(publisher != "Other") |> pull(ta_oa_total) |> sum()` articles open access in hybrid journals through transformative agreements, resulting in an even larger market share of `r publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(ta_oa_cum)*100`%.
 
@@ -780,7 +780,7 @@ In contrast, Elsevier's hybrid journals demonstrated a more modest increase, fro
 In 2018, Springer Nature had the largest open access proportion among the three publishers of `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Springer Nature") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2018", publisher == "Springer Nature") |> pull(value) |> sum()`), but experienced a relatively slower growth, resulting in `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(prop) |> sum()*100`% (n = `r publisher_summary_df |> filter(cr_year == "2022", publisher == "Springer Nature") |> pull(value) |> sum()`) of articles being open access in Springer Nature hybrid journals in 2022.
 
 ```{r publisher_figure, fig.asp=0.8, fig.cap="Developement of open access in hybrid journals included in transformative agreements between 2018 and 2022 by publishers. The blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. (A) Proportion of open access articles in hybrid journals per year and publisher. (B) Percentage of hybrid open access via agreements per year and publisher. Boxplots (C) show individual open access uptake rates by individual hybrid journals and open access funding per publication year and publisher. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available for this study."}
-library(patchwork)
+
 design = "E
 A
 B
@@ -798,7 +798,7 @@ wrap_plots(
     legend.position = "top",
     legend.justification = "right",
     legend.direction = "horizontal",
-    panel.grid.minor = element_blank(),
+#    panel.grid.minor = element_blank(),
                 panel.border = element_rect(color = "grey50", fill = NA),
     axis.title=element_text(size = 10)) &
     plot_annotation(tag_levels = 'A') 
@@ -1058,7 +1058,7 @@ wrap_plots(
     legend.justification = "right",
     legend.direction = "horizontal",
     panel.grid.minor = element_blank(),
-                panel.border = element_rect(color = "grey50", fill = NA),
+    panel.border = element_rect(color = "grey50", fill = NA),
     axis.title=element_text(size = 10)) &
     plot_annotation(tag_levels = 'A') 
 ```
