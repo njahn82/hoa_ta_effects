@@ -1039,7 +1039,7 @@ In 2022, two-thirds of open access articles (`r subject_ta_trend_plot$data |> fi
 
 
 ```{r subject_panel, fig.asp=0.8, fig.cap="Developement of open access in hybrid journals in transformative agreements between 2018 and 2022 by AJCS subject area. The blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. (A) Proportion of open access articles in hybrid journals per year and publisher. (B) Percentage of hybrid open access via agreements per year and publisher. Boxplots (C) show individual open access uptake rates by individual hybrid journals and open access funding per publication year and publisher. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available for this study."}
-library(patchwork)
+
 design = "E
 A
 B
@@ -1273,7 +1273,7 @@ country_scatter_22 <- country_scatter_df |>
   ggplot(aes(all, oa / all)) +
   geom_point(aes(fill = cat), pch = 21, alpha = 0.7) +
   scale_fill_manual(NULL, values = c("OECD" = "#d01c8b", "BRICS" = "#4dac26", "Other" = "#f7f7f7")) +
-  geom_smooth(aes(all, oa / all), method = lm) +
+  geom_smooth(aes(all, oa / all), method = "lm", se = FALSE) +
   scale_size("Agreement", guide = FALSE) +
   ggrepel::geom_text_repel(
     data = filter(country_scatter_df, cr_year == 2022, ta_oa > 2000 | country_code %in% c("CN", "IN", "BR", "RU", "IR")),
@@ -1292,6 +1292,13 @@ country_scatter_22 <- country_scatter_df |>
   labs(x = "Total articles in hybrid journals in 2022\n(log-scale)", y = "OA Uptake") 
 
 oecd_stats <- readr::read_csv(here::here("data", "oecd_stats.csv"))
+
+oecd_by_year <- oecd_stats |>
+  filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
+  filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
+  group_by(cr_year) |>
+  summarise(yearly_volume = sum(articles, na.rm = TRUE))
+
 oecd_stats_df <- oecd_stats |>
   filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |>
   filter(issn_l %in% hoaddata::cc_articles$issn_l) |>
@@ -1300,17 +1307,35 @@ oecd_stats_df <- oecd_stats |>
   mutate(closed = all - oa,
          oa_other = oa - ta_oa) |>
   pivot_longer(cols = c(ta_oa, oa_other, closed), names_to = "oa_type") |>
-  mutate(cat = ifelse(is.na(cat), "Other", cat))
+  mutate(cat = ifelse(is.na(cat), "Other", cat)) |>
+  left_join(oecd_by_year, by = "cr_year")
 
-country_bar <- ggplot(oecd_stats_df, aes(gsub("^20", "'", as.character(cr_year)), value, group = oa_type, fill = oa_type)) +
-  geom_area(color = "#000000",
-            linewidth = 0.15) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels =  scales::number_format(big.mark = ",")) +
-  facet_wrap(~ cat) +
-  scale_fill_manual(NULL, values = c(oa_other = "#b3b3b3a0", ta_oa = "#56B4E9", closed = "#e1e1e1a0"),
-                    labels = c(oa_other = "Other", ta_oa = "Agreement", closed = "NA"),  guide = guide_legend(reverse = TRUE)) +
+country_bar <- ggplot(oecd_stats_df,
+                      aes(
+                        gsub("^20", "'", as.character(cr_year)),
+                        value / yearly_volume,
+                        group = oa_type,
+                        fill = oa_type
+                      )) +
+  geom_area(color = "#000000", linewidth = 0.15) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels = scales::percent_format()) +
+  facet_wrap( ~ cat) +
+  scale_fill_manual(
+    NULL,
+    values = c(
+      oa_other = "#b3b3b3a0",
+      ta_oa = "#56B4E9",
+      closed = "#e1e1e1a0"
+    ),
+    labels = c(
+      oa_other = "Other",
+      ta_oa = "Agreement",
+      closed = "Closed"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
   theme_minimal() +
-  labs(x = "Publication year", y = "Total articles")
+  labs(x = "Publication year", y = "Hybrid OA Uptake")
 ```
 
 ```{r country_by_publisher}
@@ -1365,7 +1390,7 @@ subject_output_plot <- publ_subject_output_df |>
   facet_grid(top_level ~ publisher) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels =  scales::number_format(big.mark = ",")) +
    theme_minimal() +
-  labs(x = "Publication year", y = "Total articles")
+  labs(x = "Publication year", y = "Hybrid OA Uptake")
 
 publisher_output_plot <-
   publ_subject_output_df |>
@@ -1379,26 +1404,13 @@ publisher_output_plot <-
   labs(x = "Publication year", y = "Total articles")
 ```
 
-
 Between 2018 and 2022, high-income countries almost exclusively dominated hybrid open access publishing through transformative agreements. 
 To discern socio-economic differences, these countries were grouped according to their membership in the Organisation for Economic Co-operation and Development (OECD).
 During 2018 and 2022, first authors affiliated with institutions from OECD member countries published `r oecd_stats_global |> filter(cat == "OECD") |> pull(oa)` open access articles in hybrid journals, representing `r oecd_stats_global |> filter(cat == "OECD") |> pull(oa) / n_oa * 100`% of the investigated open access articles.
 This disparity between OECD nations and other countries becomes even more evident when considering open access through transformative agreements, as  `r oecd_stats_global |> filter(cat == "OECD") |> pull(ta_oa)` of `r n_ta_oa`, or `r oecd_stats_global |> filter(cat == "OECD") |> pull(ta_oa) / n_ta_oa*100`% of open access articles were associated with such agreements.
 
-Figure \ref{fig:country_patch}A shows the development of hybrid open access publishing by country, comparing the OECD area with the BRICS, an intergovernmental organisation, which comprised  Brazil, Russia, India, China, and South Africa as of 2022. 
-The residual category "Other" includes the remaining countries. 
-Full counting was applied to account for multiple country affiliations [@Hottenrott_2021].
-From 2018 to 2022, the proportion of open access in hybrid journals increased from `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022. 
-In contrast, BRICS recorded a low uptake, moderately growing from `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022.  
+```{r country_patch, fig.asp=0.9, fig.cap="Development of hybrid open access publishing by country. (A) presents the relative number of articles published in hybrid journals included in transformative agreement by year, distinguishing between BRICS as of 2022, OECD and other countries. (B) Scatterplot contrasts total articles with open access article volume in 2022, by country and its OECD (purple-colored points) or BRICS (green) membership. Trend line obtained from linear regression, grey areas show pointwise symmetric 95% confidence bands. (C) Hybrid open access market share in 2022 by country. In (A) and (C), the blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. The remainder shows closed access articles. Country names are represented as ISO two-letter country codes."}
 
-Despite the rise of open access across OECD countries, the overall publication output decreased sharply, dropping to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022 after peaking `r country_bar$data |> filter(cat == "OECD", cr_year == "2020") |> distinct(all) |> pull(all)` articles in 2020. 
-In stark contrast, the number of articles published in hybrid journals by first authors affiliated with institutions from BRICS countries increased steadily over the years, more than doubling from `r country_bar$data |> filter(cat == "BRICS", cr_year == "2018") |> distinct(all) |> pull(all)` in 2018 to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022. 
-Upon closer examination, this trend can be observed across all of the three largest publishers, although the shift towards BRICS is particularly evident in Elsevier's hybrid journal portfolio, particularly with regard to articles published in Physical Sciences journals. 
-While OECD publication output in Elsevier's Physical Sciences journals declined from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` articles in 2018 to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` in 2022, BRICS output increased from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` in the same five-year period.
-Furthermore, OECD publication output in Health Sciences and Life Sciences journals stagnated after peaking in 2020. 
-
-```{r country_patch, fig.asp=0.9, fig.cap="Development of hybrid open access publishing by country. (A) presents the number of articles published in hybrid journals included in transformative agreement, distinguishing between BRICS as of 20222, OECD and other countries. (B) Scatterplot contrasting total articles with open access article volume in 2022, by country. Point size represents the number of articles enabled through transformative agreements. (C) Hybrid open access market share in 2022 by country. In (A) and (C), the blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. Country names are represented as ISO two-letter country codes."}
-library(patchwork)
 wrap_plots(
   A = country_bar,
   B = country_scatter_22,
@@ -1411,12 +1423,26 @@ wrap_plots(
 ) &
   theme(
     panel.grid.minor = element_blank(),
-                panel.border = element_rect(color = "grey50", fill = NA),
+    panel.border = element_rect(color = "grey50", fill = NA),
     axis.title=element_text(size = 10),
     legend.position = "top", 
     legend.justification = "right") &
     plot_annotation(tag_levels = 'A') 
 ```
+
+Figure \ref{fig:country_patch}A shows the development of hybrid open access publishing by country, comparing the OECD area with the BRICS, an intergovernmental organisation, which comprised  Brazil, Russia, India, China, and South Africa as of 2022. 
+The residual category "Other" includes the remaining countries. 
+Full counting was applied to account for multiple country affiliations [@Hottenrott_2021].
+Open access in hybrid journals increased in particular because of publications from authors affiliated with institutions from the OECD area, from `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2018) |> pull(value) |> sum()` in 2018 to `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2022) |> pull(value) |> sum()` in 2022. 
+This growth was largely driven by transformative agreements. The share of open access by agreement rose from `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2018, oa_type == "ta_oa") |> pull(value) / country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2018, oa_type == "ta_oa") |> pull(oa) * 100`% in 2018 (n = `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2018, oa_type == "ta_oa") |> pull(value)`) to `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2022, oa_type == "ta_oa") |> pull(value) / country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2022, oa_type == "ta_oa") |> pull(oa) * 100`% (n = `r country_bar$data |> filter(cat == "OECD", oa_type != "closed", cr_year == 2022, oa_type == "ta_oa") |> pull(value)`) in 2022.
+In contrast, BRICS recorded a low uptake, moderately growing from `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2018) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2018 to `r country_bar$data |> filter(cat == "BRICS", oa_type != "closed", cr_year == 2022) |> mutate(prop = value / all) |> pull(prop) |> sum() * 100`% in 2022.  
+
+Despite the rise of open access across OECD countries, the overall publication output decreased sharply, dropping to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022 after peaking `r country_bar$data |> filter(cat == "OECD", cr_year == "2020") |> distinct(all) |> pull(all)` articles in 2020. 
+In stark contrast, the number of articles published in hybrid journals by first authors affiliated with institutions from BRICS countries increased steadily over the years, from `r country_bar$data |> filter(cat == "BRICS", cr_year == "2018") |> distinct(all) |> pull(all)` in 2018 to `r country_bar$data |> filter(cat == "BRICS", cr_year == "2022") |> distinct(all) |> pull(all)` in 2022. 
+This resulted in an increase in market share of the BRICS area from `r country_bar$data |> filter(cat == "BRICS", cr_year == "2018") |> distinct(all, yearly_volume) |> mutate(prop = all /yearly_volume) |> pull(prop) * 100`% to `r country_bar$data |> filter(cat == "BRICS", cr_year == "2022") |> distinct(all, yearly_volume) |> mutate(prop = all /yearly_volume) |> pull(prop) * 100`% between 2018 and 2022, whereas that of the OECD area decreased from `r country_bar$data |> filter(cat == "OECD", cr_year == "2018") |> distinct(all, yearly_volume) |> mutate(prop = all /yearly_volume) |> pull(prop) * 100`% to `r country_bar$data |> filter(cat == "OECD", cr_year == "2022") |> distinct(all, yearly_volume) |> mutate(prop = all /yearly_volume) |> pull(prop) * 100`% during the same period.
+Upon closer examination, this trend can be observed across all of the three largest publishers, although the shift towards BRICS is particularly evident in Elsevier's hybrid journal portfolio, particularly with regard to articles published in Physical Sciences journals. 
+While OECD publication output in Elsevier's Physical Sciences journals declined from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` articles in 2018 to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "OECD") |> pull(all)` in 2022, BRICS output increased from `r publ_subject_output_df |> filter(cr_year == 2018, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` to `r publ_subject_output_df |> filter(cr_year == 2022, top_level == "Physical Sciences", publisher == "Elsevier", cat == "BRICS") |> pull(all)` in the same five-year period.
+Furthermore, OECD publication output in Health Sciences and Life Sciences journals stagnated after peaking in 2020. 
 
 To illustrate the situation in 2022, Figure \ref{fig:country_patch}B compares the total publication output with the number of open access articles. 
 With `r country_scatter_df |> filter(cr_year == "2022", country_code == "CN") |> pull(all)` articles, China was the most productive country, followed by the United States (n = `r country_scatter_df |> filter(cr_year == "2022", country_code == "US") |> pull(all)`) and India (n = `r country_scatter_df |> filter(cr_year == "2022", country_code == "IN") |> pull(all)`). 
