@@ -90,14 +90,16 @@ The focus on large commercial publishers might also increase inequality [@Ross_H
 Besides, an editorial-board resignation raised concerns that transformative agreements might encourage publishers to maximize journal publication volume "without regard to quality" [@Goodin_2023].
 
 The controversies surrounding hybrid open access and transformative agreements have led to varying policy conclusions. 
-For instance, the Association of Swedish Higher Education Institutions (Sveriges universitets- och
-högskoleförbund, SUHF) recommended only supporting agreements for publishing in fully open access journals by 2026 [^sweden].
-Likewise, most cOAlition S funders will discontinue financial support for transformative agreements by the end of 2024 [@Liverpool_2023].
+For instance, the UK's Joint Information Systems Committee (JISC) concluded from an evaluation of its transformative agreements [@Jisc_2024] that while these agreements had a significant impact on the growth of open access in the UK, they had limited effect in facilitating a global shift towards full open access. 
+Consequently, the report argues for a reassessment of the UK's open access strategy, in which hybrid OA and transformative agreements have played an important role.
+After making similar observation, Norwegian and Swedish universities and their consortia also revised their policies [@norway; @Widding_2024]. 
+As a result, the Association of Swedish Higher Education Institutions (Sveriges universitets- och högskoleförbund, SUHF) recommended only supporting agreements for publishing in fully open access journals by 2026 [@Widding_2024].
+Likewise, cOAlition S will stop supporting transformative agreements at the end of 2024 [^coalitions].
 cOAlition S also removed the majority of hybrid journals from its Transformative Journal program in 2023 due to publishers' failure to meet self-defined open access growth targets [@Brainard_2023]. 
 By contrast, the German DEAL consortium announced a five-year transformative agreement with Elsevier starting in 2024 and also renewed its contracts with Springer Nature and Wiley until the end of 2028. Similarly, the Colombia Consortium signed the first transformative agreements in Latin America [@Mu_oz_V_lez_2024].
 
 Despite these controversies around transformative agreements as a means of transitioning journal publishing to full open access, there is limited evidence available on the uptake of open access in hybrid journals, and the extent to which this can be attributed to transformative agreements.
-Previous studies have focused on specific countries [@P_l_nen_2020; @Huang_2020; @Haucap_2021; @Wenaas_2022; @Taubert_2023; @Jisc_2024] or publisher portfolios [@Pieper_2018; @Bakker_2024; @Fraser_2023; @Jahn_2021; @Momeni_2023; @Schmal_2024], while large-scale studies relied on self-reported agreement data [@Moskovkin_2022], or used APC pricing lists [@Shu_2023]. 
+Previous studies have focused on specific countries [@P_l_nen_2020; @Huang_2020; @Haucap_2021; @Wenaas_2022; @ludo_waltman_2022_7105355; @Taubert_2023; @Jisc_2024] or publisher portfolios [@Pieper_2018; @Bakker_2024; @Fraser_2023; @Jahn_2021; @Momeni_2023; @Schmal_2024], while large-scale studies relied on self-reported agreement data [@Moskovkin_2022], or used APC pricing lists [@Shu_2023]. 
 In particular, data availability is a limiting factor when studying the impact of transformative agreements [@Bakker_2024], because bibliometric databases, even though many allow the retrieval of open access articles in hybrid journals, do not directly attribute them to specific transformative agreements. 
 Likewise, article-level open access invoicing and cost data are only partly available [@Jahn_2021; @Kramer_2024].
 
@@ -1574,6 +1576,7 @@ Source code analysis including data used is available on GitHub: <https://github
 
 [^checkertool]: <https://www.coalition-s.org/blog/enabling-accurate-results-within-the-journal-checker-tool/>
 
-[^sweden]: <https://www.su.se/english/news/open-access-need-to-move-away-from-transformative-agreements-1.683787>
+[^coalitions]: <https://www.coalition-s.org/coalition-s-confirms-the-end-of-its-financial-support-for-open-access-publishing-under-transformative-arrangements-after-2024/>
+
 
 [^agreements]: In this paper I use the term "transformative agreement", addressing also offsetting, read-and-publish or publish-and-read deals, and other variants [@Borrego_2020; @Hinchliffe_2019]. Although the term is critised as misleading and not useful to describe the different types of open access agreements between library consortia and commercial publishers [@budapest], it is widely used in policy discussions and in the research literature.
