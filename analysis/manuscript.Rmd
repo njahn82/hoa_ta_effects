@@ -235,10 +235,8 @@ Together, these journals published `r sum(oa_prop_yearly$articles)` articles bet
 Affiliation metadata about corresponding authors are crucial for the planning and evaluation of transformative agreements because they are considered responsible for arranging open access publication [@Schimmer_2015; @Geschuhn_2017; @Borrego_2020]. 
 For this study, country and institutional affiliations were retrieved from OpenAlex.
 Because the corresponding authorship field was not fully supported by OpenAlex at the time of analysis, and affiliations were only available for 54% of the investigated articles, this study focused on first authors and their affiliations instead; approximately 90% of the investigated articles had first author affiliation metadata in OpenAlex, which is a much larger proportion than previously reported for the October 2022 snapshot [@Zhang_2024].
-First authors typically contribute the most to a paper and are often considered lead authors [@Larivi_re_2016].
-Examining Web of Science and Scopus, @Chinchilla_Rodr_guez_2024 revealed that the corresponding authors were typically the first authors listed. 
-However, notable differences were observed between the two databases.
-Related studies also utilised first authors as a proxy to examine open access payments and transformative agreements [@Zhang_2022; @Shu_2023; @Haucap_2021].
+First authors typically contribute the most to a paper and are often considered lead authors [@Larivi_re_2016], although notable differences in corresponding author metadata were observed across subjects, publication years and bibliometric databases [@Chinchilla_Rodr_guez_2024].
+In case of lacking data about corresponding authors in bibliometric databases, related studies also utilised first authors as a proxy to examine open access payments and transformative agreements [@Zhang_2022; @Shu_2023; @Haucap_2021].
 
 ```{r cr_stats_overview}
 cr_stats <- readr::read_csv(here::here("data", "cr_stats.csv"))
