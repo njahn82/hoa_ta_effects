@@ -1548,7 +1548,7 @@ In contrast, transformative agreements enabled a substantial increase in open ac
 This imbalance, where open access uptake depends largely on a few less productive high-income countries, makes it increasingly unlikely that collective action towards a large-scale transition of hybrid journals to full open access through transformation agreements will be successful. 
 Rather, it highlights the importance of ongoing evaluation and adaptation of open access strategies in view of global publishing trends.
 
-From a data perspective, research institutions and funders need to push towards price transparency in scholarly publishing to enable such evaluations. 
+From a data perspective, research institutions and funders need to push towards price transparency in scholarly publishing to enable these evaluations. 
 The reporting of open access funding, including transformative agreements, is also not harmonised, but often crowd-sourced from various sources.
 To improve the assessment of transformative agreements, libraries and publishers should collaborate on standards and services to publicly share information about respective journal portfolios, participating institutions and open access invoicing, for example in the international context of ESAC and the Barcelona Declaration on Open Research Information.
 Such collaboration would help overcome the limitations of current approaches that derive funding for open access from authorship data. 
