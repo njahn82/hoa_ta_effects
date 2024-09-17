@@ -90,18 +90,19 @@ The focus on large commercial publishers might also increase inequality [@Ross_H
 Besides, an editorial-board resignation raised concerns that transformative agreements might encourage publishers to maximize journal publication volume "without regard to quality" [@Goodin_2023].
 
 The controversies surrounding hybrid open access and transformative agreements have led to varying policy conclusions. 
-For instance, the UK's Joint Information Systems Committee (JISC) concluded from an evaluation of its transformative agreements [@Jisc_2024] that while these agreements had a significant impact on the growth of open access in the UK, they had limited effect in facilitating a global shift towards full open access. 
-Consequently, the report argues for a reassessment of the UK's open access strategy, in which hybrid OA and transformative agreements have played an important role.
-After making similar observation, Norwegian and Swedish universities and their consortia also revised their policies [@norway; @Widding_2024]. 
-As a result, the Association of Swedish Higher Education Institutions (Sveriges universitets- och högskoleförbund, SUHF) recommended only supporting agreements for publishing in fully open access journals by 2026 [@Widding_2024].
-Likewise, cOAlition S will stop supporting transformative agreements at the end of 2024 [^coalitions].
+For instance, the UK's Joint Information Systems Committee (JISC) evaluated its open access strategy, which included transformative agreements [@Jisc_2024]. 
+The evaluation revealed that while these agreements had a significant impact on the growth of open access in the UK, they had limited effects in facilitating a global shift towards full open access. 
+As a result, the report advised that the UK's open access strategy should be reassessed.
+After making similar observation, Norwegian and Swedish universities and their consortia also argued for policy changes [@norway; @Widding_2024]. 
+Notably, the Association of Swedish Higher Education Institutions (Sveriges universitets- och högskoleförbund, SUHF) recommended only supporting agreements for publishing in fully open access journals by 2026 [@Widding_2024].
+Furthermore, cOAlition S will conclude its financial support of transformative agreements at the end of 2024, but will continue to view open access resulting from such agreements as compliant. [^coalitions].
 cOAlition S also removed the majority of hybrid journals from its Transformative Journal program in 2023 due to publishers' failure to meet self-defined open access growth targets [@Brainard_2023]. 
 By contrast, the German DEAL consortium announced a five-year transformative agreement with Elsevier starting in 2024 and also renewed its contracts with Springer Nature and Wiley until the end of 2028. Similarly, the Colombia Consortium signed the first transformative agreements in Latin America [@Mu_oz_V_lez_2024].
 
 Despite these controversies around transformative agreements as a means of transitioning journal publishing to full open access, there is limited evidence available on the uptake of open access in hybrid journals, and the extent to which this can be attributed to transformative agreements.
 Previous studies have focused on specific countries [@P_l_nen_2020; @Huang_2020; @Haucap_2021; @Wenaas_2022; @ludo_waltman_2022_7105355; @Taubert_2023; @Jisc_2024] or publisher portfolios [@Pieper_2018; @Bakker_2024; @Fraser_2023; @Jahn_2021; @Momeni_2023; @Schmal_2024], while large-scale studies relied on self-reported agreement data [@Moskovkin_2022], or used APC pricing lists [@Shu_2023]. 
 In particular, data availability is a limiting factor when studying the impact of transformative agreements [@Bakker_2024], because bibliometric databases, even though many allow the retrieval of open access articles in hybrid journals, do not directly attribute them to specific transformative agreements. 
-Likewise, article-level open access invoicing and cost data are only partly available [@Jahn_2021; @Kramer_2024].
+Likewise, article-level open access invoicing and cost data are only partly available, which would make it possible to establish a direct link between transformative agreements and open access publications [@Jahn_2021; @Kramer_2024].
 
 The present study aims to address these limitations by combining multiple openly available data sources to determine open access uptake in hybrid journals, while distinguishing between open access through transformative agreements and other means. 
 With this novel and open approach, this first large-scale analysis will answer the following questions:
@@ -116,7 +117,7 @@ For both research questions, this study will analyse the variability by publishe
 This study combines data from multiple publicly available sources, as shown in Figure \ref{fig:data_workflow}. 
 Initially, transformative agreement data retrieved from cOAlition S Journal Checker Tool[^checkertool]  provided information about journal portfolios and participating institutions. 
 After identifying hybrid journals by excluding fully open access journals, Crossref [@Hendricks_2020] served as the primary data source for article-level metadata including Creative Commons (CC) license information to indicate open access availability on publisher websites.
-To determine open access articles published through transformative agreements, first author affiliations from OpenAlex [@priem2022openalex] were subsequently linked to eligible institutions according to the transformative agreement data. 
+Because of a lack of comprehensive publicly available invoicing data, open access articles published through transformative agreements were determined by first author affiliations from OpenAlex [@priem2022openalex], linked to eligible institutions according to the transformative agreement data. 
 In the following, the steps are described in detail.
 
 
@@ -186,11 +187,13 @@ p <-
   labs(xlab = NULL, xlab = NULL)
 ```
 
-Data gathering started with obtaining journals included in transformative agreements from the publicly available Transformative Agreement Data dump[^tadump] used by the cOAlition S Journal Checker Tool.[^checkertool] 
-The dump consists of multiple online Google spreadsheets where each data file represents one agreement listed in the ESAC Transformative Agreement Registry.[^esacregistry]
+Data gathering started with obtaining journals included in transformative agreements from the publicly available Transformative Agreement Data dump[^tadump] used by the cOAlition S Journal Checker Tool [^checkertool], a voluntary effort based on publicly disclosed contracts in the ESAC Transformative Agreement Registry.[^esacregistry]. 
+The dump consists of multiple online Google spreadsheets where each data file represents one agreement listed in the ESAC Transformative Agreement Registry.
 From the retrieved spreadsheet files, journals and institutions involved per agreement were obtained.
 
-A limitation of using the Journal Checker Tool and its underlying publicly available data dump to study the development of transformative agreements over time is that expired transformative agreements are constantly removed. 
+It should be noted that although many library consortia see the need to register their agreements through the ESAC registry, many fail to disclose all details, including contracts [@Bakker_2024; @Kramer_2024]. 
+Furthermore, the extent to which ESAC is comprehensive remains uncertain, potentially limiting the coverage of transformative agreements in the Journal Checker Tool. 
+Another limitation of using the Journal Checker Tool and its underlying publicly available data dump to study the development of transformative agreements over time is that expired transformative agreements are constantly removed. 
 To address this, four different snapshots were safeguarded and combined for this study: self-archived versions from July 2021, July 2022, and May 2023, as well as the most current dump downloaded on 11 December 2023.
 This ensured that transformative agreements, which ended from 2021 onwards, were included, representing the majority of transformative agreements.
 <!-- Agreements ending before 2021 could not be obtained.-->
@@ -234,7 +237,7 @@ Together, these journals published `r sum(oa_prop_yearly$articles)` articles bet
 
 Affiliation metadata about corresponding authors are crucial for the planning and evaluation of transformative agreements because they are considered responsible for arranging open access publication [@Schimmer_2015; @Geschuhn_2017; @Borrego_2020]. 
 For this study, country and institutional affiliations were retrieved from OpenAlex.
-Because the corresponding authorship field was not fully supported by OpenAlex at the time of analysis, and affiliations were only available for 54% of the investigated articles, this study focused on first authors and their affiliations instead; approximately 90% of the investigated articles had first author affiliation metadata in OpenAlex, which is a much larger proportion than previously reported for the October 2022 snapshot [@Zhang_2024].
+Because the corresponding authorship field was not fully supported by OpenAlex at the time of analysis, and respective affiliation data were only available for 54% of the investigated articles, this study focused on first authors and their affiliations instead; approximately 90% of the articles examined had first author affiliation metadata in OpenAlex, which is a much larger proportion than previously reported for the October 2022 snapshot [@Zhang_2024].
 First authors typically contribute the most to a paper and are often considered lead authors [@Larivi_re_2016], although notable differences in corresponding author metadata were observed across subjects, publication years and bibliometric databases [@Chinchilla_Rodr_guez_2024].
 In case of lacking data about corresponding authors in bibliometric databases, related studies also utilised first authors as a proxy to examine open access payments and transformative agreements [@Zhang_2022; @Shu_2023; @Haucap_2021].
 
@@ -1275,7 +1278,7 @@ country_scatter_22 <- country_scatter_df |>
   ggplot(aes(all, oa / all)) +
   geom_point(aes(fill = cat), pch = 21, alpha = 0.7) +
   scale_fill_manual(NULL, values = c("OECD" = "#d01c8b", "BRICS" = "#4dac26", "Other" = "#f7f7f7")) +
-  geom_smooth(aes(all, oa / all), method = "lm", se = FALSE) +
+  geom_smooth(aes(all, oa / all), method = "lm", se = TRUE) +
   scale_size("Agreement", guide = FALSE) +
   ggrepel::geom_text_repel(
     data = filter(country_scatter_df, cr_year == 2022, ta_oa > 2000 | country_code %in% c("CN", "IN", "BR", "RU", "IR")),
@@ -1521,11 +1524,11 @@ This large-scale study provides the first empirical evidence of the influence of
 However, several limitations need to be acknowledged.
 From a data perspective, estimations of open access through transformative agreements were established by linking author affiliations with publicly available agreement data from cOAlition S, and not through invoicing data, which is usually not shared.
 Because data on corresponding authors, who are typically responsible for facilitating open access publication, were not fully supported by OpenAlex at the time of this study, first author affiliations were used instead.
-
-Moreover, this study is unable to account for the various types of transformative agreements, particularly with regard to article types and caps that limit the number of open access articles covered.
+This study is also unable to account for the various types of transformative agreements due to a lack of data, especially regarding article types and caps limiting the number of open access articles covered.
 Furthermore, assessing the quality of the OpenAlex and Crossref data used, particularly in terms of affiliations, corresponding authorship, and article types, by combining them with established bibliometric databases such as Scopus and Web of Science was beyond the scope of this analysis [@Visser_2021; @Chinchilla_Rodr_guez_2024].
-Overall, the methodology is designed to underestimate, rather than overestimate, the adoption of open access through transformative agreements. 
-In addition, the data used in this study are openly available, along with the code used for this analysis.
+It must therefore be emphasised that, unlike related evaluations of national consortia based on invoice data [@Jisc_2024], this global overview can only provide an estimate of the support for open access through transformative agreements.
+Despite these limitations, the methodology was designed to underestimate, rather than overestimate, the adoption of open access through transformative agreements. 
+To promote transparency, the data used in this study, along with the code used for this analysis, are openly available.
 
 Additionally, it must be noted that the study period was significantly impacted by the COVID-19 pandemic, which led to an unprecedented number of publications and a reduction in international collaboration [@Aviv_Reuven_2021], which could explain the observed contrasting developments in OECD and BRICS countries. 
 However, even before the pandemic, growth in publications in Europe was only due to internationally co-authored journal articles [@Kwiek_2020]. 
@@ -1534,14 +1537,20 @@ Furthermore, the study design did not consider emerging publication practices su
 Lastly, it should be emphasised that the study did not address financial shifts between subscriptions spending and open access payments while analysing hybrid open access through transformative agreements due to a lack of data on expenditures.
 
 This study allows for multiple strands of further research. 
-One is to complement this large-scale study with more specific evidence from individual countries or subjects, particularly those with low hybrid open access  rates.
+One is to complement this large-scale study with more specific evidence from individual countries or subjects, particularly those with low hybrid open access rates.
 Incorporating full open access and subscription-based journals, as well as considering global trends in scholarly migration and collaboration could also be promising.
 Financial studies could build on the study design and include subscription and open access expenditure to assess the cost-effectiveness of transformative agreements, in particular whether transformative agreements can integrate the substantial amounts of individual payments for publication fees [@Wenaas_2022; @Butler_2023], as well as potential changes in authors' behaviour following the introduction of these agreements [@Schmal_2024].
 
 This study has practical implications for research funding and libraries. 
 Of primary concern should be the observed differences across countries, particularly the relationship between socio-economic development and open access adoption.
-From a data perspective, the reporting of open access funding, including transformative agreements, is not harmonised, but often crowd-sourced from various sources.
-To improve the assessment of transformative agreements, libraries and publishers need to collaborate on standards and services to publicly share information about respective journal portfolios, participating institutions and open access invoicing.
+In the last years, there was a notable increase in the number of closed access articles published in hybrid journals by authors from countries such as China and India, where transformative agreements and open access funding options were not widely available. 
+In contrast, transformative agreements enabled a substantial increase in open access in OECD countries excluding the US, while their share of total articles in hybrid journals decreased. 
+This imbalance, where open access uptake depends largely on a few less productive high-income countries, makes it increasingly unlikely that collective action towards a large-scale transition of hybrid journals to full open access through transformation agreements will be successful. 
+Rather, it highlights the importance of ongoing evaluation and adaptation of open access strategies in view of global publishing trends.
+
+From a data perspective, research institutions and funders need to push towards price transparency in scholarly publishing to enable such evaluations. 
+The reporting of open access funding, including transformative agreements, is also not harmonised, but often crowd-sourced from various sources.
+To improve the assessment of transformative agreements, libraries and publishers should collaborate on standards and services to publicly share information about respective journal portfolios, participating institutions and open access invoicing, for example in the international context of ESAC and the Barcelona Declaration on Open Research Information.
 Such collaboration would help overcome the limitations of current approaches that derive funding for open access from authorship data. 
 
 In summary, this study provides empirical insights into the development of hybrid open access following the introduction of transformative agreements. 
