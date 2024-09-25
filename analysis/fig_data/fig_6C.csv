@@ -1,0 +1,41 @@
+country_name_fct,country_code,cat,all,oa,type,value
+China,CN,BRICS,391530,14790,no_ta,14658
+China,CN,BRICS,391530,14790,ta_oa,132
+United States,US,OECD,268965,31643,no_ta,26337
+United States,US,OECD,268965,31643,ta_oa,5306
+United Kingdom,GB,OECD,72916,35654,no_ta,3036
+United Kingdom,GB,OECD,72916,35654,ta_oa,32618
+India,IN,BRICS,87428,1542,no_ta,1542
+India,IN,BRICS,87428,1542,ta_oa,0
+Germany,DE,OECD,60900,28510,no_ta,7119
+Germany,DE,OECD,60900,28510,ta_oa,21391
+Japan,JP,OECD,43952,6458,no_ta,6285
+Japan,JP,OECD,43952,6458,ta_oa,173
+Italy,IT,OECD,39350,10835,no_ta,3452
+Italy,IT,OECD,39350,10835,ta_oa,7383
+Canada,CA,OECD,39415,6190,no_ta,3858
+Canada,CA,OECD,39415,6190,ta_oa,2332
+Australia,AU,OECD,39560,10864,no_ta,2544
+Australia,AU,OECD,39560,10864,ta_oa,8320
+France,FR,OECD,35789,5020,no_ta,2945
+France,FR,OECD,35789,5020,ta_oa,2075
+Spain,ES,OECD,31748,12753,no_ta,1911
+Spain,ES,OECD,31748,12753,ta_oa,10842
+South Korea,KR,OECD,29418,2363,no_ta,1953
+South Korea,KR,OECD,29418,2363,ta_oa,410
+Iran,IR,Other,30808,626,no_ta,626
+Iran,IR,Other,30808,626,ta_oa,0
+Brazil,BR,BRICS,28597,942,no_ta,942
+Brazil,BR,BRICS,28597,942,ta_oa,0
+Russia,RU,BRICS,21428,1110,no_ta,1110
+Russia,RU,BRICS,21428,1110,ta_oa,0
+Netherlands,NL,OECD,21689,14612,no_ta,1366
+Netherlands,NL,OECD,21689,14612,ta_oa,13246
+Turkey,TR,OECD,24314,708,no_ta,500
+Turkey,TR,OECD,24314,708,ta_oa,208
+Switzerland,CH,OECD,13190,7535,no_ta,1478
+Switzerland,CH,OECD,13190,7535,ta_oa,6057
+Sweden,SE,OECD,12764,9936,no_ta,1209
+Sweden,SE,OECD,12764,9936,ta_oa,8727
+Poland,PL,OECD,10584,4033,no_ta,1651
+Poland,PL,OECD,10584,4033,ta_oa,2382

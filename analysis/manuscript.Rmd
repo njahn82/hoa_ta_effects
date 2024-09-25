@@ -252,6 +252,7 @@ cr_stats_plot <- cr_stats |>
   summarise(n = sum(n_articles)) |>
   mutate(cat = factor(cat, levels = c("hoad", "other", "gold"))) |>
   mutate(prop = n / sum(n)) |>
+  ungroup() |>
   ggplot(aes(gsub("^20", "'", as.character(cr_year)), n, fill = cat)) +
   geom_bar(
     position = position_stack(reverse = TRUE),
@@ -293,6 +294,12 @@ To improve the matching, Transformative Agreement Data were automatically enrich
 
 ```{r method_fig, fig.asp=0.55, fig.cap="Initial data characteristics. (A) Full open access journals included in transformative agreements by evidence source Directory of Open Access Journals (DOAJ), OpenAlex and the Bielefeld GOLD OA list. (B) Number of articles in Crossref by journal types. The purple bars show the overall article volume of hybrid journals in transformative agreements, which were initially included in the study, in comparision with full open access journals according to OpenAlex. The remainder represents articles in subscription-based journals not covered by transformative agreements."}
 (p | cr_stats_plot) + plot_annotation(tag_levels = 'A') +  plot_layout(widths = c(0.6, 0.4))
+
+# Data backup
+
+my_venn_df <- stack(my_venn)
+write_csv(my_venn_df, here::here("analysis/fig_data", "fig_2A.csv"))
+write_csv(cr_stats_plot$data, here::here("analysis/fig_data", "fig_2B.csv"))
 ```
 
 The so compiled data set consists of `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l, cr_year, jn_all) |> pull(jn_all) |> sum()` articles published in `r hoaddata::jn_ind |> filter(issn_l != "0027-8424", !cr_year %in%  c("2017", "2023")) |> distinct(issn_l) |> nrow()` hybrid journals included in at least one transformative agreement between 2018 and 2022 (see purple bars in Figure \ref{fig:method_fig}B). 
@@ -460,6 +467,7 @@ oa_jn_box_df <- left_join(jn_hybrid_oa_growth, jn_year_all) |>
   mutate(prop = oa_all / n) |> 
   filter(!cr_year %in%  c("2017", "2023"))
 oa_jn_box <- oa_jn_box_df |>
+  ungroup() |>
   ggplot(aes(gsub("^20", "'", as.character(cr_year)), prop)) +
   geom_boxplot(outlier.shape = NA) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
@@ -530,6 +538,12 @@ wrap_plots(
     panel.border = element_rect(color = "grey50", fill = NA),
     axis.title=element_text(size = 10)) &
     plot_annotation(tag_levels = 'A')
+
+# Data export
+write_csv(oa_ta_plot$data, here::here("analysis/fig_data", "fig_3A.csv"))
+write_csv(ta_share_plot$data, here::here("analysis/fig_data", "fig_3B.csv"))
+write_csv(oa_jn_box$data, here::here("analysis/fig_data", "fig_3C.csv"))
+write_csv(box_ta_prop$data, here::here("analysis/fig_data", "fig_3D.csv"))
 ```
 
 ```{r}
@@ -633,7 +647,8 @@ all_publisher <- publisher_plot_df |>
   summarise(jn_all = sum(jn_all))
 
 publisher_summary_df <- inner_join(oa_publisher, all_publisher) |>
-  mutate(prop = value / jn_all)
+  mutate(prop = value / jn_all) |>
+  ungroup()
 
 
 publisher_prop <-
@@ -686,6 +701,7 @@ publisher_boxplot <- publisher_plot_df |>
         strip.text.x = element_blank())
 
 publisher_ta_prop_plot <- publisher_ta_prop |>
+  ungroup() |>
   ggplot(aes(gsub("^20", "'", as.character(cr_year)), prop)) +
   geom_bar(stat = "identity",
            fill = "#56B4E9",
@@ -806,6 +822,11 @@ wrap_plots(
                 panel.border = element_rect(color = "grey50", fill = NA),
     axis.title=element_text(size = 10)) &
     plot_annotation(tag_levels = 'A') 
+
+# Data backup
+write_csv(publisher_prop$data, here::here("analysis/fig_data", "fig_4A.csv"))
+write_csv(publisher_ta_prop_plot$data, here::here("analysis/fig_data", "fig_4B.csv"))
+write_csv(publisher_boxplot$data, here::here("analysis/fig_data", "fig_4C.csv"))
 ```
 
 The varying degrees of adoption of open access across the three major publishers can be attributed to distinct approaches to transformative agreements. 
@@ -968,7 +989,8 @@ subject_trend_plot <- top_level_by_year_oa |>
     values_to = "value"
   ) |>
   mutate(prop = value / articles_frac) |>
-  ggplot(aes(
+  ungroup() |>
+   ggplot(aes(
     gsub("^20", "'", as.character(cr_year)),
     prop,
     fill = type,
@@ -1003,6 +1025,7 @@ subject_ta_trend_plot <- top_level_by_year_oa |>
   filter(top_level != "Multidisciplinary") |>
   filter(!cr_year %in%  c("2017", "2023")) |>
   mutate(prop = ta_oa_frac / oa_frac) |>
+  ungroup() |>
   ggplot(aes(gsub("^20", "'", as.character(cr_year)), prop)) +
   geom_bar(stat = "identity", fill = "#56B4E9", color = "#000000",
             linewidth = 0.15) +
@@ -1022,6 +1045,7 @@ subject_box_trend <- subject_df |>
   pivot_longer(cols = c(ta_oa, no_ta), names_to = "type", values_to = "value") |>
   filter(value > 0) |>
   filter(top_level != "Multidisciplinary", !cr_year %in% c("2017", "2023")) |>
+  ungroup() |>
   ggplot(aes(gsub("^20", "'", as.character(cr_year)), value / jn_all, fill = type)) +
   geom_boxplot(outlier.shape = NA, show.legend = FALSE, varwidth = TRUE) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)),
@@ -1065,6 +1089,12 @@ wrap_plots(
     panel.border = element_rect(color = "grey50", fill = NA),
     axis.title=element_text(size = 10)) &
     plot_annotation(tag_levels = 'A') 
+
+# Data backup
+
+write_csv(subject_trend_plot$data, here::here("analysis/fig_data", "fig_5A.csv"))
+write_csv(subject_ta_trend_plot$data, here::here("analysis/fig_data", "fig_5B.csv"))
+write_csv(subject_box_trend$data, here::here("analysis/fig_data", "fig_5C.csv"))
 ```
 
 
@@ -1165,7 +1195,8 @@ top_20_plot_df <-
   pivot_longer(
   cols = c(no_ta, ta_oa),
   values_to = "value",
-  names_to = "type") 
+  names_to = "type") |>
+  ungroup()
 ```
 
 ```{r, country_plot, fig.asp=0.8}
@@ -1237,13 +1268,7 @@ top_20_df <- country_scatter_df |>
   summarise(all = sum(all),
             oa = sum(oa),
             ta_oa = sum(ta_oa), .groups = "drop") |>
-  head(20) |>
-  mutate(cat_labels = case_when(
-   cat == "OECD" ~ glue::glue("<span style = 'color: #3fc1c9'>{country_code}</span>"),
-   cat == "BRICS" ~ glue::glue("<span style = 'color: #fc5185'>{country_code}</span>"),
-   cat == "Other" ~ glue::glue("<span style = 'color: #e1e1e1'>{country_code}</span>")
-  )) |>
-  mutate(cat_labels = fct_inorder(cat_labels))
+  head(20) 
 
 
 top_20_plot <- top_20_df |>
@@ -1252,6 +1277,7 @@ top_20_plot <- top_20_df |>
   cols = c(no_ta, ta_oa),
   values_to = "value",
   names_to = "type") |>
+  ungroup() |>
   ggplot(aes(reorder(as.character(country_code),  value), value / sum(value), fill = type)) +
     geom_bar(stat = "identity", color = "#000000", linewidth = 0.15) +
    scale_fill_manual(
@@ -1274,6 +1300,7 @@ top_20_plot <- top_20_df |>
 ```{r}
 country_scatter_22 <- country_scatter_df |>
   filter(cr_year == "2022", !is.na(country_code), all > 5000) |>
+  ungroup() |>
   ggplot(aes(all, oa / all)) +
   geom_point(aes(fill = cat), pch = 21, alpha = 0.7) +
   scale_fill_manual(NULL, values = c("OECD" = "#d01c8b", "BRICS" = "#4dac26", "Other" = "#f7f7f7")) +
@@ -1312,7 +1339,8 @@ oecd_stats_df <- oecd_stats |>
          oa_other = oa - ta_oa) |>
   pivot_longer(cols = c(ta_oa, oa_other, closed), names_to = "oa_type") |>
   mutate(cat = ifelse(is.na(cat), "Other", cat)) |>
-  left_join(oecd_by_year, by = "cr_year")
+  left_join(oecd_by_year, by = "cr_year") |>
+  ungroup()
 
 country_bar <- ggplot(oecd_stats_df,
                       aes(
@@ -1432,6 +1460,11 @@ wrap_plots(
     legend.position = "top", 
     legend.justification = "right") &
     plot_annotation(tag_levels = 'A') 
+
+# Data backup
+write_csv(country_bar$data, here::here("analysis/fig_data", "fig_6A.csv"))
+write_csv(country_scatter_22$data, here::here("analysis/fig_data", "fig_6B.csv"))
+write_csv(top_20_plot$data, here::here("analysis/fig_data", "fig_6C.csv"))
 ```
 
 Figure \ref{fig:country_patch}A shows the development of hybrid open access publishing by country, comparing the OECD area with the BRICS, an intergovernmental organisation, which comprised  Brazil, Russia, India, China, and South Africa as of 2022. 
@@ -1459,6 +1492,9 @@ Interestingly, the United States had a notable open access market share of `r to
 
 ```{r country_top_20_plot, fig.asp=0.8, fig.cap="Development of open access in hybrid journals in transformative agreements between 2018 and 2022, by the Top 20 most productive countries in terms of total articles published in the five-years period. Blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. Country names are represented as ISO two-letter country codes. Facet subheadings show the total number of articles and corresponding market share."}
 country_plot
+
+# Data backup 
+write_csv(country_plot$data, here::here("analysis/fig_data", "fig_7.csv"))
 ```
 
 Figure \ref{fig:country_top_20_plot} illustrates the development of hybrid open access from 2018 to 2022, highlighting the top 20 most productive countries in terms of articles published in hybrid journals that were included in transformative agreements over the five-year period. 
