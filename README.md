@@ -38,14 +38,10 @@ To install {hoaddata} version used with R
 library(remotes)
 remotes::install_github("subugoe/hoaddata@v0.2.91", dependencies = "Imports")
 ```
-
-The main dataset, providing article-level data about publications linked to transformative agreements and institutions, is available as {hoaddata} release asset: 
- <https://github.com/subugoe/hoaddata/releases/download/v0.2.91/ta_oa_inst.csv.gz>
- 
  
 #### Figure data
 
-All data underlying figure can be found in `analysis/fig_data` folder. 
+All data underlying figure can be found in [`analysis/fig_data/`](analysis/fig_data/) folder. 
 
 ### Contact
 
