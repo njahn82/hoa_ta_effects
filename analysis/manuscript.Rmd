@@ -774,7 +774,7 @@ publisher_league_tbl |>
   ))
 ```
 
-However, there are notable differences between the three large publishers. Although Elsevier published the largest volume of articles (n = `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(publisher_total)`, `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(cum)*100`%), it recorded a comparably low number of open access articles, including those that are associated with transformative agreements.
+However, there are notable differences between the three large publishers. Although Elsevier published the largest volume of articles (n = `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(publisher_total)`; `r publisher_league_tbl  |> filter(publisher == "Elsevier") |> pull(cum)*100`%), it recorded a comparably low number of open access articles, including those that are associated with transformative agreements.
 In contrast, Springer Nature and Wiley provided open access to a larger proportion of their articles (`r (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_total)) / (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(publisher_total)) * 100`% of Springer Nature articles and `r (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_total)) / (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(publisher_total)) * 100`% of Wiley articles were open access), leading to higher open access market shares (`r publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_perc)*100`% Springer Nature resp. `r publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_perc)*100`% Wiley).
 This difference between Elsevier on the one hand and Springer Nature and Wiley on the other can be attributed to transformative agreements, as the latter made the majority of their open access articles available through such deals (`r ((publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(ta_oa_total)) / (publisher_league_tbl  |> filter(publisher == "Springer Nature") |> pull(oa_total)) * 100)`% Springer Nature  resp. `r (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(ta_oa_total)) / (publisher_league_tbl  |> filter(publisher == "Wiley") |> pull(oa_total)) * 100`% Wiley).
 
@@ -1042,7 +1042,7 @@ Growth in Social Sciences category can be largely attributed to transformative a
 In 2022, two-thirds of open access articles (`r subject_ta_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(prop) * 100`%, n = `r subject_ta_trend_plot$data |> filter(cr_year == "2022", top_level == "Social Sciences") |> pull(ta_oa_frac)`) were published by the first authors affiliated with participating institutions (see \ref{fig:subject_panel}B). 
 
 
-```{r subject_panel, fig.asp=0.8, fig.cap="Development of open access in hybrid journals in transformative agreements between 2018 and 2022 by ASJC subject area. The blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. (A) Proportion of open access articles in hybrid journals per year and subject area. (B) Percentage of hybrid open access via agreements per year and subject area Boxplots. (C) show individual open access uptake rates by individual hybrid journals and open access funding per publication year and subject area. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available for this study."}
+```{r subject_panel, fig.asp=0.8, fig.cap="Development of open access in hybrid journals in transformative agreements between 2018 and 2022 by ASJC subject area. The blue areas represent open access through transformative agreements, the grey areas depict open access articles where no link to an agreement could be established. (A) Proportion of open access articles in hybrid journals per year and subject area. (B) Percentage of hybrid open access via agreements per year and subject area. (C) Boxplots show individual open access uptake rates by individual hybrid journals and open access funding per publication year and subject area. The individual outliers are not shown. Note that data on transformative agreements ending before June 2021 were not available for this study."}
 
 design = "E
 A
@@ -1506,13 +1506,13 @@ In these fields, the majority of full open access journals are so-called "Diamon
 Rather, this result can be more accurately attributed to the substantial proportion of authors from high-income countries who publish in these hybrid journals included in transformative agreements, particularly when journals are of local relevance, such as by belonging to national societies or regional research scope.
  <!--   [funding options in the humanities and social sicences] -->
 
-Surprisingly, the total publication output of high-income countries belonging to the OECD in hybrid journals declined substantially after peaking in 2020, whereas that of BRICS countries doubled from 2018 to 2022.
+Surprisingly, the total publication output of high-income countries belonging to the OECD in hybrid journals declined substantially after peaking in 2020, whereas that of BRICS countries continuously grew from 2018 to 2022.
 Because the BRICS expansion can be exclusively attributed to closed access articles, this development has the potential to hinder the transition of academic journal publishing to full open access through transformative agreements and demands discussion. 
 In China, the country with the highest volume of articles in hybrid journals, only limited research funding to pay for open access is available, with expenditures for open access publishing surpassing subscription costs at some universities [@Shu_2023].
 Furthermore, the focus of Chinese authors on established journals may contribute to this trend [@Zhang_2022]. 
 Although China supports Plan S [@Schiermeier_2018], this is not reflected in the data in terms of open access uptake in hybrid journals.
 Market observers also do not expect a broad implementation of transformative agreements in China in near future [@Owens_2024].
-As highlighted by @Koley_2023, India faces similar challenges in terms of the availablility of resources to pay for open access.
+As highlighted by @Koley_2023, India faces similar challenges in terms of the availability of resources to pay for open access.
 At the same time, access to research literature is a pressing issue, which is addressed by the "Indian one nation, one subscription" policy proposal. 
 However, this policy focuses on centrally negotiated subscriptions and does not entail open access.
 
@@ -1548,7 +1548,7 @@ One concern should be the observed differences across countries, particularly th
 Between 2018 and 2022, there was a notable increase in the number of closed access articles published in hybrid journals by authors from countries such as China and India, where transformative agreements and open access funding options were not widely available.
 In contrast, the introduction of country-wide transformative agreements in numerous OECD countries led to a substantial increase in open access, while their share of total articles in hybrid journals decreased.
 This imbalance, whereby open access uptake depends largely on a few countries, makes it less likely that collective action towards a large-scale transition of hybrid journals to full open access through transformation agreements will succeed within the next years.
-Rather, and in accordance with recent British and Scandinavian policy recommendations [@Jisc_2024; @Widding_2024], it emphasises the importance of ongoing evaluation and adaptation of open access strategies in view of global publishing trends. 
+Rather, and in accordance with recent British and Scandinavian policy recommendations [@Jisc_2024; @Widding_2024], it emphasises the importance of ongoing evaluation and adaptation of open access strategies in view of global publishing trends and related challenges to equity and journal quality [@Ross_Hellauer_2022; @Goodin_2023]. 
 
 From a data perspective, research institutions and funders need to push towards price transparency in scholarly publishing to enable these evaluations. 
 The reporting of open access funding, including transformative agreements, is also not harmonised, but often crowd-sourced from various sources.
