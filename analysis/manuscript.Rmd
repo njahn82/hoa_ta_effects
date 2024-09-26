@@ -94,7 +94,7 @@ For instance, the British Joint Information Systems Committee (JISC) evaluated i
 The evaluation revealed that while these agreements had a significant impact on the growth of open access in the country, they had limited effects in facilitating a global shift towards full open access. 
 As a result, the report advised that the British open access strategy should be reassessed.
 After making similar observation, Norwegian and Swedish universities and their consortia also argued for policy changes [@norway; @Widding_2024].
-Furthermore, cOAlition S conclude its financial support of transformative agreements at the end of 2024, but continue to view open access resulting from such agreements as compliant. [^coalitions].
+Furthermore, cOAlition S conclude its financial support of transformative agreements at the end of 2024, but continue to view open access resulting from such agreements as compliant.[^coalitions]
 cOAlition S also removed the majority of hybrid journals from its Transformative Journal program in 2023 due to publishers' failure to meet self-defined open access growth targets [@Brainard_2023]. 
 By contrast, the German DEAL consortium announced a five-year transformative agreement with Elsevier starting in 2024 and also renewed its contracts with Springer Nature and Wiley until the end of 2028. Similarly, the Colombia Consortium signed the first transformative agreements in Latin America [@Mu_oz_V_lez_2024].
 
