@@ -93,7 +93,7 @@ The controversies surrounding hybrid open access and transformative agreements h
 For instance, the British Joint Information Systems Committee (JISC) evaluated its open access strategy, which included transformative agreements [@Jisc_2024]. 
 The evaluation revealed that while these agreements had a significant impact on the growth of open access in the country, they had limited effects in facilitating a global shift towards full open access. 
 As a result, the report advised that the British open access strategy should be reassessed.
-After making similar observation, Norwegian and Swedish universities and their consortia also argued for policy changes [@norway; @Widding_2024].
+After making similar observations, Norwegian and Swedish universities and their consortia also argued for policy changes [@norway; @Widding_2024].
 Furthermore, cOAlition S conclude its financial support of transformative agreements at the end of 2024, but continue to view open access resulting from such agreements as compliant.[^coalitions]
 cOAlition S also removed the majority of hybrid journals from its Transformative Journal program in 2023 due to publishers' failure to meet self-defined open access growth targets [@Brainard_2023]. 
 By contrast, the German DEAL consortium announced a five-year transformative agreement with Elsevier starting in 2024 and also renewed its contracts with Springer Nature and Wiley until the end of 2028. Similarly, the Colombia Consortium signed the first transformative agreements in Latin America [@Mu_oz_V_lez_2024].
@@ -186,7 +186,7 @@ p <-
   labs(xlab = NULL, xlab = NULL)
 ```
 
-Data gathering started with obtaining journals included in transformative agreements from the publicly available Transformative Agreement Data dump[^tadump] used by the cOAlition S Journal Checker Tool[^checkertool], a voluntary effort based on publicly disclosed contracts in the ESAC Transformative Agreement Registry[^esacregistry]. 
+Data gathering started with obtaining journals included in transformative agreements from the publicly available Transformative Agreement Data dump used by the cOAlition S Journal Checker Tool[^tadump], a voluntary effort based on publicly disclosed contracts in the ESAC Transformative Agreement Registry[^esacregistry]. 
 The dump consists of multiple online Google spreadsheets where each data file represents one agreement listed in the ESAC Transformative Agreement Registry.
 From the retrieved spreadsheet files, journals and institutions involved per agreement were obtained.
 
@@ -310,7 +310,7 @@ These hybrid journals in transformative agreements represented `r cr_stats |> fi
 
 ## Data analysis
 
-Throughout this mostly automated data gathering and analysis process, Tidyverse tools (Wickham et al., 2019) for the R programming language (R Core Team, 2020) were used. 
+Throughout this mostly automated data gathering and analysis process, Tidyverse tools [@tidyverse] for the R programming language [@r] were used. 
 The resulting data are openly available through an R data package, hoaddata [@hoaddata]. 
 Following @Marwick_2018, hoaddata contains not only the datasets used in the data analysis. 
 It also includes code used to compile the data by connecting it to a cloud-based Google BigQuery data warehouse, where scholarly big data from Crossref, OpenAlex and Unpaywall were made available, using bigrquery [@bigrquery].
@@ -1571,7 +1571,7 @@ To promote transparency, the data used in this study, along with the code used f
 Additionally, it must be noted that the study period was significantly impacted by the COVID-19 pandemic, which led to an unprecedented number of publications and a reduction in international collaboration [@Aviv_Reuven_2021], which could explain the observed contrasting developments in OECD and BRICS countries. 
 However, even before the pandemic, growth in publications in Europe was only due to internationally co-authored journal articles [@Kwiek_2020]. 
 Likewise, inflows from China to the United States and European countries already declined by 2020 [@Zhao_2023].
-Furthermore, the study design did not consider emerging publication practices such as preprints [@Fraser_2021] and special issues [@hanson2023strain], which have grown rapidly since 2020. 
+Furthermore, the study design did not consider emerging publication practices such as preprints [@Fraser_2021] and special issues [@Hanson_2024], which have grown rapidly since 2020. 
 Lastly, it should be emphasised that the study did not address financial shifts between subscriptions spending and open access payments while analysing hybrid open access through transformative agreements due to a lack of data on expenditures.
 
 This study allows for multiple strands of further research. 
@@ -1595,15 +1595,19 @@ In summary, this study provides empirical insights into the development of hybri
 These results are important for both researchers and stakeholders engaged in negotiating and evaluating these agreements. 
 The presented approach relies on open data, which enables follow-up studies and open access monitoring activities to further explore the role of transformative agreements in transitioning academic publishing to full open access.
 
-# Competing interests
+# Author contributions {-}
+
+The author confirms sole responsibility for the following: Conceptualization, Methodology, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Writing - Review & Editing, Visualization.
+
+# Competing interests {-}
 
 The author declares no competing interests. 
 
-# Funding information
+# Funding information {-}
 
-This work was supported by the Deutsche Forschungsgemeinschaft (Grant number 416115939). 
+This work was supported by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation), Project-ID 416115939.
 
-# Data and code availability
+# Data and code availability {-}
 
 Source code analysis including data used is available on GitHub: <https://github.com/njahn82/hoa_ta_effects>.
 

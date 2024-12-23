@@ -196,7 +196,7 @@ al., 2024). The evaluation revealed that while these agreements had a
 significant impact on the growth of open access in the country, they had
 limited effects in facilitating a global shift towards full open access.
 As a result, the report advised that the British open access strategy
-should be reassessed. After making similar observation, Norwegian and
+should be reassessed. After making similar observations, Norwegian and
 Swedish universities and their consortia also argued for policy changes
 (Holden et al., 2023; Widding, 2024). Furthermore, cOAlition S conclude
 its financial support of transformative agreements at the end of 2024,
@@ -284,8 +284,8 @@ data}\label{transformative-agreement-and-hybrid-journal-data}
 
 Data gathering started with obtaining journals included in
 transformative agreements from the publicly available Transformative
-Agreement Data dump\footnote{\url{https://journalcheckertool.org/transformative-agreements/}}
-used by the cOAlition S Journal Checker Tool\footnote{\url{https://www.coalition-s.org/blog/enabling-accurate-results-within-the-journal-checker-tool/}},
+Agreement Data dump used by the cOAlition S Journal Checker
+Tool\footnote{\url{https://journalcheckertool.org/transformative-agreements/}},
 a voluntary effort based on publicly disclosed contracts in the ESAC
 Transformative Agreement Registry\footnote{\url{https://esac-initiative.org/about/transformative-agreements/agreement-registry/}}.
 The dump consists of multiple online Google spreadsheets where each data
@@ -439,7 +439,7 @@ Crossref, while fully open access journals recorded 35\%.
 
 Throughout this mostly automated data gathering and analysis process,
 Tidyverse tools (Wickham et al., 2019) for the R programming language (R
-Core Team, 2020) were used. The resulting data are openly available
+Core Team, 2024) were used. The resulting data are openly available
 through an R data package, hoaddata (Jahn, 2023). Following Marwick et
 al. (2018), hoaddata contains not only the datasets used in the data
 analysis. It also includes code used to compile the data by connecting
@@ -529,7 +529,7 @@ through transformative agreements, resulting in an even larger market
 share of 74\%.
 
 \begin{table}[H]
-
+\centering
 \caption{\label{tab:publisher_league_table}Hybrid open access through transformative agreements market shares 2018-2022}
 \centering
 \begin{tabular}[t]{lrlrlrlrl}
@@ -937,7 +937,7 @@ internationally co-authored journal articles (Kwiek, 2021). Likewise,
 inflows from China to the United States and European countries already
 declined by 2020 (Zhao et al., 2023). Furthermore, the study design did
 not consider emerging publication practices such as preprints (Fraser et
-al., 2021) and special issues (Hanson et al., 2023), which have grown
+al., 2021) and special issues (Hanson et al., 2024), which have grown
 rapidly since 2020. Lastly, it should be emphasised that the study did
 not address financial shifts between subscriptions spending and open
 access payments while analysing hybrid open access through
@@ -999,16 +999,27 @@ and open access monitoring activities to further explore the role of
 transformative agreements in transitioning academic publishing to full
 open access.
 
-\section{Competing interests}\label{competing-interests}
+\section*{Author contributions}\label{author-contributions}
+\addcontentsline{toc}{section}{Author contributions}
+
+The author confirms sole responsibility for the following:
+Conceptualization, Methodology, Formal analysis, Investigation, Data
+Curation, Writing - Original Draft, Writing - Review \& Editing,
+Visualization.
+
+\section*{Competing interests}\label{competing-interests}
+\addcontentsline{toc}{section}{Competing interests}
 
 The author declares no competing interests.
 
-\section{Funding information}\label{funding-information}
+\section*{Funding information}\label{funding-information}
+\addcontentsline{toc}{section}{Funding information}
 
-This work was supported by the Deutsche Forschungsgemeinschaft (Grant
-number 416115939).
+This work was supported by the Deutsche Forschungsgemeinschaft (DFG,
+German Research Foundation), Project-ID 416115939.
 
-\section{Data and code availability}\label{data-and-code-availability}
+\section*{Data and code availability}\label{data-and-code-availability}
+\addcontentsline{toc}{section}{Data and code availability}
 
 Source code analysis including data used is available on GitHub:
 \url{https://github.com/njahn82/hoa_ta_effects}.
@@ -1145,10 +1156,10 @@ required to make {``offsetting''} work for the open access transition.
 \emph{Insights the {UKSG} Journal}, \emph{30}(3), 103--114.
 \url{https://doi.org/10.1629/uksg.391}
 
-\bibitem[\citeproctext]{ref-hanson2023strain}
-Hanson, M. A., Barreiro, P. G., Crosetto, P., \& Brockington, D. (2023).
-\emph{The strain on scientific publishing}.
-\url{https://arxiv.org/abs/2309.15884}
+\bibitem[\citeproctext]{ref-Hanson_2024}
+Hanson, M. A., Barreiro, P. G., Crosetto, P., \& Brockington, D. (2024).
+The strain on scientific publishing. \emph{Quantitative Science
+Studies}, 1--21. \url{https://doi.org/10.1162/qss_a_00327}
 
 \bibitem[\citeproctext]{ref-Haucap_2021}
 Haucap, J., Moshgbar, N., \& Schmal, W. B. (2021). The impact of the
@@ -1387,6 +1398,11 @@ transforming journals from closed to open access. \emph{Learned
 Publishing}, \emph{16}(3), 163--166.
 \url{https://doi.org/10.1087/095315103322110923}
 
+\bibitem[\citeproctext]{ref-r}
+R Core Team. (2024). \emph{R: A language and environment for statistical
+computing}. R Foundation for Statistical Computing.
+\url{https://www.R-project.org/}
+
 \bibitem[\citeproctext]{ref-Goodin_2023}
 Rasmussen, K. B. (2023). Interview with {Robert {``Bob''} E. Goodin}.
 \emph{Tidskrift För Politisk Filosofi}.
@@ -1473,6 +1489,14 @@ to journal ranking and publish-and-read deals. \emph{Frontiers in
 Research Metrics and Analytics}, \emph{7}.
 \url{https://doi.org/10.3389/frma.2022.943932}
 
+\bibitem[\citeproctext]{ref-tidyverse}
+Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D.,
+François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M.,
+Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J.,
+Robinson, D., Seidel, D. P., Spinu, V., \ldots{} Yutani, H. (2019).
+Welcome to the {tidyverse}. \emph{Journal of Open Source Software},
+\emph{4}(43), 1686. \url{https://doi.org/10.21105/joss.01686}
+
 \bibitem[\citeproctext]{ref-bigrquery}
 Wickham, H., \& Bryan, J. (2023). \emph{{bigrquery: An interface to
 Google's 'BigQuery' 'API'}}.
@@ -1480,7 +1504,7 @@ Google's 'BigQuery' 'API'}}.
 
 \bibitem[\citeproctext]{ref-Widding_2024}
 Widding, A. S. (2024). Beyond transformative agreements: Ways forward
-for universities. \emph{European Review}, 1--11.
+for universities. \emph{European Review}, \emph{32}(S1), S28--S38.
 \url{https://doi.org/10.1017/s1062798724000036}
 
 \bibitem[\citeproctext]{ref-Zhang_2024}
