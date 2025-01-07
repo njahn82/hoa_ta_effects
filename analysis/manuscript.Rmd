@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
   out.width = "99%",
   fig.align = "center",
   dpi = 300,
-  dev = c("png", "pdf"),
+  dev = c("png", "cairo_ps", "pdf"),
   fig.path = "fig/",
   fig.pos = "ht!", out.extra = ""
 )
